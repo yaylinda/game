@@ -1,4 +1,6 @@
-package yay.linda.game.game;
+package yay.linda.dto;
+
+import yay.linda.dto.Cell;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +11,7 @@ public class GameBoard {
     private int numCols;
     private Map<Integer, Map<Integer, Cell>> board = new HashMap<>();
 
+    public GameBoard() {}
 
     public GameBoard(int numRows, int numCols) {
         this.numRows = numRows;

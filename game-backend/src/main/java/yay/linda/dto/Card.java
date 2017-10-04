@@ -1,15 +1,20 @@
-package yay.linda.game.game;
+package yay.linda.dto;
 
-public abstract class Card {
+public class Card {
 
+    protected String cardType;
     protected int cost;
     protected int might;
     protected int movement;
+    protected Player owner;
+
+    public Card() {}
 
     public Card(int cost, int might, int movement) {
         this.cost = cost;
         this.might = might;
         this.movement = movement;
+        this.owner = null;
     }
 
     public int getCost() {

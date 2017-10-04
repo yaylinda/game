@@ -1,4 +1,4 @@
-package yay.linda.game.game;
+package yay.linda.dto.enums;
 
 public enum CellState {
     EMPTY, OCCUPIED;

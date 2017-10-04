@@ -1,4 +1,4 @@
-package yay.linda.game.game;
+package yay.linda.dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +11,13 @@ public class GameSession {
     private List<Card> deck;
     private List<Card> discard;
 
-    public GameSession(Player player1, Player player2, GameBoard gameBoard, List<Card> deck) {
+    public GameSession() {}
+
+    public GameSession(Player player1, Player player2) {
         this.player1 = player1;
         this.player2 = player2;
-        this.gameBoard = gameBoard;
-        this.deck = deck;
+        this.gameBoard = new GameBoard(5, 4);
+        this.deck = new ArrayList<>();
         this.discard = new ArrayList<>();
     }
 

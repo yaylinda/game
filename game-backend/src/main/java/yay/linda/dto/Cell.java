@@ -1,19 +1,22 @@
-package yay.linda.game.game;
+package yay.linda.dto;
+
+import yay.linda.dto.enums.CellState;
 
 public class Cell {
 
     private CellState state;
     private Card card;
 
+    public Cell() {
+        this.state = CellState.EMPTY;
+        this.card = null;
+    }
+
     public Cell(CellState state, Card card) {
         this.state = state;
         this.card = card;
     }
 
-    public Cell() {
-        this.state = CellState.EMPTY;
-        this.card = null;
-    }
 
     public CellState getState() {
         return state;
