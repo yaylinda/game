@@ -2,6 +2,9 @@ package yay.linda.dto;
 
 import yay.linda.dto.enums.CardType;
 
+/**
+ * Represents a Card object.
+ */
 public class Card {
 
     private String cardType;

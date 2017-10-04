@@ -5,6 +5,9 @@ import yay.linda.dto.enums.PlayerTeam;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a Player object.
+ */
 public class Player {
 
     private String name;

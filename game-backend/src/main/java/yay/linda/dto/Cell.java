@@ -2,6 +2,9 @@ package yay.linda.dto;
 
 import yay.linda.dto.enums.CellState;
 
+/**
+ * Represents a Cell object on the Game Board.
+ */
 public class Cell {
 
     private CellState state;

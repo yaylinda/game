@@ -1,5 +1,8 @@
 package yay.linda.dto;
 
+/**
+ * DTO of a Player object.
+ */
 public class DTOPlayer {
 
     private String name;

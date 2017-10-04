@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import yay.linda.dto.Card;
 import yay.linda.dto.DTOGameSession;
 import yay.linda.dto.DTOPlayer;
 import yay.linda.dto.Player;
@@ -15,7 +16,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 /**
- * Controller to handle all requests related to actual game play
+ * Controller to handle all requests related to actual game play.
  */
 @RestController
 @RequestMapping("/gameplay")
@@ -31,5 +32,15 @@ public class GamePlayController {
             return ResponseEntity.ok(new DTOGameSession(gameSession));
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @RequestMapping(value = "/card", method = RequestMethod.PUT)
+    public ResponseEntity<DTOGameSession> placeCard(Card card, int x, int y) {
+        return null;
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public ResponseEntity<DTOGameSession> update(DTOGameSession newSession) {
+        return null;
     }
 }

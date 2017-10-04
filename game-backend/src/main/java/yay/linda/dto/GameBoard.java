@@ -5,6 +5,9 @@ import yay.linda.dto.Cell;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents a Game Board object; contains Cell objects.
+ */
 public class GameBoard {
 
     private int numRows;

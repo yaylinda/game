@@ -2,6 +2,9 @@ package yay.linda.dto;
 
 import yay.linda.service.GameSession;
 
+/**
+ * DTO of a Game Session object.
+ */
 public class DTOGameSession {
 
     private Player player1;

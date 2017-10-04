@@ -12,6 +12,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Class to handle the creation of a new random deck. Has features stats and serialization.
+ */
 public class DeckGenerator {
 
     private GameConfigurations gameConfigurations;

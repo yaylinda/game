@@ -8,6 +8,9 @@ import yay.linda.dto.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a Game Session object, with logic to handle all internal states.
+ */
 public class GameSession {
 
     private GameConfigurations gameConfigurations;
