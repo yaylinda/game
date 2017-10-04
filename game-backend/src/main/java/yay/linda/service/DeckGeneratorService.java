@@ -1,19 +1,24 @@
 package yay.linda.service;
 
 import org.springframework.stereotype.Component;
+import yay.linda.config.GameConfigurations;
 import yay.linda.dto.Card;
 import yay.linda.dto.DeckGeneratorRequest;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class DeckGeneratorService {
 
-    public List<Card> generateDeck(DeckGeneratorRequest request) {
+    @Inject
+    private GameConfigurations gameConfigurations;
+
+    public List<Card> generateDeck() {
         List<Card> deck = new ArrayList<>();
-        deck.addAll(generateTroopCards(request.getNumTroops()));
-        deck.addAll(generateWallCards(request.getNumWalls()));
+        deck.addAll(generateTroopCards(gameConfigurations.getNumTroopCards()));
+        deck.addAll(generateWallCards(gameConfigurations.getNumWallCards()));
         return deck;
     }
 

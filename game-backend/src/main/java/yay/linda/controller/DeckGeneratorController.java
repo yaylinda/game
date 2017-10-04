@@ -19,10 +19,8 @@ public class DeckGeneratorController {
     @Inject
     private DeckGeneratorService deckGeneratorService;
 
-
     public ResponseEntity<List<Card>> generateDeck(@RequestBody DeckGeneratorRequest request) {
-        List<Card> deck = new ArrayList<>();
-        deck = deckGeneratorService.generateDeck(request);
+        List<Card> deck = deckGeneratorService.generateDeck(request);
         if (deck.size() == request.getNumTotal()) {
             return ResponseEntity.ok(deck);
         }
