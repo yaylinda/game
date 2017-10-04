@@ -1,11 +1,15 @@
 package yay.linda.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 import yay.linda.config.GameConfigurations;
 import yay.linda.dto.Card;
 import yay.linda.dto.enums.CardType;
 
 import javax.inject.Inject;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,13 +23,14 @@ public class DeckGeneratorService {
     private Random random;
 
     public DeckGeneratorService() {
-        random = new Random();
+        this.random = new Random();
     }
 
     public List<Card> generateDeck() {
         List<Card> deck = new ArrayList<>();
-        deck.addAll(generateCards(CardType.TROOP, gameConfigurations.getNumTroopCards()));
-        deck.addAll(generateCards(CardType.WALL, gameConfigurations.getNumWallCards()));
+        deck.addAll(generateCards(CardType.TROOP, this.gameConfigurations.getNumTroopCards()));
+        deck.addAll(generateCards(CardType.WALL, this.gameConfigurations.getNumWallCards()));
+        this.serializeDeck(deck); // TODO refactor this to user another thread to be faster
         return deck;
     }
 
@@ -74,13 +79,25 @@ public class DeckGeneratorService {
         return cost;
     }
 
-    private static int getRandomNumberInRange(int min, int max) {
+    private int getRandomNumberInRange(int min, int max) {
         // copied from https://www.mkyong.com/java/java-generate-random-integers-in-a-range/
         if (min >= max) {
             throw new IllegalArgumentException("max must be greater than min");
         }
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
+    }
+
+    private void serializeDeck(List<Card> deck) {
+        String chaos = RandomStringUtils.randomAlphabetic(6);
+        String filename = "generated-decks/deck_" + chaos + ".json";
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            mapper.writeValue(bw, deck);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
