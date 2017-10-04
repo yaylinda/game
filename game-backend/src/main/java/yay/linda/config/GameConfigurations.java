@@ -59,6 +59,9 @@ public class GameConfigurations {
     @Value("${troop.might.tier5.freq}")
     private float troopMightStatTier5;
 
+    @Value("${hand.size}")
+    private int handSize;
+
     public int getNumRows() {
         return numRows;
     }
@@ -125,5 +128,9 @@ public class GameConfigurations {
 
     public float getTroopMightStatTier5() {
         return troopMightStatTier5;
+    }
+
+    public int getHandSize() {
+        return handSize;
     }
 }

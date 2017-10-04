@@ -3,26 +3,24 @@ package yay.linda.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.stereotype.Component;
 import yay.linda.config.GameConfigurations;
 import yay.linda.dto.Card;
 import yay.linda.dto.enums.CardType;
 
-import javax.inject.Inject;
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@Component
-public class DeckGeneratorService {
+public class DeckGenerator {
 
-    @Inject
     private GameConfigurations gameConfigurations;
-
     private Random random;
 
-    public DeckGeneratorService() {
+    public DeckGenerator(GameConfigurations gameConfigurations) {
+        this.gameConfigurations = gameConfigurations;
         this.random = new Random();
     }
 
@@ -31,6 +29,12 @@ public class DeckGeneratorService {
         deck.addAll(generateCards(CardType.TROOP, this.gameConfigurations.getNumTroopCards()));
         deck.addAll(generateCards(CardType.WALL, this.gameConfigurations.getNumWallCards()));
         this.serializeDeck(deck); // TODO refactor this to user another thread to be faster
+        return deck;
+    }
+
+    public List<Card> loadDeck() {
+        // TODO future: option to load deck from file, rather than generate random
+        List<Card> deck = new ArrayList<>();
         return deck;
     }
 
@@ -49,14 +53,14 @@ public class DeckGeneratorService {
     private int calculateMightStat() {
         int might;
         float rand = random.nextFloat();
-
-        if (rand >= 0 && rand <= gameConfigurations.getTroopMightStatTier1()) {
+        System.out.println(rand);
+        if (rand >= 0 && rand < gameConfigurations.getTroopMightStatTier1()) {
             might = this.getRandomNumberInRange(1,2);
-        } else if (rand >= gameConfigurations.getTroopMightStatTier1() && rand <= gameConfigurations.getTroopMightStatTier2()) {
+        } else if (rand >= gameConfigurations.getTroopMightStatTier1() && rand < gameConfigurations.getTroopMightStatTier2()) {
             might = this.getRandomNumberInRange(3,4);
-        } else if (rand >= gameConfigurations.getTroopMightStatTier1() && rand <= gameConfigurations.getTroopMightStatTier2()) {
+        } else if (rand >= gameConfigurations.getTroopMightStatTier2() && rand < gameConfigurations.getTroopMightStatTier3()) {
             might = this.getRandomNumberInRange(5,6);
-        } else if (rand >= gameConfigurations.getTroopMightStatTier1() && rand <= gameConfigurations.getTroopMightStatTier2()) {
+        } else if (rand >= gameConfigurations.getTroopMightStatTier3() && rand < gameConfigurations.getTroopMightStatTier4()) {
             might = this.getRandomNumberInRange(7,8);
         } else {
             might = this.getRandomNumberInRange(9,10);
@@ -79,7 +83,7 @@ public class DeckGeneratorService {
         return cost;
     }
 
-    private int getRandomNumberInRange(int min, int max) {
+    public int getRandomNumberInRange(int min, int max) {
         // copied from https://www.mkyong.com/java/java-generate-random-integers-in-a-range/
         if (min >= max) {
             throw new IllegalArgumentException("max must be greater than min");

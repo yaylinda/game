@@ -1,19 +1,22 @@
 package yay.linda.service;
 
 import org.springframework.stereotype.Component;
-import yay.linda.dto.GameSession;
+import yay.linda.config.GameConfigurations;
+import yay.linda.dto.DTOPlayer;
 import yay.linda.dto.Player;
 
+import javax.inject.Inject;
 import java.util.List;
 
 @Component
 public class GamePlayService {
 
-    public GameSession startGame(List<Player> players) {
-        GameSession gameSession = null;
-        if (players.size() == 2) {
-            gameSession = new GameSession(players.get(0), players.get(1));
-        }
+    @Inject
+    private GameConfigurations gameConfigurations;
+
+    public GameSession startGame(Player player1, Player player2) {
+        GameSession gameSession = new GameSession(player1, player2, gameConfigurations);
+
         return gameSession;
     }
 }

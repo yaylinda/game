@@ -24,6 +24,16 @@ public class Card {
         this.played = false;
     }
 
+    public Card(Card other) {
+        this.cardType = other.cardType;
+        this.might = other.might;
+        this.movement = other.movement;
+        this.cost = other.cost;
+        this.specialAbility = other.specialAbility;
+        this.owner = other.owner;
+        this.played = other.played;
+    }
+
     public String getCardType() {
         return cardType;
     }

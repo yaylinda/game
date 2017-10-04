@@ -1,24 +1,26 @@
 package yay.linda.dto;
 
-import java.util.ArrayList;
-import java.util.List;
+import yay.linda.service.GameSession;
 
-public class GameSession {
+public class DTOGameSession {
 
     private Player player1;
     private Player player2;
     private GameBoard gameBoard;
-    private List<Card> deck;
-    private List<Card> discard;
 
-    public GameSession() {}
+    public DTOGameSession() {
+    }
 
-    public GameSession(Player player1, Player player2) {
+    public DTOGameSession(GameSession gameSession) {
+        this.player1 = gameSession.getPlayer1();
+        this.player2 = gameSession.getPlayer2();
+        this.gameBoard = gameSession.getGameBoard();
+    }
+
+    public DTOGameSession(Player player1, Player player2, GameBoard gameBoard) {
         this.player1 = player1;
         this.player2 = player2;
-        this.gameBoard = new GameBoard(5, 4);
-        this.deck = new ArrayList<>();
-        this.discard = new ArrayList<>();
+        this.gameBoard = gameBoard;
     }
 
     public Player getPlayer1() {
@@ -43,21 +45,5 @@ public class GameSession {
 
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
-    }
-
-    public List<Card> getDeck() {
-        return deck;
-    }
-
-    public void setDeck(List<Card> deck) {
-        this.deck = deck;
-    }
-
-    public List<Card> getDiscard() {
-        return discard;
-    }
-
-    public void setDiscard(List<Card> discard) {
-        this.discard = discard;
     }
 }
