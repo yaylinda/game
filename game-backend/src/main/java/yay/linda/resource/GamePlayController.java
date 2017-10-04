@@ -24,7 +24,7 @@ public class GamePlayController {
     @Inject
     private GamePlayService gamePlayService;
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/start", method = RequestMethod.POST)
     public ResponseEntity<DTOGameSession> startGame(@RequestBody List<DTOPlayer> players) {
         GameSession gameSession = gamePlayService.startGame(new Player(players.get(0)), new Player(players.get(1)));
         if (gameSession != null) {
