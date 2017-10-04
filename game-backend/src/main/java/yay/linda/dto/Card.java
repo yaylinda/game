@@ -8,9 +8,9 @@ public class Card {
     private int might;
     private int movement;
     private double cost;
-    private String specialAbility;
     private Player owner;
     private boolean played;
+    private String specialAbility; // TODO v2
 
     public Card() {}
 
@@ -19,9 +19,9 @@ public class Card {
         this.might = might;
         this.movement = movement;
         this.cost = cost;
-        this.specialAbility = "";
         this.owner = null;
         this.played = false;
+        this.specialAbility = "";
     }
 
     public Card(Card other) {
@@ -29,9 +29,9 @@ public class Card {
         this.might = other.might;
         this.movement = other.movement;
         this.cost = other.cost;
-        this.specialAbility = other.specialAbility;
         this.owner = other.owner;
         this.played = other.played;
+        this.specialAbility = other.specialAbility;
     }
 
     public String getCardType() {
@@ -74,19 +74,19 @@ public class Card {
         this.owner = owner;
     }
 
-    public String getSpecialAbility() {
-        return specialAbility;
-    }
-
-    public void setSpecialAbility(String specialAbility) {
-        this.specialAbility = specialAbility;
-    }
-
     public boolean isPlayed() {
         return played;
     }
 
     public void setPlayed(boolean played) {
         this.played = played;
+    }
+
+    public String getSpecialAbility() {
+        return specialAbility;
+    }
+
+    public void setSpecialAbility(String specialAbility) {
+        this.specialAbility = specialAbility;
     }
 }
