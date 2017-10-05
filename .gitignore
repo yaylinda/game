@@ -25,3 +25,8 @@ hs_err_pid*
 *.iml
 .DS_Store
 target/
+
+node_modules/
+build/
+
+package-lock.json
