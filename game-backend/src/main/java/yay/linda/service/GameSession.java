@@ -36,17 +36,19 @@ public class GameSession {
     }
 
     private void initializeGameState() {
-        this.player1.setHand(pickStartingCards());
-        this.player2.setHand(pickStartingCards());
+        this.player1.setHand(pickStartingCards(player1.getTeam()));
+        this.player2.setHand(pickStartingCards(player2.getTeam()));
 
     }
 
-    private List<Card> pickStartingCards() {
-        List<Card> hands = new ArrayList<>();
+    private List<Card> pickStartingCards(String team) {
+        List<Card> hand = new ArrayList<>();
         for (int i = 0; i < gameConfigurations.getHandSize(); i++) {
-            hands.add(this.drawCard());
+            Card card = this.drawCard();
+            card.setOwningTeam(team);
+            hand.add(card);
         }
-        return hands;
+        return hand;
     }
 
     private Card drawCard() {

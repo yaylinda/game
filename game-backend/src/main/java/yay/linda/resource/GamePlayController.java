@@ -5,10 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import yay.linda.dto.Card;
-import yay.linda.dto.DTOGameSession;
-import yay.linda.dto.DTOPlayer;
-import yay.linda.dto.Player;
+import yay.linda.dto.*;
 import yay.linda.service.GameSession;
 import yay.linda.service.GamePlayService;
 
@@ -35,12 +32,14 @@ public class GamePlayController {
     }
 
     @RequestMapping(value = "/card", method = RequestMethod.PUT)
-    public ResponseEntity<DTOGameSession> placeCard(Card card, int x, int y) {
-        return null;
+    public ResponseEntity<GameBoard> placeCard(Card card, int x, int y) {
+        GameBoard gameBoard = gamePlayService.placeCard(card, x, y);
+        return ResponseEntity.ok(gameBoard);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public ResponseEntity<DTOGameSession> update(DTOGameSession newSession) {
-        return null;
+    public ResponseEntity<GameBoard> update(GameBoard gameBoard) {
+        gamePlayService.update(gameBoard);
+        return ResponseEntity.ok(gameBoard);
     }
 }

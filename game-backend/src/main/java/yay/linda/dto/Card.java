@@ -11,7 +11,7 @@ public class Card {
     private int might;
     private int movement;
     private double cost;
-    private Player owner;
+    private String owningTeam;
     private boolean played;
     private String specialAbility; // TODO v2
 
@@ -22,7 +22,7 @@ public class Card {
         this.might = might;
         this.movement = movement;
         this.cost = cost;
-        this.owner = null;
+        this.owningTeam = null;
         this.played = false;
         this.specialAbility = "";
     }
@@ -32,7 +32,7 @@ public class Card {
         this.might = other.might;
         this.movement = other.movement;
         this.cost = other.cost;
-        this.owner = other.owner;
+        this.owningTeam = other.owningTeam;
         this.played = other.played;
         this.specialAbility = other.specialAbility;
     }
@@ -69,12 +69,12 @@ public class Card {
         this.movement = movement;
     }
 
-    public Player getOwner() {
-        return owner;
+    public String getOwningTeam() {
+        return owningTeam;
     }
 
-    public void setOwner(Player owner) {
-        this.owner = owner;
+    public void setOwningTeam(String owningTeam) {
+        this.owningTeam = owningTeam;
     }
 
     public boolean isPlayed() {
