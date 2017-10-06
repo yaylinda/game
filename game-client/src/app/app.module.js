@@ -41,8 +41,12 @@ AppModule = __decorate([
             heroes_component_1.HeroesComponent,
             hero_search_component_1.HeroSearchComponent
         ],
-        providers: [hero_service_1.HeroService],
-        bootstrap: [app_component_1.AppComponent]
+        providers: [
+            hero_service_1.HeroService
+        ],
+        bootstrap: [
+            app_component_1.AppComponent
+        ]
     })
 ], AppModule);
 exports.AppModule = AppModule;

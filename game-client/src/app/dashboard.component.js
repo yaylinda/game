@@ -11,15 +11,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var hero_service_1 = require("./hero.service");
+var player_1 = require("./player");
 var DashboardComponent = (function () {
     function DashboardComponent(heroService) {
         this.heroService = heroService;
         this.heroes = [];
+        this.name = '';
+        this.player = new player_1.Player;
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.heroService.getHeroes()
             .then(function (heroes) { return _this.heroes = heroes.slice(1, 5); });
+    };
+    DashboardComponent.prototype.joinGame = function () {
+        var _this = this;
+        this.heroService.joinGame(this.name)
+            .then(function (player) { return _this.player = player; });
     };
     return DashboardComponent;
 }());

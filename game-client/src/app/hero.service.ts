@@ -4,14 +4,28 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Hero } from './hero';
+import {Player} from "./player";
+import {toPromise} from "rxjs/operator/toPromise";
 
 @Injectable()
 export class HeroService {
 
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new Headers({'Content-Type': 'application/json', 'accept': 'application/json'});
   private heroesUrl = 'api/heroes';  // URL to web api
 
+  private baseUrl = 'localhost:8080';
+  private joinGameUrl = '/player/join';
+
   constructor(private http: Http) { }
+
+  joinGame(name: string): Promise<Player> {
+    const url = `${this.baseUrl}${this.joinGameUrl}/${name}`;
+    return this.http
+      .post(url, "{}", {headers: this.headers})
+      .toPromise()
+      .then(response => response.json().data as Player)
+      .catch(this.handleError);
+  }
 
   getHeroes(): Promise<Hero[]> {
     return this.http.get(this.heroesUrl)
@@ -55,7 +69,7 @@ export class HeroService {
   }
 
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
+    console.error('An error occurred', error.message); // for demo purposes only
     return Promise.reject(error.message || error);
   }
 }

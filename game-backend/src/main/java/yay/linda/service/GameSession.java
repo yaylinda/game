@@ -51,7 +51,7 @@ public class GameSession {
         return hand;
     }
 
-    private Card drawCard() {
+    public Card drawCard() {
         int index = deckGenerator.getRandomNumberInRange(0, deck.size()-1);
         Card toReturn = deck.get(index);
 

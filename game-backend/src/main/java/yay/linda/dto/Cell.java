@@ -20,7 +20,6 @@ public class Cell {
         this.card = card;
     }
 
-
     public CellState getState() {
         return state;
     }

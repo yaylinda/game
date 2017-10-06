@@ -36,6 +36,10 @@ public class GamePlayService {
         return gameSession;
     }
 
+    public Card drawCard() {
+        return gameSession.drawCard();
+    }
+
     public GameBoard placeCard(Card card, int row, int col) {
         card.setPlayed(true);
 

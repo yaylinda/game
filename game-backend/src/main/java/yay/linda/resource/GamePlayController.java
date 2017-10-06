@@ -16,7 +16,7 @@ import java.util.List;
  * Controller to handle all requests related to actual game play.
  */
 @RestController
-@RequestMapping("/gameplay")
+@RequestMapping("/game")
 public class GamePlayController {
 
     @Inject
@@ -29,6 +29,12 @@ public class GamePlayController {
             return ResponseEntity.ok(new DTOGameSession(gameSession));
         }
         return ResponseEntity.badRequest().build();
+    }
+
+    @RequestMapping(value = "/card", method = RequestMethod.GET)
+    public ResponseEntity<Card> drawCard() {
+        Card nextCard = gamePlayService.drawCard();
+        return ResponseEntity.ok(nextCard);
     }
 
     @RequestMapping(value = "/card", method = RequestMethod.PUT)

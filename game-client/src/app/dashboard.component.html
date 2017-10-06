@@ -1,9 +1,14 @@
-<h3>Top Heroes</h3>
-<div class="grid grid-pad">
-  <a *ngFor="let hero of heroes"  [routerLink]="['/detail', hero.id]"  class="col-1-4">
-    <div class="module hero">
-      <h4>{{hero.name}}</h4>
-    </div>
-  </a>
+<!--<h3>Top Heroes</h3>-->
+<!--<div class="grid grid-pad">-->
+<!--<a *ngFor="let hero of heroes"  [routerLink]="['/detail', hero.id]"  class="col-1-4">-->
+<!--<div class="module hero">-->
+<!--<h4>{{hero.name}}</h4>-->
+<!--</div>-->
+<!--</a>-->
+<!--</div>-->
+<!--<hero-search></hero-search>-->
+
+<div class="main-container">
+  <input [(ngModel)]="name" placeholder="name" />
+  <button id="join-game-btn" (click)="joinGame()"><b>Join Game</b></button>
 </div>
-<hero-search></hero-search>
