@@ -26,8 +26,7 @@ var DashboardComponent = (function () {
     };
     DashboardComponent.prototype.joinGame = function () {
         var _this = this;
-        this.heroService.joinGame(this.name)
-            .then(function (player) { return _this.player = player; });
+        this.heroService.joinGame(this.name).subscribe(function (player) { return _this.player = player; });
     };
     return DashboardComponent;
 }());

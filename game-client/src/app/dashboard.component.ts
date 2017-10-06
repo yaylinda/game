@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
   }
 
   joinGame(): void {
-    this.heroService.joinGame(this.name)
-      .then(player => this.player = player)
+    this.heroService.joinGame(this.name).subscribe(player => this.player = player)
   }
 }

@@ -1,11 +1,13 @@
 import { Injectable }    from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 import 'rxjs/add/operator/toPromise';
 
 import { Hero } from './hero';
 import {Player} from "./player";
 import {toPromise} from "rxjs/operator/toPromise";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class HeroService {
@@ -16,16 +18,21 @@ export class HeroService {
   private baseUrl = 'localhost:8080';
   private joinGameUrl = '/player/join';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private httpClient: HttpClient) { }
 
-  joinGame(name: string): Promise<Player> {
+  joinGame(name: string): Observable<Player> {
     const url = `${this.baseUrl}${this.joinGameUrl}/${name}`;
-    return this.http
-      .post(url, "{}", {headers: this.headers})
-      .toPromise()
-      .then(response => response.json().data as Player)
-      .catch(this.handleError);
+    return this.httpClient.post(url, "{}");
   }
+
+  // joinGame(name: string): void {
+  //   const url = `${this.baseUrl}${this.joinGameUrl}/${name}`;
+  //   this.http
+  //     .post(url, "{}", {headers: this.headers})
+  //     .toPromise()
+  //     .then(response => response.json().data as Player)
+  //     .catch(this.handleError);
+  // }
 
   getHeroes(): Promise<Hero[]> {
     return this.http.get(this.heroesUrl)
@@ -69,7 +76,7 @@ export class HeroService {
   }
 
   private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error.message); // for demo purposes only
+    console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
   }
 }

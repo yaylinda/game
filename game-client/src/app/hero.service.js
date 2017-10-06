@@ -11,10 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
+var http_2 = require("@angular/common/http");
 require("rxjs/add/operator/toPromise");
 var HeroService = (function () {
-    function HeroService(http) {
+    function HeroService(http, httpClient) {
         this.http = http;
+        this.httpClient = httpClient;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json', 'accept': 'application/json' });
         this.heroesUrl = 'api/heroes'; // URL to web api
         this.baseUrl = 'localhost:8080';
@@ -22,12 +24,16 @@ var HeroService = (function () {
     }
     HeroService.prototype.joinGame = function (name) {
         var url = "" + this.baseUrl + this.joinGameUrl + "/" + name;
-        return this.http
-            .post(url, "{}", { headers: this.headers })
-            .toPromise()
-            .then(function (response) { return response.json().data; })
-            .catch(this.handleError);
+        return this.httpClient.post(url, "{}");
     };
+    // joinGame(name: string): void {
+    //   const url = `${this.baseUrl}${this.joinGameUrl}/${name}`;
+    //   this.http
+    //     .post(url, "{}", {headers: this.headers})
+    //     .toPromise()
+    //     .then(response => response.json().data as Player)
+    //     .catch(this.handleError);
+    // }
     HeroService.prototype.getHeroes = function () {
         return this.http.get(this.heroesUrl)
             .toPromise()
@@ -64,14 +70,14 @@ var HeroService = (function () {
             .catch(this.handleError);
     };
     HeroService.prototype.handleError = function (error) {
-        console.error('An error occurred', error.message); // for demo purposes only
+        console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     };
     return HeroService;
 }());
 HeroService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http])
+    __metadata("design:paramtypes", [http_1.Http, http_2.HttpClient])
 ], HeroService);
 exports.HeroService = HeroService;
 //# sourceMappingURL=hero.service.js.map
