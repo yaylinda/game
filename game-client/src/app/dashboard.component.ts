@@ -13,16 +13,18 @@ import {Player} from "./player";
 export class DashboardComponent implements OnInit {
   heroes: Hero[] = [];
   name = '';
-  player: Player = new Player;
+  player: Player;
 
   constructor(private heroService: HeroService) { }
 
   ngOnInit(): void {
-    this.heroService.getHeroes()
-      .then(heroes => this.heroes = heroes.slice(1, 5));
+    // this.heroService.getHeroes()
+    //   .then(heroes => this.heroes = heroes.slice(1, 5));
   }
 
   joinGame(): void {
-    this.heroService.joinGame(this.name).subscribe(player => this.player = player)
+    this.heroService.joinGame(this.name)
+      .then(player => this.player = player)
   }
+
 }

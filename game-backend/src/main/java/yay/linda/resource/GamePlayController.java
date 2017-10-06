@@ -1,10 +1,7 @@
 package yay.linda.resource;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import yay.linda.dto.*;
 import yay.linda.service.GameSession;
 import yay.linda.service.GamePlayService;
@@ -17,6 +14,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/game")
+@CrossOrigin("*")
 public class GamePlayController {
 
     @Inject
