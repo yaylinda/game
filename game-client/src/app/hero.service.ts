@@ -3,10 +3,11 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Hero } from './hero';
+import 'rxjs/Rx';
+import {Observable} from 'rxjs/Rx';
+
 import {Player} from "./player";
-import {toPromise} from "rxjs/operator/toPromise";
-import {Observable} from "rxjs/Observable";
+import {GameSession} from "./gamesession";
 
 @Injectable()
 export class HeroService {
@@ -18,6 +19,11 @@ export class HeroService {
 
   private baseUrl = 'http://localhost:8080';
   private joinGameUrl = '/player/join';
+  private startGameUrl = '/game/start';
+  private cardUrl = '/game/card';
+  private playerUrl = '/game/player';
+  private boardUrl = '/game/board';
+  private pollUrl = '/game/poll';
 
   constructor(private http: Http) { }
 
@@ -30,46 +36,51 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  // getHeroes(): Promise<Hero[]> {
-  //   return this.http.get(this.heroesUrl)
-  //              .toPromise()
-  //              .then(response => response.json().data as Hero[])
-  //              .catch(this.handleError);
-  // }
-  //
-  //
-  // getHero(id: number): Promise<Hero> {
-  //   const url = `${this.heroesUrl}/${id}`;
-  //   return this.http.get(url)
-  //     .toPromise()
-  //     .then(response => response.json().data as Hero)
-  //     .catch(this.handleError);
-  // }
-  //
-  // delete(id: number): Promise<void> {
-  //   const url = `${this.heroesUrl}/${id}`;
-  //   return this.http.delete(url, {headers: this.headers})
-  //     .toPromise()
-  //     .then(() => null)
-  //     .catch(this.handleError);
-  // }
-  //
-  // create(name: string): Promise<Hero> {
-  //   return this.http
-  //     .post(this.heroesUrl, JSON.stringify({name: name}), {headers: this.headers})
-  //     .toPromise()
-  //     .then(res => res.json().data as Hero)
-  //     .catch(this.handleError);
-  // }
-  //
-  // update(hero: Hero): Promise<Hero> {
-  //   const url = `${this.heroesUrl}/${hero.id}`;
-  //   return this.http
-  //     .put(url, JSON.stringify(hero), {headers: this.headers})
-  //     .toPromise()
-  //     .then(() => hero)
-  //     .catch(this.handleError);
-  // }
+  startGame(player1: Player, player2: Player): Promise<GameSession> {
+    const url = `${this.baseUrl}${this.startGameUrl}`;
+    return this.http
+      .post(url, [player1, player2], {headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as GameSession)
+      .catch(this.handleError);
+  }
+
+  getPlayerById(id: string): Promise<Player> {
+    const url = `${this.baseUrl}${this.playerUrl}/${id}`;
+    return this.http
+      .get(url, {headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as Player)
+      .catch(this.handleError);
+  }
+
+  pollForGame(): Observable<GameSession> {
+    const url = `${this.baseUrl}${this.pollUrl}`;
+    return Observable
+      .fromPromise(this.http
+        .get(url, {headers: this.headers})
+        .toPromise())
+      .flatMap(jobQueueData =>
+        Observable.interval(1000)
+          .flatMap(() => this.http
+            .get(url, {headers: this.headers})
+            .toPromise())
+          .filter(x => {
+            return x.json().id != null;
+          })
+          .take(1)
+          .map(gameSession => {
+            return gameSession.json() as GameSession
+          })
+          .timeout(60000, )
+      );
+  }
+
+  // TODO update board
+
+  // TODO draw cards
+
+  // TODO place card
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only

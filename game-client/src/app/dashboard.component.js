@@ -16,6 +16,7 @@ var DashboardComponent = (function () {
         this.heroService = heroService;
         this.heroes = [];
         this.name = '';
+        this.showGameboard = false;
     }
     DashboardComponent.prototype.ngOnInit = function () {
         // this.heroService.getHeroes()
@@ -24,7 +25,23 @@ var DashboardComponent = (function () {
     DashboardComponent.prototype.joinGame = function () {
         var _this = this;
         this.heroService.joinGame(this.name)
-            .then(function (player) { return _this.player = player; });
+            .then(function (player) {
+            _this.player = player;
+            console.log(player);
+            if (_this.player.team === 'TEAM1') {
+            }
+            else if (_this.player.team === 'TEAM2') {
+                _this.heroService.getPlayerById(player.opponentId)
+                    .then(function (player1) {
+                    _this.heroService.startGame(player1, player)
+                        .then(function (gameSession) {
+                        _this.gameSession = gameSession;
+                        console.log(_this.gameSession);
+                        _this.showGameboard = true;
+                    });
+                });
+            }
+        });
     };
     return DashboardComponent;
 }());

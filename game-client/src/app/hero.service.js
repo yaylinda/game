@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
+require("rxjs/Rx");
+var Rx_1 = require("rxjs/Rx");
 var HeroService = (function () {
     function HeroService(http) {
         this.http = http;
@@ -21,6 +23,11 @@ var HeroService = (function () {
         });
         this.baseUrl = 'http://localhost:8080';
         this.joinGameUrl = '/player/join';
+        this.startGameUrl = '/game/start';
+        this.cardUrl = '/game/card';
+        this.playerUrl = '/game/player';
+        this.boardUrl = '/game/board';
+        this.pollUrl = '/game/poll';
     }
     HeroService.prototype.joinGame = function (name) {
         var url = "" + this.baseUrl + this.joinGameUrl + "/" + name;
@@ -30,46 +37,47 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    // getHeroes(): Promise<Hero[]> {
-    //   return this.http.get(this.heroesUrl)
-    //              .toPromise()
-    //              .then(response => response.json().data as Hero[])
-    //              .catch(this.handleError);
-    // }
-    //
-    //
-    // getHero(id: number): Promise<Hero> {
-    //   const url = `${this.heroesUrl}/${id}`;
-    //   return this.http.get(url)
-    //     .toPromise()
-    //     .then(response => response.json().data as Hero)
-    //     .catch(this.handleError);
-    // }
-    //
-    // delete(id: number): Promise<void> {
-    //   const url = `${this.heroesUrl}/${id}`;
-    //   return this.http.delete(url, {headers: this.headers})
-    //     .toPromise()
-    //     .then(() => null)
-    //     .catch(this.handleError);
-    // }
-    //
-    // create(name: string): Promise<Hero> {
-    //   return this.http
-    //     .post(this.heroesUrl, JSON.stringify({name: name}), {headers: this.headers})
-    //     .toPromise()
-    //     .then(res => res.json().data as Hero)
-    //     .catch(this.handleError);
-    // }
-    //
-    // update(hero: Hero): Promise<Hero> {
-    //   const url = `${this.heroesUrl}/${hero.id}`;
-    //   return this.http
-    //     .put(url, JSON.stringify(hero), {headers: this.headers})
-    //     .toPromise()
-    //     .then(() => hero)
-    //     .catch(this.handleError);
-    // }
+    HeroService.prototype.startGame = function (player1, player2) {
+        var url = "" + this.baseUrl + this.startGameUrl;
+        return this.http
+            .post(url, [player1, player2], { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    HeroService.prototype.getPlayerById = function (id) {
+        var url = "" + this.baseUrl + this.playerUrl + "/" + id;
+        return this.http
+            .get(url, { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
+    HeroService.prototype.pollForGame = function () {
+        var _this = this;
+        var url = "" + this.baseUrl + this.pollUrl;
+        return Rx_1.Observable
+            .fromPromise(this.http
+            .get(url, { headers: this.headers })
+            .toPromise())
+            .flatMap(function (jobQueueData) {
+            return Rx_1.Observable.interval(1000)
+                .flatMap(function () { return _this.http
+                .get(url, { headers: _this.headers })
+                .toPromise(); })
+                .filter(function (x) {
+                return x.json().id != null;
+            })
+                .take(1)
+                .map(function (gameSession) {
+                return gameSession.json();
+            })
+                .timeout(60000);
+        });
+    };
+    // TODO update board
+    // TODO draw cards
+    // TODO place card
     HeroService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
