@@ -9,6 +9,7 @@ import yay.linda.dto.Player;
 import yay.linda.dto.enums.CellState;
 import yay.linda.dto.enums.PlayerTeam;
 import yay.linda.repo.PlayerGameSessionRepo;
+import yay.linda.repo.PlayerRepo;
 
 import javax.inject.Inject;
 import java.util.UUID;
@@ -22,19 +23,52 @@ public class GamePlayService {
     @Inject
     private GameConfigurations gameConfigurations;
 
-    // TODO v2: store games and look them up by ID to handle multiple games at once
-    // for now, list should only have the one and only game session
-//    private List<GameSession> gameSessionList = new ArrayList<>();
-//    private List<GameBoard> gameBoardList = new ArrayList<>();
-
     private GameBoard gameBoard;
     private PlayerGameSessionRepo playerGameSessionRepo = new PlayerGameSessionRepo();
 
-    public GameBoard startGame(Player player1, Player player2) {
+    private Player player1;
+    private PlayerRepo playerRepo = new PlayerRepo();
+
+    public Player join(String name) {
+        System.out.printf("%s is joining the game\n", name);
+        Player player = new Player(name);
+        if (player1 == null) {
+            player.setTeam(PlayerTeam.TEAM1.name());
+            player.setPower(1);
+            player1 = player;
+        } else {
+            player.setTeam(PlayerTeam.TEAM2.name());
+            player.setPower(2);
+            player.setOpponentId(player1.getId());
+            player1 = null;
+        }
+        playerRepo.addPlayer(player);
+        playerRepo.getPlayerIds();
+        return player;
+    }
+
+    public Player findPlayerById(String id) {
+        return playerRepo.getPlayerById(UUID.fromString(id));
+    }
+
+    public GameSession startGame(Player player1, Player player2) {
+        System.out.printf("starting game for %s and %s\n", player1.getName(), player2.getName());
+        player1.setOpponentId(player2.getId());
         GameSession gameSession = new GameSession(player1, player2, gameConfigurations);
         playerGameSessionRepo.assignGameSession(player1.getId(), gameSession);
         playerGameSessionRepo.assignGameSession(player2.getId(), gameSession);
-        return gameSession.getGameBoard();
+        return gameSession;
+    }
+
+    public GameSession pollForGame(UUID id) {
+        System.out.printf("Polling for game...\n");
+        System.out.printf("Current players: %s\n", playerGameSessionRepo.getPlayerIds());
+        GameSession gameSession = playerGameSessionRepo.getGameSessionById(id);
+        if (gameSession != null) {
+            return gameSession;
+        } else {
+            return GameSession.none();
+        }
     }
 
     public Card drawCard(UUID playerId) {
@@ -60,9 +94,5 @@ public class GamePlayService {
 
     public void updateBoard(GameBoard gameBoard) {
         // TODO
-    }
-
-    public GameBoard pollForGame(UUID id) {
-        return playerGameSessionRepo.getGameSessionById(id).getGameBoard();
     }
 }

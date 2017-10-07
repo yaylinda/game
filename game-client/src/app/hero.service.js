@@ -22,10 +22,10 @@ var HeroService = (function () {
             'accept': 'application/json'
         });
         this.baseUrl = 'http://localhost:8080';
+        this.playerUrl = '/player';
         this.joinGameUrl = '/player/join';
         this.startGameUrl = '/game/start';
         this.cardUrl = '/game/card';
-        this.playerUrl = '/game/player';
         this.boardUrl = '/game/board';
         this.pollUrl = '/game/poll';
     }
@@ -46,6 +46,7 @@ var HeroService = (function () {
             .catch(this.handleError);
     };
     HeroService.prototype.getPlayerById = function (id) {
+        console.log("getting player by id: " + id);
         var url = "" + this.baseUrl + this.playerUrl + "/" + id;
         return this.http
             .get(url, { headers: this.headers })
@@ -67,7 +68,7 @@ var HeroService = (function () {
                 .get(url, { headers: _this.headers })
                 .toPromise(); })
                 .filter(function (x) {
-                return x.json().id != null;
+                return x.json().gameBoard != null;
             })
                 .take(1)
                 .map(function (gameSession) {

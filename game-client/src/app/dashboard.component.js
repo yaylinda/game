@@ -42,6 +42,7 @@ var DashboardComponent = (function () {
             else if (_this.player.team === 'TEAM2') {
                 _this.heroService.getPlayerById(player.opponentId)
                     .then(function (player1) {
+                    console.log("got player!");
                     _this.heroService.startGame(player1, player)
                         .then(function (gameSession) {
                         _this.gameSession = gameSession;

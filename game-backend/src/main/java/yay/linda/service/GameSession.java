@@ -69,6 +69,10 @@ public class GameSession {
         return toReturn;
     }
 
+    public static GameSession none() {
+        return new GameSession();
+    }
+
     public UUID getId() {
         return id;
     }

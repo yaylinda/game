@@ -18,10 +18,10 @@ export class HeroService {
   });
 
   private baseUrl = 'http://localhost:8080';
+  private playerUrl = '/player';
   private joinGameUrl = '/player/join';
   private startGameUrl = '/game/start';
   private cardUrl = '/game/card';
-  private playerUrl = '/game/player';
   private boardUrl = '/game/board';
   private pollUrl = '/game/poll';
 
@@ -46,6 +46,7 @@ export class HeroService {
   }
 
   getPlayerById(id: string): Promise<Player> {
+    console.log(`getting player by id: ${id}`);
     const url = `${this.baseUrl}${this.playerUrl}/${id}`;
     return this.http
       .get(url, {headers: this.headers})
@@ -67,7 +68,7 @@ export class HeroService {
             .get(url, {headers: this.headers})
             .toPromise())
           .filter(x => {
-            return x.json().id != null;
+            return x.json().gameBoard != null;
           })
           .take(1)
           .map(gameSession => {

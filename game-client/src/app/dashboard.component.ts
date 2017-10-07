@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit {
         } else if (this.player.team === 'TEAM2') {
           this.heroService.getPlayerById(player.opponentId)
             .then(player1 => {
+              console.log("got player!");
               this.heroService.startGame(player1, player)
                 .then(gameSession => {
                   this.gameSession = gameSession;
