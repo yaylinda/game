@@ -17,8 +17,15 @@ public class PlayerController {
 
     @RequestMapping(value = "/join/{name}", method = RequestMethod.POST)
     public ResponseEntity<Player> join(@PathVariable String name) {
-        Player player = playerService.doMatchmaking(name);
-        System.out.println(player);
+        Player player = playerService.join(name);
         return ResponseEntity.ok(player);
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public ResponseEntity<Player> findPlayerById(@PathVariable String id) {
+        Player player = playerService.findPlayerById(id);
+        return ResponseEntity.ok(player);
+    }
+
+
 }

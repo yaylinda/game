@@ -8,6 +8,7 @@ import yay.linda.service.GamePlayService;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Controller to handle all requests related to actual game play.
@@ -21,17 +22,17 @@ public class GamePlayController {
     private GamePlayService gamePlayService;
 
     @RequestMapping(value = "/start", method = RequestMethod.POST)
-    public ResponseEntity<DTOGameSession> startGame(@RequestBody List<DTOPlayer> players) {
-        GameSession gameSession = gamePlayService.startGame(new Player(players.get(0)), new Player(players.get(1)));
-        if (gameSession != null) {
-            return ResponseEntity.ok(new DTOGameSession(gameSession));
+    public ResponseEntity<GameBoard> startGame(@RequestBody List<Player> players) {
+        GameBoard gameBoard = gamePlayService.startGame(players.get(0), players.get(1));
+        if (gameBoard != null) {
+            return ResponseEntity.ok(gameBoard);
         }
         return ResponseEntity.badRequest().build();
     }
 
     @RequestMapping(value = "/card", method = RequestMethod.GET)
     public ResponseEntity<Card> drawCard() {
-        Card nextCard = gamePlayService.drawCard();
+        Card nextCard = gamePlayService.drawCard(UUID.randomUUID()); // TODO get playerId from frontend
         return ResponseEntity.ok(nextCard);
     }
 
@@ -41,9 +42,15 @@ public class GamePlayController {
         return ResponseEntity.ok(gameBoard);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
-    public ResponseEntity<GameBoard> update(GameBoard gameBoard) {
-        gamePlayService.update(gameBoard);
+    @RequestMapping(value = "/board", method = RequestMethod.PUT)
+    public ResponseEntity<GameBoard> updateBoard(GameBoard gameBoard) {
+        gamePlayService.updateBoard(gameBoard);
+        return ResponseEntity.ok(gameBoard);
+    }
+
+    @RequestMapping(value = "/poll/{id}", method = RequestMethod.GET)
+    public ResponseEntity<GameBoard> pollForGame(@PathVariable String id) {
+        GameBoard gameBoard = gamePlayService.pollForGame(UUID.fromString(id));
         return ResponseEntity.ok(gameBoard);
     }
 }

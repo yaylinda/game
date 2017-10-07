@@ -4,29 +4,43 @@ import yay.linda.dto.enums.PlayerTeam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents a Player object.
  */
 public class Player {
 
+    private UUID id;
+    private UUID opponentId;
     private String name;
+    private String team;
     private double power;
     private List<Card> hand;
-    private String team;
 
     public Player() {
+        this.id = UUID.randomUUID();
     }
 
     public Player(String name) {
+        this.id = UUID.randomUUID();
         this.name = name;
     }
 
-    public Player(DTOPlayer dtoPlayer) {
-        this.name = dtoPlayer.getName();
-        this.team = dtoPlayer.getTeam();
-        this.power = team.equals(PlayerTeam.TEAM1.name()) ? 1 : 2;
-        this.hand = new ArrayList<>();
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getOpponentId() {
+        return opponentId;
+    }
+
+    public void setOpponentId(UUID opponentId) {
+        this.opponentId = opponentId;
     }
 
     public String getName() {

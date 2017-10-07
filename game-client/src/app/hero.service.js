@@ -53,9 +53,10 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HeroService.prototype.pollForGame = function () {
+    HeroService.prototype.pollForGame = function (id) {
         var _this = this;
-        var url = "" + this.baseUrl + this.pollUrl;
+        console.log('polling for game...');
+        var url = "" + this.baseUrl + this.pollUrl + "/" + id;
         return Rx_1.Observable
             .fromPromise(this.http
             .get(url, { headers: this.headers })

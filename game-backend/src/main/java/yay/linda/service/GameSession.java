@@ -7,6 +7,7 @@ import yay.linda.dto.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents a Game Session object, with logic to handle all internal states.
@@ -16,17 +17,21 @@ public class GameSession {
     private GameConfigurations gameConfigurations;
     private DeckGenerator deckGenerator;
 
+    private UUID id;
     private Player player1;
     private Player player2;
     private GameBoard gameBoard;
     private List<Card> deck;
 
-    public GameSession() {}
+    public GameSession() {
+        this.id = UUID.randomUUID();
+    }
 
     public GameSession(Player player1, Player player2, GameConfigurations gameConfigurations) {
         this.gameConfigurations = gameConfigurations;
-        deckGenerator = new DeckGenerator(gameConfigurations);
+        this.deckGenerator = new DeckGenerator(gameConfigurations);
 
+        this.id = UUID.randomUUID();
         this.player1 = player1;
         this.player2 = player2;
         this.gameBoard = new GameBoard(gameConfigurations.getNumRows(), gameConfigurations.getNumCols());
@@ -62,6 +67,14 @@ public class GameSession {
         System.out.println("Deck now has " + deck.size() + " remaining.");
 
         return toReturn;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public Player getPlayer1() {

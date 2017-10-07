@@ -1,17 +1,16 @@
 #join-game-btn {
-  transition-duration: 0.4s;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  border-radius: 20px;
-  text-align: center;
   font-size: 50px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  transition-duration: 0.4s;
+  border-radius: 20px;
   cursor: pointer;
   background-color: white;
   color: #57ee6a;
-  border: 5px solid #57ee6a;
   padding: 30px 40px;
+  border: 5px solid #57ee6a;
+  text-align: center;
   margin: 0 auto;
   display: block;
-
 }
 
 #join-game-btn:hover {
@@ -20,12 +19,25 @@
 }
 
 #player-name-input {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   font-size: 50px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   margin: 150px auto 50px;
-  display: block;
-  text-align: center;
   border: 5px solid #57ee6a;
+  text-align: center;
+  display: block;
+}
+
+#loading {
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+}
+
+
+#gameboard {
+  text-align: center;
+  margin: 0 auto;
+  display: block;
 }
 
 /*[class*='col-'] {*/

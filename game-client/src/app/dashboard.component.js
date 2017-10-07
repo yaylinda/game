@@ -17,6 +17,7 @@ var DashboardComponent = (function () {
         this.heroes = [];
         this.name = '';
         this.showGameboard = false;
+        this.showLoading = false;
     }
     DashboardComponent.prototype.ngOnInit = function () {
         // this.heroService.getHeroes()
@@ -24,11 +25,19 @@ var DashboardComponent = (function () {
     };
     DashboardComponent.prototype.joinGame = function () {
         var _this = this;
+        this.showLoading = true;
         this.heroService.joinGame(this.name)
             .then(function (player) {
             _this.player = player;
-            console.log(player);
             if (_this.player.team === 'TEAM1') {
+                _this.heroService.pollForGame(player.id)
+                    .subscribe(function (gameSession) {
+                    console.log('got result from polling...');
+                    _this.gameSession = gameSession;
+                    console.log(_this.gameSession);
+                    _this.showGameboard = true;
+                    _this.showLoading = false;
+                });
             }
             else if (_this.player.team === 'TEAM2') {
                 _this.heroService.getPlayerById(player.opponentId)
@@ -38,6 +47,7 @@ var DashboardComponent = (function () {
                         _this.gameSession = gameSession;
                         console.log(_this.gameSession);
                         _this.showGameboard = true;
+                        _this.showLoading = false;
                     });
                 });
             }

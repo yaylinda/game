@@ -54,8 +54,9 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  pollForGame(): Observable<GameSession> {
-    const url = `${this.baseUrl}${this.pollUrl}`;
+  pollForGame(id: string): Observable<GameSession> {
+    console.log('polling for game...');
+    const url = `${this.baseUrl}${this.pollUrl}/${id}`;
     return Observable
       .fromPromise(this.http
         .get(url, {headers: this.headers})
@@ -72,7 +73,7 @@ export class HeroService {
           .map(gameSession => {
             return gameSession.json() as GameSession
           })
-          .timeout(60000, )
+          .timeout(60000)
       );
   }
 

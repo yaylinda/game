@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Hero }        from './hero';
 import { HeroService } from './hero.service';
 import {Player} from "./player";
+import {GameSession} from "./gamesession";
 
 @Component({
   selector: 'my-dashboard',
@@ -15,7 +16,8 @@ export class DashboardComponent implements OnInit {
   name = '';
   player: Player;
   showGameboard = false;
-  gameSession: {};
+  showLoading = false;
+  gameSession: GameSession;
 
   constructor(private heroService: HeroService) { }
 
@@ -25,12 +27,19 @@ export class DashboardComponent implements OnInit {
   }
 
   joinGame(): void {
+    this.showLoading = true;
     this.heroService.joinGame(this.name)
       .then(player => {
         this.player = player;
-        console.log(player);
         if (this.player.team === 'TEAM1') {
-
+          this.heroService.pollForGame(player.id)
+            .subscribe(gameSession => {
+              console.log('got result from polling...');
+              this.gameSession = gameSession;
+              console.log(this.gameSession);
+              this.showGameboard = true;
+              this.showLoading = false;
+          });
         } else if (this.player.team === 'TEAM2') {
           this.heroService.getPlayerById(player.opponentId)
             .then(player1 => {
@@ -39,7 +48,8 @@ export class DashboardComponent implements OnInit {
                   this.gameSession = gameSession;
                   console.log(this.gameSession);
                   this.showGameboard = true;
-              });
+                  this.showLoading = false;
+                });
             });
         }
       });
