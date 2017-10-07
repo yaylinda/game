@@ -18,11 +18,10 @@ var DashboardComponent = (function () {
         this.name = '';
         this.showGameboard = false;
         this.showLoading = false;
+        this.numRows = [];
+        this.numCols = [];
     }
-    DashboardComponent.prototype.ngOnInit = function () {
-        // this.heroService.getHeroes()
-        //   .then(heroes => this.heroes = heroes.slice(1, 5));
-    };
+    DashboardComponent.prototype.ngOnInit = function () { };
     DashboardComponent.prototype.joinGame = function () {
         var _this = this;
         this.showLoading = true;
@@ -32,27 +31,27 @@ var DashboardComponent = (function () {
             if (_this.player.team === 'TEAM1') {
                 _this.heroService.pollForGame(player.id)
                     .subscribe(function (gameSession) {
-                    console.log('got result from polling...');
-                    _this.gameSession = gameSession;
-                    console.log(_this.gameSession);
-                    _this.showGameboard = true;
-                    _this.showLoading = false;
+                    _this.setupGame(gameSession);
                 });
             }
             else if (_this.player.team === 'TEAM2') {
                 _this.heroService.getPlayerById(player.opponentId)
                     .then(function (player1) {
-                    console.log("got player!");
                     _this.heroService.startGame(player1, player)
                         .then(function (gameSession) {
-                        _this.gameSession = gameSession;
-                        console.log(_this.gameSession);
-                        _this.showGameboard = true;
-                        _this.showLoading = false;
+                        _this.setupGame(gameSession);
                     });
                 });
             }
         });
+    };
+    DashboardComponent.prototype.setupGame = function (gameSession) {
+        this.gameSession = gameSession;
+        this.showGameboard = true;
+        this.showLoading = false;
+        this.numRows = Array.from(Array(gameSession.gameBoard.numRows), function (x, i) { return i; });
+        this.numCols = Array.from(Array(gameSession.gameBoard.numCols), function (x, i) { return i; });
+        console.log(this.gameSession.gameBoard);
     };
     return DashboardComponent;
 }());

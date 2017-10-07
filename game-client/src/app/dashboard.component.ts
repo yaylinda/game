@@ -4,6 +4,7 @@ import { Hero }        from './hero';
 import { HeroService } from './hero.service';
 import {Player} from "./player";
 import {GameSession} from "./gamesession";
+import {CardFrontComponent} from "./card-front.component";
 
 @Component({
   selector: 'my-dashboard',
@@ -18,13 +19,12 @@ export class DashboardComponent implements OnInit {
   showGameboard = false;
   showLoading = false;
   gameSession: GameSession;
+  numRows: number[] = [];
+  numCols: number[] = [];
 
   constructor(private heroService: HeroService) { }
 
-  ngOnInit(): void {
-    // this.heroService.getHeroes()
-    //   .then(heroes => this.heroes = heroes.slice(1, 5));
-  }
+  ngOnInit(): void { }
 
   joinGame(): void {
     this.showLoading = true;
@@ -34,26 +34,27 @@ export class DashboardComponent implements OnInit {
         if (this.player.team === 'TEAM1') {
           this.heroService.pollForGame(player.id)
             .subscribe(gameSession => {
-              console.log('got result from polling...');
-              this.gameSession = gameSession;
-              console.log(this.gameSession);
-              this.showGameboard = true;
-              this.showLoading = false;
+              this.setupGame(gameSession);
           });
         } else if (this.player.team === 'TEAM2') {
           this.heroService.getPlayerById(player.opponentId)
             .then(player1 => {
-              console.log("got player!");
               this.heroService.startGame(player1, player)
                 .then(gameSession => {
-                  this.gameSession = gameSession;
-                  console.log(this.gameSession);
-                  this.showGameboard = true;
-                  this.showLoading = false;
+                  this.setupGame(gameSession);
                 });
             });
         }
       });
+  }
+
+  setupGame(gameSession: GameSession): void {
+    this.gameSession = gameSession;
+    this.showGameboard = true;
+    this.showLoading = false;
+    this.numRows = Array.from(Array(gameSession.gameBoard.numRows),(x,i)=>i);
+    this.numCols = Array.from(Array(gameSession.gameBoard.numCols),(x,i)=>i);
+    console.log(this.gameSession.gameBoard);
   }
 
 }

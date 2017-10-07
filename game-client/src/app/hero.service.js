@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
-require("rxjs/Rx");
+// import 'rxjs/Rx';
 var Rx_1 = require("rxjs/Rx");
 var HeroService = (function () {
     function HeroService(http) {

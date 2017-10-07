@@ -3,7 +3,7 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import 'rxjs/Rx';
+// import 'rxjs/Rx';
 import {Observable} from 'rxjs/Rx';
 
 import {Player} from "./player";

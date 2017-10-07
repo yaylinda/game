@@ -18,6 +18,8 @@ var hero_detail_component_1 = require("./hero-detail.component");
 var hero_service_1 = require("./hero.service");
 var hero_search_component_1 = require("./hero-search.component");
 var http_2 = require("@angular/common/http");
+var card_front_component_1 = require("./card-front.component");
+var gameboard_component_1 = require("./gameboard.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -35,6 +37,8 @@ AppModule = __decorate([
         declarations: [
             app_component_1.AppComponent,
             dashboard_component_1.DashboardComponent,
+            card_front_component_1.CardFrontComponent,
+            gameboard_component_1.GameboardComponent,
             hero_detail_component_1.HeroDetailComponent,
             heroes_component_1.HeroesComponent,
             hero_search_component_1.HeroSearchComponent

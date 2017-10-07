@@ -1,14 +1,5 @@
-<!--<h3>Top Heroes</h3>-->
-<!--<div class="grid grid-pad">-->
-<!--<a *ngFor="let hero of heroes"  [routerLink]="['/detail', hero.id]"  class="col-1-4">-->
-<!--<div class="module hero">-->
-<!--<h4>{{hero.name}}</h4>-->
-<!--</div>-->
-<!--</a>-->
-<!--</div>-->
-<!--<hero-search></hero-search>-->
-
 <div class="main-container">
+
   <div id="greeting" *ngIf="!showLoading && !showGameboard">
     <input id="player-name-input" [(ngModel)]="name" placeholder="name" />
     <button id="join-game-btn" (click)="joinGame()"><b>Join Game</b></button>
@@ -16,11 +7,25 @@
 
 
   <div id="loading" *ngIf="showLoading">
-    Loading {{name}}'s Smiple War...
+    Loading {{name}}'s Simple War...
   </div>
 
-  <div id="gameboard" *ngIf="showGameboard">
-    GAME BOARD WILL BE HERE
+  <div id="game" *ngIf="showGameboard">
+
+    <game-board
+      [gameboard]="gameSession.gameBoard.board"
+      [numRows]="numRows"
+      [numCols]="numCols">
+    </game-board>
+
+    <span *ngIf="player.team === 'TEAM1'" class="hand" id="hand1">
+      <card-front *ngFor="let card of gameSession.player1.hand" [card]="card"></card-front>
+    </span>
+
+    <span *ngIf="player.team === 'TEAM2'" class="hand" id="hand2">
+      <card-front *ngFor="let card of gameSession.player2.hand" [card]="card"></card-front>
+    </span>
+
   </div>
 
 </div>

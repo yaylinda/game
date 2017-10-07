@@ -12,6 +12,8 @@ import { HeroDetailComponent }  from './hero-detail.component';
 import { HeroService }          from './hero.service';
 import { HeroSearchComponent }  from './hero-search.component';
 import {HttpClientModule} from '@angular/common/http';
+import {CardFrontComponent} from "./card-front.component";
+import {GameboardComponent} from "./gameboard.component";
 
 @NgModule({
   imports: [
@@ -24,6 +26,8 @@ import {HttpClientModule} from '@angular/common/http';
   declarations: [
     AppComponent,
     DashboardComponent,
+    CardFrontComponent,
+    GameboardComponent,
     HeroDetailComponent,
     HeroesComponent,
     HeroSearchComponent

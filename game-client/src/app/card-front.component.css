@@ -1,0 +1,11 @@
+#card {
+  font-size: 10px;
+  border: 2px solid #1c97ee;
+  border-radius: 10px;
+  display: inline-block;
+  width: 100px;
+  height: 120px;
+  cursor: pointer;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  margin: 10px;
+}
