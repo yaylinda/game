@@ -43,7 +43,6 @@ public class GamePlayService {
             player1 = null;
         }
         playerRepo.addPlayer(player);
-        playerRepo.getPlayerIds();
         return player;
     }
 
@@ -52,7 +51,6 @@ public class GamePlayService {
     }
 
     public GameSession startGame(Player player1, Player player2) {
-        System.out.printf("starting game for %s and %s\n", player1.getName(), player2.getName());
         player1.setOpponentId(player2.getId());
         GameSession gameSession = new GameSession(player1, player2, gameConfigurations);
         playerGameSessionRepo.assignGameSession(player1.getId(), gameSession);
@@ -61,8 +59,6 @@ public class GamePlayService {
     }
 
     public GameSession pollForGame(UUID id) {
-        System.out.printf("Polling for game...\n");
-        System.out.printf("Current players: %s\n", playerGameSessionRepo.getPlayerIds());
         GameSession gameSession = playerGameSessionRepo.getGameSessionById(id);
         if (gameSession != null) {
             return gameSession;
