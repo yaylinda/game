@@ -1,20 +1,20 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {Card} from "./card";
 
 @Component({
-  selector: 'card-front',
+  selector: 'card',
   template: `
-    <div id="card">
+    <div id="card" [ngClass]="card.clicked ? 'highlightCard' : ''">
       <p>{{card.cardType}}</p>
       <p>Cost: {{card.cost}}</p>
       <p>Might: {{card.might}}</p>
       <p>Movement: {{card.movement}}</p>
     </div>
   `,
-  styleUrls: [ './card-front.component.css' ]
+  styleUrls: [ './card.component.css' ]
 })
 
-export class CardFrontComponent {
+export class CardComponent {
   private _card: Card;
 
   @Input()

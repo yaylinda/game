@@ -17,37 +17,32 @@ var HeroesComponent = (function () {
         this.heroService = heroService;
         this.router = router;
     }
-    HeroesComponent.prototype.getHeroes = function () {
-        var _this = this;
-        this.heroService
-            .getHeroes()
-            .then(function (heroes) { return _this.heroes = heroes; });
-    };
-    HeroesComponent.prototype.add = function (name) {
-        var _this = this;
-        name = name.trim();
-        if (!name) {
-            return;
-        }
-        this.heroService.create(name)
-            .then(function (hero) {
-            _this.heroes.push(hero);
-            _this.selectedHero = null;
-        });
-    };
-    HeroesComponent.prototype.delete = function (hero) {
-        var _this = this;
-        this.heroService
-            .delete(hero.id)
-            .then(function () {
-            _this.heroes = _this.heroes.filter(function (h) { return h !== hero; });
-            if (_this.selectedHero === hero) {
-                _this.selectedHero = null;
-            }
-        });
-    };
+    // getHeroes(): void {
+    //   this.heroService
+    //       .getHeroes()
+    //       .then(heroes => this.heroes = heroes);
+    // }
+    //
+    // add(name: string): void {
+    //   name = name.trim();
+    //   if (!name) { return; }
+    //   this.heroService.create(name)
+    //     .then(hero => {
+    //       this.heroes.push(hero);
+    //       this.selectedHero = null;
+    //     });
+    // }
+    //
+    // delete(hero: Hero): void {
+    //   this.heroService
+    //       .delete(hero.id)
+    //       .then(() => {
+    //         this.heroes = this.heroes.filter(h => h !== hero);
+    //         if (this.selectedHero === hero) { this.selectedHero = null; }
+    //       });
+    // }
     HeroesComponent.prototype.ngOnInit = function () {
-        this.getHeroes();
+        // this.getHeroes();
     };
     HeroesComponent.prototype.onSelect = function (hero) {
         this.selectedHero = hero;

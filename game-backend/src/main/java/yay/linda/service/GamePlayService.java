@@ -68,7 +68,7 @@ public class GamePlayService {
     }
 
     public Card drawCard(UUID playerId) {
-        return playerGameSessionRepo.getGameSessionById(playerId).drawCard();
+        return playerGameSessionRepo.getGameSessionById(playerId).drawCard(playerId.toString());
     }
 
     public GameBoard placeCard(Card card, int row, int col) {

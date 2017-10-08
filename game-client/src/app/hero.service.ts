@@ -1,4 +1,4 @@
-import { Injectable }    from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Rx';
 
 import {Player} from "./player";
 import {GameSession} from "./gamesession";
+import {Card} from "./card";
 
 @Injectable()
 export class HeroService {
@@ -24,6 +25,10 @@ export class HeroService {
   private cardUrl = '/game/card';
   private boardUrl = '/game/board';
   private pollUrl = '/game/poll';
+
+  selectedCard: Card;
+
+  @Output() updateHandEE: EventEmitter<Card> = new EventEmitter();
 
   constructor(private http: Http) { }
 
@@ -78,11 +83,37 @@ export class HeroService {
       );
   }
 
+  drawCard(id: string): Promise<Card> {
+    console.log('drawing card...');
+    const url = `${this.baseUrl}${this.cardUrl}/${id}`;
+    return this.http
+      .get(url, {headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as Card)
+      .catch(this.handleError);
+  }
+
   // TODO update board
 
   // TODO draw cards
 
   // TODO place card
+
+  setClickedCard(card: Card) {
+    this.selectedCard = card;
+  }
+
+  getClickedCard(): Card {
+    return this.selectedCard;
+  }
+
+  updateHand(newCard: Card) {
+    this.updateHandEE.emit(newCard);
+  }
+
+  getUpdatedHand(): EventEmitter<Card> {
+    return this.updateHandEE;
+  }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only

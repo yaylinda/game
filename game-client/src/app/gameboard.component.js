@@ -10,9 +10,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var hero_service_1 = require("./hero.service");
 var GameboardComponent = (function () {
-    function GameboardComponent() {
+    function GameboardComponent(heroService) {
+        this.heroService = heroService;
     }
+    GameboardComponent.prototype.processClickedCell = function (row, col) {
+        var _this = this;
+        console.log("(" + row + ", " + col + ")");
+        var card = this.heroService.getClickedCard();
+        if (card) {
+            console.log(card);
+            this._gameboard[row][col].type = card.cardType;
+            this._gameboard[row][col].might = card.might;
+            this._gameboard[row][col].move = card.movement;
+            this.heroService.setClickedCard(null);
+            this.heroService.drawCard(card.owningPlayer)
+                .then(function (newCard) {
+                // const index = this._cards.indexOf(card);
+                // this._cards.splice(index, 1, newCard);
+                _this.heroService.updateHand(newCard);
+                console.log("drew new card......");
+                console.log(newCard);
+            });
+        }
+    };
     Object.defineProperty(GameboardComponent.prototype, "gameboard", {
         get: function () {
             return this._gameboard;
@@ -63,9 +85,10 @@ __decorate([
 GameboardComponent = __decorate([
     core_1.Component({
         selector: 'game-board',
-        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\">\n          {{gameboard[rowNum][colNum].state}}\n        </td>\n      </tr>\n    </table>\n  ",
+        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" (click)=\"processClickedCell(rowNum, colNum)\">\n          <p>{{gameboard[rowNum][colNum].type}}</p>\n          <p>{{gameboard[rowNum][colNum].might}}</p>\n          <p>{{gameboard[rowNum][colNum].move}}</p>\n        </td>\n      </tr>\n    </table>\n  ",
         styleUrls: ['./gameboard.component.css']
-    })
+    }),
+    __metadata("design:paramtypes", [hero_service_1.HeroService])
 ], GameboardComponent);
 exports.GameboardComponent = GameboardComponent;
 //# sourceMappingURL=gameboard.component.js.map

@@ -28,6 +28,7 @@ var HeroService = (function () {
         this.cardUrl = '/game/card';
         this.boardUrl = '/game/board';
         this.pollUrl = '/game/poll';
+        this.updateHandEE = new core_1.EventEmitter();
     }
     HeroService.prototype.joinGame = function (name) {
         var url = "" + this.baseUrl + this.joinGameUrl + "/" + name;
@@ -77,15 +78,40 @@ var HeroService = (function () {
                 .timeout(60000);
         });
     };
+    HeroService.prototype.drawCard = function (id) {
+        console.log('drawing card...');
+        var url = "" + this.baseUrl + this.cardUrl + "/" + id;
+        return this.http
+            .get(url, { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     // TODO update board
     // TODO draw cards
     // TODO place card
+    HeroService.prototype.setClickedCard = function (card) {
+        this.selectedCard = card;
+    };
+    HeroService.prototype.getClickedCard = function () {
+        return this.selectedCard;
+    };
+    HeroService.prototype.updateHand = function (newCard) {
+        this.updateHandEE.emit(newCard);
+    };
+    HeroService.prototype.getUpdatedHand = function () {
+        return this.updateHandEE;
+    };
     HeroService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     };
     return HeroService;
 }());
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], HeroService.prototype, "updateHandEE", void 0);
 HeroService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])

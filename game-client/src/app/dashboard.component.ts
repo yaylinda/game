@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Hero }        from './hero';
 import { HeroService } from './hero.service';
 import {Player} from "./player";
 import {GameSession} from "./gamesession";
-import {CardFrontComponent} from "./card-front.component";
+import {CardComponent} from "./card.component";
+import {Card} from "./card";
 
 @Component({
   selector: 'my-dashboard',
@@ -13,7 +13,6 @@ import {CardFrontComponent} from "./card-front.component";
 })
 
 export class DashboardComponent implements OnInit {
-  heroes: Hero[] = [];
   name = '';
   player: Player;
   showGameboard = false;
@@ -56,5 +55,4 @@ export class DashboardComponent implements OnInit {
     this.numCols = Array.from(Array(gameSession.gameBoard.numCols),(x,i)=>i);
     console.log(this.gameSession.gameBoard);
   }
-
 }

@@ -4,6 +4,8 @@ export class Card {
   movement: number;
   cost: number;
   owningTeam: string;
+  owningPlayer: string;
   played: boolean;
   // specialAbility: string;
+  clicked: boolean;
 }

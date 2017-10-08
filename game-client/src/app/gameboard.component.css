@@ -20,6 +20,11 @@ td {
   background: white;
 }
 
+td:hover {
+  background-color: lightcyan;
+  cursor: pointer;
+}
+
 tr {
   margin: 10px auto;
   display: block;

@@ -41,22 +41,23 @@ public class GameSession {
     }
 
     private void initializeGameState() {
-        this.player1.setHand(pickStartingCards(player1.getTeam()));
-        this.player2.setHand(pickStartingCards(player2.getTeam()));
+        this.player1.setHand(pickStartingCards(player1.getTeam(), player1.getId().toString()));
+        this.player2.setHand(pickStartingCards(player2.getTeam(), player2.getId().toString()));
 
     }
 
-    private List<Card> pickStartingCards(String team) {
+    private List<Card> pickStartingCards(String team, String owningPlayer) {
         List<Card> hand = new ArrayList<>();
         for (int i = 0; i < gameConfigurations.getHandSize(); i++) {
-            Card card = this.drawCard();
+            Card card = this.drawCard(owningPlayer);
             card.setOwningTeam(team);
+            card.setOwningPlayer(owningPlayer);
             hand.add(card);
         }
         return hand;
     }
 
-    public Card drawCard() {
+    public Card drawCard(String owningPlayer) {
         int index = deckGenerator.getRandomNumberInRange(0, deck.size()-1);
         Card toReturn = deck.get(index);
 

@@ -75,9 +75,9 @@ public class GamePlayController {
         return ResponseEntity.notFound().build();
     }
 
-    @RequestMapping(value = "game/card", method = RequestMethod.GET)
-    public ResponseEntity<Card> drawCard() {
-        Card nextCard = gamePlayService.drawCard(UUID.randomUUID()); // TODO get playerId from frontend
+    @RequestMapping(value = "game/card/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Card> drawCard(@PathVariable String id) {
+        Card nextCard = gamePlayService.drawCard(UUID.fromString(id));
         return ResponseEntity.ok(nextCard);
     }
 

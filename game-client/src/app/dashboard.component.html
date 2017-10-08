@@ -12,22 +12,21 @@
 
   <div id="game" *ngIf="showGameboard">
 
+    <div id="other-team-goal">
+
+    </div>
+
     <game-board
       [gameboard]="gameSession.gameBoard.board"
       [numRows]="numRows"
       [numCols]="numCols">
     </game-board>
 
-    <span *ngIf="player.team === 'TEAM1'" class="hand" id="hand1">
-      <card-front *ngFor="let card of gameSession.player1.hand" [card]="card"></card-front>
-    </span>
-
-    <span *ngIf="player.team === 'TEAM2'" class="hand" id="hand2">
-      <card-front *ngFor="let card of gameSession.player2.hand" [card]="card"></card-front>
-    </span>
+    <hand
+      [cards]="player.team === 'TEAM1' ? gameSession.player1.hand : gameSession.player2.hand">
+    </hand>
 
   </div>
-
 </div>
 
 

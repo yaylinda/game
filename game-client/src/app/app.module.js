@@ -10,6 +10,7 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
+var angular2_grid_1 = require("angular2-grid");
 var app_routing_module_1 = require("./app-routing.module");
 var app_component_1 = require("./app.component");
 var dashboard_component_1 = require("./dashboard.component");
@@ -18,8 +19,10 @@ var hero_detail_component_1 = require("./hero-detail.component");
 var hero_service_1 = require("./hero.service");
 var hero_search_component_1 = require("./hero-search.component");
 var http_2 = require("@angular/common/http");
-var card_front_component_1 = require("./card-front.component");
+var card_component_1 = require("./card.component");
 var gameboard_component_1 = require("./gameboard.component");
+var ng2_dragula_1 = require("ng2-dragula");
+var hand_component_1 = require("./hand.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -32,12 +35,15 @@ AppModule = __decorate([
             forms_1.FormsModule,
             http_1.HttpModule,
             app_routing_module_1.AppRoutingModule,
-            http_2.HttpClientModule
+            http_2.HttpClientModule,
+            angular2_grid_1.NgGridModule,
+            ng2_dragula_1.DragulaModule,
         ],
         declarations: [
             app_component_1.AppComponent,
             dashboard_component_1.DashboardComponent,
-            card_front_component_1.CardFrontComponent,
+            card_component_1.CardComponent,
+            hand_component_1.HandComponent,
             gameboard_component_1.GameboardComponent,
             hero_detail_component_1.HeroDetailComponent,
             heroes_component_1.HeroesComponent,

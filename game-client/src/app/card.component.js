@@ -11,10 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var card_1 = require("./card");
-var CardFrontComponent = (function () {
-    function CardFrontComponent() {
+var CardComponent = (function () {
+    function CardComponent() {
     }
-    Object.defineProperty(CardFrontComponent.prototype, "card", {
+    Object.defineProperty(CardComponent.prototype, "card", {
         get: function () {
             return this._card;
         },
@@ -24,19 +24,19 @@ var CardFrontComponent = (function () {
         enumerable: true,
         configurable: true
     });
-    return CardFrontComponent;
+    return CardComponent;
 }());
 __decorate([
     core_1.Input(),
     __metadata("design:type", card_1.Card),
     __metadata("design:paramtypes", [card_1.Card])
-], CardFrontComponent.prototype, "card", null);
-CardFrontComponent = __decorate([
+], CardComponent.prototype, "card", null);
+CardComponent = __decorate([
     core_1.Component({
-        selector: 'card-front',
-        template: "\n    <div id=\"card\">\n      <p>{{card.cardType}}</p>\n      <p>Cost: {{card.cost}}</p>\n      <p>Might: {{card.might}}</p>\n      <p>Movement: {{card.movement}}</p>\n    </div>\n  ",
-        styleUrls: ['./card-front.component.css']
+        selector: 'card',
+        template: "\n    <div id=\"card\" [ngClass]=\"card.clicked ? 'highlightCard' : ''\">\n      <p>{{card.cardType}}</p>\n      <p>Cost: {{card.cost}}</p>\n      <p>Might: {{card.might}}</p>\n      <p>Movement: {{card.movement}}</p>\n    </div>\n  ",
+        styleUrls: ['./card.component.css']
     })
-], CardFrontComponent);
-exports.CardFrontComponent = CardFrontComponent;
-//# sourceMappingURL=card-front.component.js.map
+], CardComponent);
+exports.CardComponent = CardComponent;
+//# sourceMappingURL=card.component.js.map

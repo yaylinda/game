@@ -33,7 +33,9 @@
       // other libraries
       'rxjs':                      'npm:rxjs',
       'tslib':                     'npm:tslib/tslib.js',
-      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
+      'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
+      'angular2-grid':             'npm:angular2-grid/bundles',
+      'ng2-dragula':               'npm:ng2-dragula/bundles'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -47,6 +49,14 @@
         }
       },
       rxjs: {
+        defaultExtension: 'js'
+      },
+      'angular2-grid': {
+        main: 'NgGrid.umd.js',
+        defaultExtension: 'js'
+      },
+      'ng2-dragula': {
+        main: 'ng2-dragula.umd.js',
         defaultExtension: 'js'
       }
     }

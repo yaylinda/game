@@ -1,41 +1,10 @@
 [ {
   "cardType" : "TROOP",
-  "might" : 2,
+  "might" : 1,
   "movement" : 1,
-  "cost" : 1.5,
+  "cost" : 1.0,
   "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 3,
-  "movement" : 2,
-  "cost" : 2.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 2,
-  "movement" : 2,
-  "cost" : 2.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 4,
-  "movement" : 1,
-  "cost" : 2.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 2,
-  "movement" : 2,
-  "cost" : 2.0,
-  "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
@@ -44,38 +13,7 @@
   "movement" : 1,
   "cost" : 1.0,
   "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 8,
-  "movement" : 1,
-  "cost" : 4.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 1,
-  "movement" : 2,
-  "cost" : 1.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 2,
-  "movement" : 2,
-  "cost" : 2.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 4,
-  "movement" : 2,
-  "cost" : 3.0,
-  "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
@@ -84,38 +22,7 @@
   "movement" : 1,
   "cost" : 1.5,
   "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 2,
-  "movement" : 1,
-  "cost" : 1.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 5,
-  "movement" : 1,
-  "cost" : 3.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 6,
-  "movement" : 2,
-  "cost" : 4.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 2,
-  "movement" : 1,
-  "cost" : 1.5,
-  "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
@@ -124,230 +31,25 @@
   "movement" : 1,
   "cost" : 1.0,
   "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 4,
-  "movement" : 2,
-  "cost" : 3.0,
-  "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
   "cardType" : "TROOP",
   "might" : 2,
-  "movement" : 1,
-  "cost" : 1.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 3,
   "movement" : 2,
-  "cost" : 2.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 8,
-  "movement" : 1,
-  "cost" : 4.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 4,
-  "movement" : 1,
-  "cost" : 2.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 1,
-  "movement" : 1,
-  "cost" : 1.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 4,
-  "movement" : 1,
-  "cost" : 2.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 3,
-  "movement" : 1,
   "cost" : 2.0,
   "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
   "cardType" : "TROOP",
-  "might" : 6,
-  "movement" : 2,
-  "cost" : 4.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 3,
+  "might" : 10,
   "movement" : 1,
-  "cost" : 2.0,
+  "cost" : 5.5,
   "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 9,
-  "movement" : 1,
-  "cost" : 5.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 1,
-  "movement" : 1,
-  "cost" : 1.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 3,
-  "movement" : 1,
-  "cost" : 2.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 4,
-  "movement" : 1,
-  "cost" : 2.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 2,
-  "movement" : 1,
-  "cost" : 1.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 3,
-  "movement" : 1,
-  "cost" : 2.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 2,
-  "movement" : 1,
-  "cost" : 1.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 1,
-  "movement" : 1,
-  "cost" : 1.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 2,
-  "movement" : 1,
-  "cost" : 1.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 1,
-  "movement" : 2,
-  "cost" : 1.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 3,
-  "movement" : 1,
-  "cost" : 2.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 1,
-  "movement" : 1,
-  "cost" : 1.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 4,
-  "movement" : 2,
-  "cost" : 3.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 5,
-  "movement" : 1,
-  "cost" : 3.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 8,
-  "movement" : 2,
-  "cost" : 5.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 2,
-  "movement" : 1,
-  "cost" : 1.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 4,
-  "movement" : 1,
-  "cost" : 2.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "TROOP",
-  "might" : 6,
-  "movement" : 2,
-  "cost" : 4.0,
-  "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
@@ -356,22 +58,367 @@
   "movement" : 1,
   "cost" : 3.5,
   "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
-  "cardType" : "WALL",
-  "might" : 4,
-  "movement" : 0,
+  "cardType" : "TROOP",
+  "might" : 3,
+  "movement" : 2,
+  "cost" : 2.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 2,
   "cost" : 2.0,
   "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
-  "cardType" : "WALL",
+  "cardType" : "TROOP",
   "might" : 6,
-  "movement" : 0,
+  "movement" : 1,
+  "cost" : 3.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 2,
+  "cost" : 2.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 3,
+  "movement" : 1,
+  "cost" : 2.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 8,
+  "movement" : 1,
+  "cost" : 4.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 1,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 4,
+  "movement" : 1,
+  "cost" : 2.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 1,
+  "movement" : 1,
+  "cost" : 1.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 3,
+  "movement" : 1,
+  "cost" : 2.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 4,
+  "movement" : 1,
+  "cost" : 2.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 3,
+  "movement" : 2,
+  "cost" : 2.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 1,
+  "movement" : 2,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 1,
+  "movement" : 2,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 4,
+  "movement" : 1,
+  "cost" : 2.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 3,
+  "movement" : 1,
+  "cost" : 2.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 1,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 4,
+  "movement" : 1,
+  "cost" : 2.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 1,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 1,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 3,
+  "movement" : 2,
+  "cost" : 2.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 8,
+  "movement" : 1,
+  "cost" : 4.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 1,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 1,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 4,
+  "movement" : 2,
   "cost" : 3.0,
   "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 7,
+  "movement" : 1,
+  "cost" : 4.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 5,
+  "movement" : 1,
+  "cost" : 3.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 3,
+  "movement" : 2,
+  "cost" : 2.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 7,
+  "movement" : 1,
+  "cost" : 4.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 2,
+  "cost" : 2.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 4,
+  "movement" : 2,
+  "cost" : 3.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 1,
+  "movement" : 1,
+  "cost" : 1.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 2,
+  "cost" : 2.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 1,
+  "movement" : 1,
+  "cost" : 1.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 4,
+  "movement" : 1,
+  "cost" : 2.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 7,
+  "movement" : 1,
+  "cost" : 4.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 7,
+  "movement" : 1,
+  "cost" : 4.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "TROOP",
+  "might" : 2,
+  "movement" : 2,
+  "cost" : 2.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "WALL",
+  "might" : 7,
+  "movement" : 0,
+  "cost" : 3.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "WALL",
+  "might" : 9,
+  "movement" : 0,
+  "cost" : 4.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
@@ -380,14 +427,7 @@
   "movement" : 0,
   "cost" : 1.0,
   "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "WALL",
-  "might" : 2,
-  "movement" : 0,
-  "cost" : 1.0,
-  "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
@@ -396,54 +436,7 @@
   "movement" : 0,
   "cost" : 1.5,
   "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "WALL",
-  "might" : 1,
-  "movement" : 0,
-  "cost" : 0.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "WALL",
-  "might" : 6,
-  "movement" : 0,
-  "cost" : 3.0,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "WALL",
-  "might" : 1,
-  "movement" : 0,
-  "cost" : 0.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "WALL",
-  "might" : 1,
-  "movement" : 0,
-  "cost" : 0.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "WALL",
-  "might" : 1,
-  "movement" : 0,
-  "cost" : 0.5,
-  "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "WALL",
-  "might" : 2,
-  "movement" : 0,
-  "cost" : 1.0,
-  "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
@@ -452,22 +445,16 @@
   "movement" : 0,
   "cost" : 2.0,
   "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
   "cardType" : "WALL",
-  "might" : 2,
+  "might" : 5,
   "movement" : 0,
-  "cost" : 1.0,
+  "cost" : 2.5,
   "owningTeam" : null,
-  "played" : false,
-  "specialAbility" : ""
-}, {
-  "cardType" : "WALL",
-  "might" : 6,
-  "movement" : 0,
-  "cost" : 3.0,
-  "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 }, {
@@ -476,6 +463,79 @@
   "movement" : 0,
   "cost" : 2.0,
   "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "WALL",
+  "might" : 1,
+  "movement" : 0,
+  "cost" : 0.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "WALL",
+  "might" : 2,
+  "movement" : 0,
+  "cost" : 1.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "WALL",
+  "might" : 2,
+  "movement" : 0,
+  "cost" : 1.0,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "WALL",
+  "might" : 5,
+  "movement" : 0,
+  "cost" : 2.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "WALL",
+  "might" : 3,
+  "movement" : 0,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "WALL",
+  "might" : 3,
+  "movement" : 0,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "WALL",
+  "might" : 3,
+  "movement" : 0,
+  "cost" : 1.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
+  "played" : false,
+  "specialAbility" : ""
+}, {
+  "cardType" : "WALL",
+  "might" : 1,
+  "movement" : 0,
+  "cost" : 0.5,
+  "owningTeam" : null,
+  "owningPlayer" : null,
   "played" : false,
   "specialAbility" : ""
 } ]
