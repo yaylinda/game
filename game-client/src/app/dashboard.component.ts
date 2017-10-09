@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { HeroService } from './hero.service';
+import {HeroService} from './hero.service';
 import {Player} from "./player";
 import {GameSession} from "./gamesession";
-import {CardComponent} from "./card.component";
-import {Card} from "./card";
 
 @Component({
   selector: 'my-dashboard',

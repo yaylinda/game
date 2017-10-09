@@ -7,7 +7,7 @@
 
 
   <div id="loading" *ngIf="showLoading">
-    Loading {{name}}'s Simple War...
+    Loading <strong>{{name}}'s</strong> Simple War against <strong>{{player.opponentName}}</strong>...
   </div>
 
   <div id="game" *ngIf="showGameboard">
@@ -19,11 +19,13 @@
     <game-board
       [gameboard]="gameSession.gameBoard.board"
       [numRows]="numRows"
-      [numCols]="numCols">
+      [numCols]="numCols"
+      [myTurn]="gameSession.myTurn">
     </game-board>
 
     <hand
-      [cards]="player.team === 'TEAM1' ? gameSession.player1.hand : gameSession.player2.hand">
+      [cards]="gameSession.player.hand"
+      [myTurn]="gameSession.myTurn">
     </hand>
 
   </div>

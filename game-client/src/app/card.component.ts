@@ -16,6 +16,7 @@ import {Card} from "./card";
 
 export class CardComponent {
   private _card: Card;
+  private _myTurn: boolean;
 
   @Input()
   set card(card: Card) {

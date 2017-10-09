@@ -93,11 +93,16 @@ export class HeroService {
       .catch(this.handleError);
   }
 
+  endTurn(id: string) {
+    const url = `${this.baseUrl}${this.boardUrl}/${id}`;
+    return this.http
+      .put(url, {headers: this.headers})
+      .toPromise()
+      .then()
+      .catch(this.handleError);
+  }
+
   // TODO update board
-
-  // TODO draw cards
-
-  // TODO place card
 
   setClickedCard(card: Card) {
     this.selectedCard = card;

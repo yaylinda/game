@@ -22,21 +22,25 @@ export class GameboardComponent {
   private _gameboard: {};
   private _rowIndexes: number[];
   private _colndexes: number[];
+  private _myTurn: boolean;
 
   constructor(private heroService: HeroService) { }
 
   processClickedCell(row: number, col: number): void {
     console.log(`(${row}, ${col})`);
-    let card = this.heroService.getClickedCard();
-    if (card) {
-      this._gameboard[row][col].type = card.cardType;
-      this._gameboard[row][col].might = card.might;
-      this._gameboard[row][col].move = card.movement;
-      this.heroService.setClickedCard(null);
-      this.heroService.drawCard(card.owningPlayer)
-        .then(newCard => {
-          this.heroService.updateHand(newCard);
-        });
+    if (row === 4) { // only put card on first row
+      let card = this.heroService.getClickedCard();
+      if (card) {
+        this._gameboard[row][col].type = card.cardType;
+        this._gameboard[row][col].might = card.might;
+        this._gameboard[row][col].move = card.movement;
+        this.heroService.setClickedCard(null);
+        this.heroService.drawCard(card.owningPlayer)
+          .then(newCard => {
+            this.heroService.updateHand(newCard);
+            this._myTurn = false;
+          });
+      }
     }
   }
 
@@ -65,5 +69,14 @@ export class GameboardComponent {
 
   get numCols(): number[] {
     return this._colndexes;
+  }
+
+  @Input()
+  set myTurn(myTurn: boolean) {
+    this._myTurn = myTurn;
+  }
+
+  get myTurn(): boolean {
+    return this._myTurn;
   }
 }

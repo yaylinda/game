@@ -6,11 +6,15 @@ import {HeroService} from "./hero.service";
   selector: 'hand',
   template: `
     <div id="hand">
+      <div id="game-stats">
+        <p *ngIf="myTurn">Your Turn</p><p *ngIf="!myTurn">Opponent's Turn</p>
+      </div>
       <card *ngFor="let card of cards;"
             (click)="processClickedCard(card)"
-            [card]="card">
+            [card]="card"
+            [myTurn]="myTurn()">
       </card>
-      <button id="end-turn-btn">End Turn</button>
+      <button id="end-turn-btn" (click)="endTurn()">End Turn</button>
     </div>
   `,
   styleUrls: [ './hand.component.css' ]
@@ -18,6 +22,7 @@ import {HeroService} from "./hero.service";
 
 export class HandComponent implements OnInit {
   private _cards: Card[];
+  private _myTurn: boolean;
   private lastSelectedCard: Card;
 
   constructor(private heroService: HeroService) { }
@@ -41,6 +46,12 @@ export class HandComponent implements OnInit {
     this.heroService.setClickedCard(card);
   }
 
+  endTurn(): void {
+    this._myTurn = false;
+    // this.heroService.endTurn();
+    console.log('end turn');
+  }
+
   @Input()
   set cards(cards: Card[]) {
     this._cards = cards;
@@ -48,5 +59,14 @@ export class HandComponent implements OnInit {
 
   get cards(): Card[] {
     return this._cards;
+  }
+
+  @Input()
+  set myTurn(myTurn: boolean) {
+    this._myTurn = myTurn;
+  }
+
+  get myTurn(): boolean {
+    return this._myTurn;
   }
 }
