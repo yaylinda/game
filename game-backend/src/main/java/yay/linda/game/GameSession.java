@@ -2,6 +2,7 @@ package yay.linda.game;
 
 import yay.linda.dto.Card;
 import yay.linda.dto.GameBoard;
+import yay.linda.dto.GameSessionDTO;
 import yay.linda.dto.Player;
 import yay.linda.dto.enums.GameSessionStatus;
 import yay.linda.service.DeckGenerator;
@@ -23,6 +24,8 @@ public class GameSession {
 
     private Map<String, GameSessionStatus> playerGameSessionStatuses;
 
+    private Map<String, Boolean> playerTurns;
+
     private List<Card> deck;
 
     private int handSize;
@@ -36,11 +39,18 @@ public class GameSession {
         this.players = new HashMap<>();
         this.playerGameboards = new HashMap<>();
         this.playerGameSessionStatuses = new HashMap<>();
+        this.playerTurns = new HashMap<>();
         this.deck = this.deckGenerator.generateDeck();
         this.handSize = handSize;
 
         player1.setHand(this.pickStartingCards(player1.getId()));
         player2.setHand(this.pickStartingCards(player2.getId()));
+
+        player1.setOpponentName(player2.getName());
+        player2.setOpponentName(player1.getName());
+
+        player1.setOpponentId(player2.getId());
+        player2.setOpponentId(player1.getId());
 
         this.players.put(player1.getId(), player1);
         this.players.put(player2.getId(), player2);
@@ -66,15 +76,21 @@ public class GameSession {
         return toReturn;
     }
 
-    public void updateBoard(String playerId, GameBoard gameboard) {
+    public void updateGameData(String playerId, GameSessionDTO gameSession) {
         this.players.get(playerId).setPower(players.get(playerId).getPower() + 1.0);
-        this.playerGameboards.put(playerId, gameboard);
-        // tell other players to update
+        this.players.get(playerId).setHand(gameSession.getPlayer().getHand());
+        this.playerGameboards.put(playerId, gameSession.getGameboard());
+        this.playerGameSessionStatuses.put(playerId, GameSessionStatus.OLD);
+        this.playerTurns.put(playerId, false);
+
+        // get other players to update stats as well
         for (String id : players.keySet()) {
             if (!id.equals(playerId)) {
+                // TODO logic to update other player's board correctly
+                this.playerGameboards.put(id, gameSession.getGameboard());
+
                 this.playerGameSessionStatuses.put(id, GameSessionStatus.NEW);
-                // TODO logic to update other player's board
-                this.playerGameboards.put(id, gameboard);
+                this.playerTurns.put(id, true);
             }
         }
     }

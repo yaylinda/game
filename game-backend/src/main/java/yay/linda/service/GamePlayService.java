@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import yay.linda.config.GameConfigurations;
 import yay.linda.dto.Card;
 import yay.linda.dto.GameBoard;
+import yay.linda.dto.GameSessionDTO;
 import yay.linda.dto.Player;
 import yay.linda.dto.enums.GameSessionStatus;
 import yay.linda.dto.enums.PlayerTeam;
@@ -19,14 +20,14 @@ import javax.inject.Inject;
 @Component
 public class GamePlayService {
 
-    @Inject
-    private GameConfigurations gameConfigurations;
-
-    private Player player1;
-
     private PlayerGameSessionRepo playerGameSessionRepo = new PlayerGameSessionRepo();
 
+    // is this only used for matchmaking?
+    private Player player1;
     private PlayerRepo playerRepo = new PlayerRepo();
+
+    @Inject
+    private GameConfigurations gameConfigurations;
 
     public Player join(String name) {
         System.out.printf("%s is joining the game\n", name);
@@ -49,23 +50,29 @@ public class GamePlayService {
         return playerRepo.getPlayerById(id);
     }
 
-    public GameSession startGame(Player player1, Player player2) {
-        player1.setOpponentId(player2.getId());
-        player2.setOpponentId(player1.getId());
+    public GameSessionDTO startGame(Player player1, Player player2, String invokingPlayerId) {
         GameSession gameSession = new GameSession(player1, player2,
                 gameConfigurations.getNumRows(),
                 gameConfigurations.getNumCols(),
                 gameConfigurations.getHandSize());
         playerGameSessionRepo.assignGameSession(player1.getId(), gameSession);
         playerGameSessionRepo.assignGameSession(player2.getId(), gameSession);
-        return gameSession;
+
+        return new GameSessionDTO(
+                this.playerGameSessionRepo.getGameSessionById(invokingPlayerId).
+                        getPlayers().get(invokingPlayerId),
+                this.playerGameSessionRepo.getGameSessionById(invokingPlayerId).
+                        getPlayerGameboards().get(invokingPlayerId), false); // this gets sent to player 2
     }
 
-    public GameSession pollForGame(String playerId) {
+    public GameSessionDTO pollForGame(String playerId) {
         GameSession gameSession = playerGameSessionRepo.getGameSessionById(playerId);
         if (gameSession != null && gameSession.getPlayerGameSessionStatuses().get(playerId) != GameSessionStatus.NEW) {
-            // TODO filter game session info to not contain opponent's info
-            return gameSession;
+            return new GameSessionDTO(
+                    this.playerGameSessionRepo.getGameSessionById(playerId).
+                            getPlayers().get(playerId),
+                    this.playerGameSessionRepo.getGameSessionById(playerId).
+                            getPlayerGameboards().get(playerId), true); // this gets setnt to player 1
         } else {
             return null;
         }
@@ -75,7 +82,7 @@ public class GamePlayService {
         return playerGameSessionRepo.getGameSessionById(playerId).drawCard(playerId);
     }
 
-    public void updateBoard(String playerId, GameBoard gameboard) {
-        playerGameSessionRepo.getGameSessionById(playerId).updateBoard(playerId, gameboard);
+    public void updateGameData(String playerId, GameSessionDTO gameSession) {
+        this.playerGameSessionRepo.getGameSessionById(playerId).updateGameData(playerId, gameSession);
     }
 }

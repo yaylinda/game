@@ -13,6 +13,7 @@ public class Player {
 
     private String id;
     private String opponentId;
+    private String opponentName;
     private String name;
     private String team;
     private double power;
@@ -41,6 +42,14 @@ public class Player {
 
     public void setOpponentId(String opponentId) {
         this.opponentId = opponentId;
+    }
+
+    public String getOpponentName() {
+        return opponentName;
+    }
+
+    public void setOpponentName(String opponentName) {
+        this.opponentName = opponentName;
     }
 
     public String getName() {

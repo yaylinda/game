@@ -47,9 +47,9 @@ public class GamePlayController {
      * @param players
      * @return
      */
-    @RequestMapping(value = "game/start", method = RequestMethod.POST)
-    public ResponseEntity<GameSession> startGame(@RequestBody List<Player> players) {
-        GameSession gameSession = gamePlayService.startGame(players.get(0), players.get(1));
+    @RequestMapping(value = "game/start/{id}", method = RequestMethod.POST)
+    public ResponseEntity<GameSessionDTO> startGame(@PathVariable String id, @RequestBody List<Player> players) {
+        GameSessionDTO gameSession = gamePlayService.startGame(players.get(0), players.get(1), id);
         if (gameSession != null) {
             return ResponseEntity.ok(gameSession);
         }
@@ -62,8 +62,8 @@ public class GamePlayController {
      * @return
      */
     @RequestMapping(value = "game/poll/{id}", method = RequestMethod.GET)
-    public ResponseEntity<GameSession> pollForGame(@PathVariable String id) {
-        GameSession gameSession = gamePlayService.pollForGame(id);
+    public ResponseEntity<GameSessionDTO> pollForGame(@PathVariable String id) {
+        GameSessionDTO gameSession = gamePlayService.pollForGame(id);
         if (gameSession != null) {
             return ResponseEntity.ok(gameSession);
         }
@@ -84,12 +84,12 @@ public class GamePlayController {
     /**
      *
      * @param id
-     * @param gameboard
+     * @param gameSession
      * @return
      */
     @RequestMapping(value = "game/board/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<GameBoard> updateBoard(@PathVariable String id, @RequestBody GameBoard gameboard) {
-        gamePlayService.updateBoard(id, gameboard);
-        return ResponseEntity.ok(gameboard);
+    public ResponseEntity<GameSessionDTO> updateBoard(@PathVariable String id, @RequestBody GameSessionDTO gameSession) {
+        gamePlayService.updateGameData(id, gameSession);
+        return ResponseEntity.ok(gameSession);
     }
 }
