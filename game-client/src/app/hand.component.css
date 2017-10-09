@@ -2,3 +2,8 @@
   border: 4px solid saddlebrown;
   border-radius: 10px;
 }
+
+#end-turn-btn {
+  float: right;
+  vertical-align: center;
+}

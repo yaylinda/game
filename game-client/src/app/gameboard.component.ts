@@ -29,18 +29,13 @@ export class GameboardComponent {
     console.log(`(${row}, ${col})`);
     let card = this.heroService.getClickedCard();
     if (card) {
-      console.log(card);
       this._gameboard[row][col].type = card.cardType;
       this._gameboard[row][col].might = card.might;
       this._gameboard[row][col].move = card.movement;
       this.heroService.setClickedCard(null);
       this.heroService.drawCard(card.owningPlayer)
         .then(newCard => {
-          // const index = this._cards.indexOf(card);
-          // this._cards.splice(index, 1, newCard);
           this.heroService.updateHand(newCard);
-          console.log("drew new card......");
-          console.log(newCard);
         });
     }
   }

@@ -10,6 +10,7 @@ import {HeroService} from "./hero.service";
             (click)="processClickedCard(card)"
             [card]="card">
       </card>
+      <button id="end-turn-btn">End Turn</button>
     </div>
   `,
   styleUrls: [ './hand.component.css' ]

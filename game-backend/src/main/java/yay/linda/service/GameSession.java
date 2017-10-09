@@ -60,6 +60,7 @@ public class GameSession {
     public Card drawCard(String owningPlayer) {
         int index = deckGenerator.getRandomNumberInRange(0, deck.size()-1);
         Card toReturn = deck.get(index);
+        toReturn.setOwningPlayer(owningPlayer);
 
         Card last = new Card(deck.get(deck.size()-1));
         deck.set(index, last);
