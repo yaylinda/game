@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var hero_service_1 = require("./hero.service");
+var gamesession_1 = require("./gamesession");
 var HandComponent = (function () {
     function HandComponent(heroService) {
         this.heroService = heroService;
@@ -19,54 +20,39 @@ var HandComponent = (function () {
         var _this = this;
         this.heroService.getUpdatedHand()
             .subscribe(function (newCard) {
-            var index = _this._cards.indexOf(_this.lastSelectedCard);
-            _this._cards.splice(index, 1, newCard);
+            var index = _this._gameSession.player.hand.indexOf(_this._lastSelectedCard);
+            _this._gameSession.player.hand.splice(index, 1, newCard);
         });
         this.heroService.getUpdatedPower()
             .subscribe(function (power) {
-            _this._power = power;
+            _this._gameSession.player.power = power;
+        });
+        this.heroService.getUpdatedBoard()
+            .subscribe(function (board) {
+            _this._gameSession.gameboard = board;
         });
     };
     HandComponent.prototype.processClickedCard = function (card) {
-        for (var _i = 0, _a = this._cards; _i < _a.length; _i++) {
-            var otherCard = _a[_i];
-            otherCard.clicked = false;
+        if (this._gameSession.myTurn) {
+            for (var _i = 0, _a = this._gameSession.player.hand; _i < _a.length; _i++) {
+                var otherCard = _a[_i];
+                otherCard.clicked = false;
+            }
+            card.clicked = true;
+            this._lastSelectedCard = card;
+            this.heroService.setClickedCard(card);
         }
-        card.clicked = true;
-        this.lastSelectedCard = card;
-        this.heroService.setClickedCard(card);
     };
     HandComponent.prototype.endTurn = function () {
-        this._myTurn = false;
-        // this.heroService.endTurn();
-        console.log('end turn');
+        this._gameSession.myTurn = false;
+        this.heroService.endTurn(this._gameSession);
     };
-    Object.defineProperty(HandComponent.prototype, "cards", {
+    Object.defineProperty(HandComponent.prototype, "gameSession", {
         get: function () {
-            return this._cards;
+            return this._gameSession;
         },
-        set: function (cards) {
-            this._cards = cards;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(HandComponent.prototype, "myTurn", {
-        get: function () {
-            return this._myTurn;
-        },
-        set: function (myTurn) {
-            this._myTurn = myTurn;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(HandComponent.prototype, "power", {
-        get: function () {
-            return this._power;
-        },
-        set: function (value) {
-            this._power = value;
+        set: function (gameSession) {
+            this._gameSession = gameSession;
         },
         enumerable: true,
         configurable: true
@@ -75,23 +61,13 @@ var HandComponent = (function () {
 }());
 __decorate([
     core_1.Input(),
-    __metadata("design:type", Array),
-    __metadata("design:paramtypes", [Array])
-], HandComponent.prototype, "cards", null);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean),
-    __metadata("design:paramtypes", [Boolean])
-], HandComponent.prototype, "myTurn", null);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Number),
-    __metadata("design:paramtypes", [Number])
-], HandComponent.prototype, "power", null);
+    __metadata("design:type", gamesession_1.GameSession),
+    __metadata("design:paramtypes", [gamesession_1.GameSession])
+], HandComponent.prototype, "gameSession", null);
 HandComponent = __decorate([
     core_1.Component({
         selector: 'hand',
-        template: "\n    <div id=\"hand\">\n      <div id=\"game-stats\">\n        <p *ngIf=\"myTurn\">My Turn</p>\n        <p *ngIf=\"!myTurn\">Opponent's Turn</p>\n        <p>Power: {{power}}</p>\n      </div>\n      <card *ngFor=\"let card of cards;\"\n            (click)=\"processClickedCard(card)\"\n            [card]=\"card\">\n      </card>\n      <button id=\"end-turn-btn\" (click)=\"endTurn()\">End Turn</button>\n    </div>\n  ",
+        template: "\n    <div id=\"hand\">\n      <div id=\"game-stats\">\n        <p *ngIf=\"gameSession.myTurn\">My Turn</p>\n        <p *ngIf=\"!gameSession.myTurn\">Opponent's Turn</p>\n        <p>Power: {{gameSession.player.power}}</p>\n      </div>\n      <card *ngFor=\"let card of gameSession.player.hand;\"\n            (click)=\"processClickedCard(card)\"\n            [card]=\"card\">\n      </card>\n      <button id=\"end-turn-btn\" (click)=\"endTurn()\">End Turn</button>\n    </div>\n  ",
         styleUrls: ['./hand.component.css']
     }),
     __metadata("design:paramtypes", [hero_service_1.HeroService])

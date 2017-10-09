@@ -9,6 +9,7 @@ import {Observable} from 'rxjs/Rx';
 import {Player} from "./player";
 import {GameSession} from "./gamesession";
 import {Card} from "./card";
+import {Cell} from "./cell";
 
 @Injectable()
 export class HeroService {
@@ -30,6 +31,7 @@ export class HeroService {
 
   @Output() updateHandEE: EventEmitter<Card> = new EventEmitter();
   @Output() updatePowerEE: EventEmitter<number> = new EventEmitter();
+  @Output() updateBoardEE: EventEmitter<Cell[][]> = new EventEmitter();
 
   constructor(private http: Http) { }
 
@@ -95,16 +97,14 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  endTurn(id: string) {
-    const url = `${this.baseUrl}${this.boardUrl}/${id}`;
+  endTurn(gameSession: GameSession) {
+    const url = `${this.baseUrl}${this.boardUrl}`;
     return this.http
-      .put(url, {headers: this.headers})
+      .put(url, gameSession, {headers: this.headers})
       .toPromise()
       .then()
       .catch(this.handleError);
   }
-
-  // TODO update board
 
   setClickedCard(card: Card) {
     this.selectedCard = card;
@@ -128,6 +128,14 @@ export class HeroService {
 
   getUpdatedPower(): EventEmitter<number> {
     return this.updatePowerEE;
+  }
+
+  updateBoard(board: Cell[][]) {
+    this.updateBoardEE.emit(board);
+  }
+
+  getUpdatedBoard(): EventEmitter<Cell[][]> {
+    return this.updateBoardEE;
   }
 
   private handleError(error: any): Promise<any> {

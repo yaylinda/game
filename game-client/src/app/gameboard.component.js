@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var hero_service_1 = require("./hero.service");
+var gamesession_1 = require("./gamesession");
 var GameboardComponent = (function () {
     function GameboardComponent(heroService) {
         this.heroService = heroService;
@@ -18,18 +19,19 @@ var GameboardComponent = (function () {
     GameboardComponent.prototype.processClickedCell = function (row, col) {
         var _this = this;
         console.log("clicked on: (" + row + ", " + col + ")");
-        if (this.myTurn === true) {
+        if (this._gameSession.myTurn === true) {
             if (row === 4) {
                 var card = this.heroService.getClickedCard();
                 if (card) {
-                    if (this._power >= card.cost) {
-                        this._gameboard[row][col].state = 'OCCUPIED';
-                        this._gameboard[row][col].type = card.cardType;
-                        this._gameboard[row][col].might = card.might;
-                        this._gameboard[row][col].move = card.movement;
-                        this._gameboard[row][col].team = card.owningTeam;
-                        this._power = this._power - card.cost;
-                        this.heroService.updatePowerEE.emit(this._power);
+                    if (this._gameSession.player.power >= card.cost) {
+                        this._gameSession.gameboard[row][col].state = 'OCCUPIED';
+                        this._gameSession.gameboard[row][col].type = card.cardType;
+                        this._gameSession.gameboard[row][col].might = card.might;
+                        this._gameSession.gameboard[row][col].move = card.movement;
+                        this._gameSession.gameboard[row][col].team = card.owningTeam;
+                        this._gameSession.player.power = this._gameSession.player.power - card.cost;
+                        this.heroService.updatePowerEE.emit(this._gameSession.player.power);
+                        this.heroService.updateBoardEE.emit(this._gameSession.gameboard);
                         this.heroService.setClickedCard(null);
                         this.heroService.drawCard(card.owningPlayer)
                             .then(function (newCard) {
@@ -40,52 +42,32 @@ var GameboardComponent = (function () {
             }
         }
     };
-    Object.defineProperty(GameboardComponent.prototype, "gameboard", {
+    Object.defineProperty(GameboardComponent.prototype, "gameSession", {
         get: function () {
-            return this._gameboard;
+            return this._gameSession;
         },
-        set: function (gameboard) {
-            this._gameboard = gameboard;
+        set: function (gameSession) {
+            this._gameSession = gameSession;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(GameboardComponent.prototype, "numRows", {
         get: function () {
-            return this._rowIndexes;
+            return this._numRows;
         },
-        set: function (numRows) {
-            this._rowIndexes = numRows;
+        set: function (value) {
+            this._numRows = value;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(GameboardComponent.prototype, "numCols", {
         get: function () {
-            return this._colndexes;
-        },
-        set: function (numCols) {
-            this._colndexes = numCols;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(GameboardComponent.prototype, "myTurn", {
-        get: function () {
-            return this._myTurn;
-        },
-        set: function (myTurn) {
-            this._myTurn = myTurn;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(GameboardComponent.prototype, "power", {
-        get: function () {
-            return this._power;
+            return this._numCols;
         },
         set: function (value) {
-            this._power = value;
+            this._numCols = value;
         },
         enumerable: true,
         configurable: true
@@ -94,9 +76,9 @@ var GameboardComponent = (function () {
 }());
 __decorate([
     core_1.Input(),
-    __metadata("design:type", Array),
-    __metadata("design:paramtypes", [Array])
-], GameboardComponent.prototype, "gameboard", null);
+    __metadata("design:type", gamesession_1.GameSession),
+    __metadata("design:paramtypes", [gamesession_1.GameSession])
+], GameboardComponent.prototype, "gameSession", null);
 __decorate([
     core_1.Input(),
     __metadata("design:type", Array),
@@ -107,20 +89,10 @@ __decorate([
     __metadata("design:type", Array),
     __metadata("design:paramtypes", [Array])
 ], GameboardComponent.prototype, "numCols", null);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Boolean),
-    __metadata("design:paramtypes", [Boolean])
-], GameboardComponent.prototype, "myTurn", null);
-__decorate([
-    core_1.Input(),
-    __metadata("design:type", Number),
-    __metadata("design:paramtypes", [Number])
-], GameboardComponent.prototype, "power", null);
 GameboardComponent = __decorate([
     core_1.Component({
         selector: 'game-board',
-        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" \n            (click)=\"processClickedCell(rowNum, colNum)\" \n            [ngClass]=\"[(myTurn && rowNum === 4) ? 'playable' : '', (gameboard[rowNum][colNum].team === 'TEAM1') ? 'team1' : 'team2']\">\n          <p *ngIf=\"gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameboard[rowNum][colNum].type}}</p>\n          <p *ngIf=\"gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameboard[rowNum][colNum].might}}</p>\n          <p *ngIf=\"gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameboard[rowNum][colNum].move}}</p>\n        </td>\n      </tr>\n    </table>\n  ",
+        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" \n            (click)=\"processClickedCell(rowNum, colNum)\" \n            [ngClass]=\"[(gameSession.myTurn && rowNum === 4) ? 'playable' : '', (gameSession.gameboard[rowNum][colNum].team === 'TEAM1') ? 'team1' : 'team2']\">\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].type}}</p>\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].might}}</p>\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].move}}</p>\n        </td>\n      </tr>\n    </table>\n  ",
         styleUrls: ['./gameboard.component.css']
     }),
     __metadata("design:paramtypes", [hero_service_1.HeroService])

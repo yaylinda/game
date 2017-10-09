@@ -63,9 +63,9 @@ public class GamePlayService {
 
         return new GameSessionDTO(
                 this.playerGameSessionRepo.getGameSessionById(invokingPlayerId).
-                        getPlayers().get(invokingPlayerId),
+                        getPlayers().get(invokingPlayerId), false,
                 this.playerGameSessionRepo.getGameSessionById(invokingPlayerId).
-                        getPlayerGameboards().get(invokingPlayerId), false); // this gets sent to player 2
+                        getPlayerGameboards().get(invokingPlayerId)); // this gets sent to player 2
     }
 
     public GameSessionDTO pollForGame(String playerId) {
@@ -73,9 +73,9 @@ public class GamePlayService {
         if (gameSession != null && gameSession.getPlayerGameSessionStatuses().get(playerId) == GameSessionStatus.NEW) {
             return new GameSessionDTO(
                     this.playerGameSessionRepo.getGameSessionById(playerId).
-                            getPlayers().get(playerId),
+                            getPlayers().get(playerId), true,
                     this.playerGameSessionRepo.getGameSessionById(playerId).
-                            getPlayerGameboards().get(playerId), true); // this gets sent to player 1
+                            getPlayerGameboards().get(playerId)); // this gets sent to player 1
         } else {
             return new GameSessionDTO();
         }
@@ -86,7 +86,8 @@ public class GamePlayService {
         return playerGameSessionRepo.getGameSessionById(playerId).drawCard(playerId, team);
     }
 
-    public void updateGameData(String playerId, GameSessionDTO gameSession) {
+    public void updateGameData(GameSessionDTO gameSession) {
+        String playerId = gameSession.getPlayer().getId();
         this.playerGameSessionRepo.getGameSessionById(playerId).updateGameData(playerId, gameSession);
     }
 }

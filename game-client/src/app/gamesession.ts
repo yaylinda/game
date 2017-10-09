@@ -1,9 +1,10 @@
 import {Player} from "./player";
-import {GameBoard} from "./gameboard";
-import {Card} from "./card";
+import {Cell} from "./cell";
 
 export class GameSession {
   player: Player;
-  gameboard: GameBoard;
+  gameboard: Cell[][];
   myTurn: boolean;
+  numRows: number;
+  numCols: number;
 }

@@ -87,9 +87,9 @@ public class GamePlayController {
      * @param gameSession
      * @return
      */
-    @RequestMapping(value = "game/board/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<GameSessionDTO> updateBoard(@PathVariable String id, @RequestBody GameSessionDTO gameSession) {
-        gamePlayService.updateGameData(id, gameSession);
+    @RequestMapping(value = "game/board", method = RequestMethod.PUT)
+    public ResponseEntity<GameSessionDTO> updateBoard(@RequestBody GameSessionDTO gameSession) {
+        gamePlayService.updateGameData(gameSession);
         return ResponseEntity.ok(gameSession);
     }
 }

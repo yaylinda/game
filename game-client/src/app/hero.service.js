@@ -30,6 +30,7 @@ var HeroService = (function () {
         this.pollUrl = '/game/poll';
         this.updateHandEE = new core_1.EventEmitter();
         this.updatePowerEE = new core_1.EventEmitter();
+        this.updateBoardEE = new core_1.EventEmitter();
     }
     HeroService.prototype.joinGame = function (name) {
         var url = "" + this.baseUrl + this.joinGameUrl + "/" + name;
@@ -89,15 +90,14 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HeroService.prototype.endTurn = function (id) {
-        var url = "" + this.baseUrl + this.boardUrl + "/" + id;
+    HeroService.prototype.endTurn = function (gameSession) {
+        var url = "" + this.baseUrl + this.boardUrl;
         return this.http
-            .put(url, { headers: this.headers })
+            .put(url, gameSession, { headers: this.headers })
             .toPromise()
             .then()
             .catch(this.handleError);
     };
-    // TODO update board
     HeroService.prototype.setClickedCard = function (card) {
         this.selectedCard = card;
     };
@@ -116,6 +116,12 @@ var HeroService = (function () {
     HeroService.prototype.getUpdatedPower = function () {
         return this.updatePowerEE;
     };
+    HeroService.prototype.updateBoard = function (board) {
+        this.updateBoardEE.emit(board);
+    };
+    HeroService.prototype.getUpdatedBoard = function () {
+        return this.updateBoardEE;
+    };
     HeroService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
@@ -130,6 +136,10 @@ __decorate([
     core_1.Output(),
     __metadata("design:type", core_1.EventEmitter)
 ], HeroService.prototype, "updatePowerEE", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], HeroService.prototype, "updateBoardEE", void 0);
 HeroService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])

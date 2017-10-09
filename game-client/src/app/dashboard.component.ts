@@ -49,8 +49,8 @@ export class DashboardComponent implements OnInit {
     this.gameSession = gameSession;
     this.showGameboard = true;
     this.showLoading = false;
-    this.numRows = Array.from(Array(gameSession.gameboard.numRows),(x,i)=>i);
-    this.numCols = Array.from(Array(gameSession.gameboard.numCols),(x,i)=>i);
+    this.numRows = Array.from(Array(gameSession.numRows),(x,i)=>i);
+    this.numCols = Array.from(Array(gameSession.numCols),(x,i)=>i);
     console.log(this.gameSession.gameboard);
   }
 }

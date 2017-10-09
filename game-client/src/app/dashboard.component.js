@@ -48,8 +48,8 @@ var DashboardComponent = (function () {
         this.gameSession = gameSession;
         this.showGameboard = true;
         this.showLoading = false;
-        this.numRows = Array.from(Array(gameSession.gameboard.numRows), function (x, i) { return i; });
-        this.numCols = Array.from(Array(gameSession.gameboard.numCols), function (x, i) { return i; });
+        this.numRows = Array.from(Array(gameSession.numRows), function (x, i) { return i; });
+        this.numCols = Array.from(Array(gameSession.numCols), function (x, i) { return i; });
         console.log(this.gameSession.gameboard);
     };
     return DashboardComponent;

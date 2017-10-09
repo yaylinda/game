@@ -60,7 +60,7 @@ public class GameSession {
         this.playerGameboards.put(player2.getId(), new GameBoard(numRows, numCols));
 
         this.playerGameSessionStatuses.put(player1.getId(), GameSessionStatus.NEW);
-        this.playerGameSessionStatuses.put(player2.getId(), GameSessionStatus.NEW);
+        this.playerGameSessionStatuses.put(player2.getId(), GameSessionStatus.OLD);
     }
 
     public Card drawCard(String owningPlayerId, String owningTeam) {
@@ -80,7 +80,7 @@ public class GameSession {
     public void updateGameData(String playerId, GameSessionDTO gameSession) {
         this.players.get(playerId).setPower(players.get(playerId).getPower() + 1.0);
         this.players.get(playerId).setHand(gameSession.getPlayer().getHand());
-        this.playerGameboards.put(playerId, gameSession.getGameboard());
+        this.playerGameboards.get(playerId).setBoard(gameSession.getGameboard());
         this.playerGameSessionStatuses.put(playerId, GameSessionStatus.OLD);
         this.playerTurns.put(playerId, false);
 
@@ -88,7 +88,7 @@ public class GameSession {
         for (String id : players.keySet()) {
             if (!id.equals(playerId)) {
                 // TODO logic to update other player's board correctly
-                this.playerGameboards.put(id, gameSession.getGameboard());
+                this.playerGameboards.get(id).setBoard(gameSession.getGameboard());
 
                 this.playerGameSessionStatuses.put(id, GameSessionStatus.NEW);
                 this.playerTurns.put(id, true);

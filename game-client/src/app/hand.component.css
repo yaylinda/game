@@ -5,10 +5,12 @@
 
 #end-turn-btn {
   float: right;
-  vertical-align: middle;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 #game-stats {
   float: left;
-  vertical-align: middle;
+  margin-top: auto;
+  margin-bottom: auto;
 }

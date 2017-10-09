@@ -16,19 +16,9 @@
 
     </div>
 
-    <game-board
-      [gameboard]="gameSession.gameboard.board"
-      [numRows]="numRows"
-      [numCols]="numCols"
-      [myTurn]="gameSession.myTurn"
-      [power]="gameSession.player.power">
-    </game-board>
+    <game-board [gameSession]="gameSession" [numRows]="numRows" [numCols]="numCols"></game-board>
 
-    <hand
-      [cards]="gameSession.player.hand"
-      [myTurn]="gameSession.myTurn"
-      [power]="gameSession.player.power">
-    </hand>
+    <hand [gameSession]="gameSession"></hand>
 
   </div>
 </div>

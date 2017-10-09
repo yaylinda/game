@@ -1,17 +1,19 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {Card} from "./card";
 import {HeroService} from "./hero.service";
+import {Cell} from "./cell";
+import {GameSession} from "./gamesession";
 
 @Component({
   selector: 'hand',
   template: `
     <div id="hand">
       <div id="game-stats">
-        <p *ngIf="myTurn">My Turn</p>
-        <p *ngIf="!myTurn">Opponent's Turn</p>
-        <p>Power: {{power}}</p>
+        <p *ngIf="gameSession.myTurn">My Turn</p>
+        <p *ngIf="!gameSession.myTurn">Opponent's Turn</p>
+        <p>Power: {{gameSession.player.power}}</p>
       </div>
-      <card *ngFor="let card of cards;"
+      <card *ngFor="let card of gameSession.player.hand;"
             (click)="processClickedCard(card)"
             [card]="card">
       </card>
@@ -22,64 +24,49 @@ import {HeroService} from "./hero.service";
 })
 
 export class HandComponent implements OnInit {
-  private _cards: Card[];
-  private _myTurn: boolean;
-  private _power: number;
-  private lastSelectedCard: Card;
+  private _gameSession: GameSession;
+  private _lastSelectedCard: Card;
 
   constructor(private heroService: HeroService) { }
 
   ngOnInit() {
     this.heroService.getUpdatedHand()
       .subscribe((newCard: Card) => {
-        const index = this._cards.indexOf(this.lastSelectedCard);
-        this._cards.splice(index, 1, newCard);
+        const index = this._gameSession.player.hand.indexOf(this._lastSelectedCard);
+        this._gameSession.player.hand.splice(index, 1, newCard);
       });
     this.heroService.getUpdatedPower()
       .subscribe((power: number) => {
-        this._power = power;
+        this._gameSession.player.power = power;
+      });
+    this.heroService.getUpdatedBoard()
+      .subscribe((board: Cell[][]) => {
+        this._gameSession.gameboard = board;
       });
   }
 
   processClickedCard(card: Card): void {
-    for (let otherCard of this._cards) {
-      otherCard.clicked = false;
+    if (this._gameSession.myTurn) {
+      for (let otherCard of this._gameSession.player.hand) {
+        otherCard.clicked = false;
+      }
+      card.clicked = true;
+      this._lastSelectedCard = card;
+      this.heroService.setClickedCard(card);
     }
-    card.clicked = true;
-    this.lastSelectedCard = card;
-    this.heroService.setClickedCard(card);
   }
 
   endTurn(): void {
-    this._myTurn = false;
-    // this.heroService.endTurn();
-    console.log('end turn');
+    this._gameSession.myTurn = false;
+    this.heroService.endTurn(this._gameSession);
   }
 
   @Input()
-  set cards(cards: Card[]) {
-    this._cards = cards;
+  set gameSession(gameSession: GameSession) {
+    this._gameSession = gameSession;
   }
 
-  get cards(): Card[] {
-    return this._cards;
-  }
-
-  @Input()
-  set myTurn(myTurn: boolean) {
-    this._myTurn = myTurn;
-  }
-
-  get myTurn(): boolean {
-    return this._myTurn;
-  }
-
-  @Input()
-  get power(): number {
-    return this._power;
-  }
-
-  set power(value: number) {
-    this._power = value;
+  get gameSession(): GameSession {
+    return this._gameSession;
   }
 }
