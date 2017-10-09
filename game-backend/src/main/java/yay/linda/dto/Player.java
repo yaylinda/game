@@ -11,35 +11,35 @@ import java.util.UUID;
  */
 public class Player {
 
-    private UUID id;
-    private UUID opponentId;
+    private String id;
+    private String opponentId;
     private String name;
     private String team;
     private double power;
     private List<Card> hand;
 
     public Player() {
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
     }
 
     public Player(String name) {
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().toString();
         this.name = name;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public UUID getOpponentId() {
+    public String getOpponentId() {
         return opponentId;
     }
 
-    public void setOpponentId(UUID opponentId) {
+    public void setOpponentId(String opponentId) {
         this.opponentId = opponentId;
     }
 

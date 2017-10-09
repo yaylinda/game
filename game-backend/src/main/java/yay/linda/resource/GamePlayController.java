@@ -3,13 +3,11 @@ package yay.linda.resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yay.linda.dto.*;
-import yay.linda.service.GameSession;
+import yay.linda.game.GameSession;
 import yay.linda.service.GamePlayService;
-import yay.linda.service.PlayerService;
 
 import javax.inject.Inject;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Controller to handle all requests related to actual game play.
@@ -68,30 +66,33 @@ public class GamePlayController {
      */
     @RequestMapping(value = "game/poll/{id}", method = RequestMethod.GET)
     public ResponseEntity<GameSession> pollForGame(@PathVariable String id) {
-        GameSession gameSession = gamePlayService.pollForGame(UUID.fromString(id));
+        GameSession gameSession = gamePlayService.pollForGame(id);
         if (gameSession != null) {
             return ResponseEntity.ok(gameSession);
         }
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "game/card/{id}", method = RequestMethod.GET)
     public ResponseEntity<Card> drawCard(@PathVariable String id) {
-        Card nextCard = gamePlayService.drawCard(UUID.fromString(id));
+        Card nextCard = gamePlayService.drawCard(id);
         return ResponseEntity.ok(nextCard);
     }
 
-    @RequestMapping(value = "game/card", method = RequestMethod.PUT)
-    public ResponseEntity<GameBoard> placeCard(Card card, int x, int y) {
-        GameBoard gameBoard = gamePlayService.placeCard(card, x, y);
-        return ResponseEntity.ok(gameBoard);
+    /**
+     *
+     * @param id
+     * @param gameboard
+     * @return
+     */
+    @RequestMapping(value = "game/board/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<GameBoard> updateBoard(@PathVariable String id, @RequestBody GameBoard gameboard) {
+        gamePlayService.updateBoard(id, gameboard);
+        return ResponseEntity.ok(gameboard);
     }
-
-    @RequestMapping(value = "game/board", method = RequestMethod.PUT)
-    public ResponseEntity<GameBoard> updateBoard(GameBoard gameBoard) {
-        gamePlayService.updateBoard(gameBoard);
-        return ResponseEntity.ok(gameBoard);
-    }
-
-
 }

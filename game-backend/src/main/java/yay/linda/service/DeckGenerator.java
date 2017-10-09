@@ -3,10 +3,12 @@ package yay.linda.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.stereotype.Component;
 import yay.linda.config.GameConfigurations;
 import yay.linda.dto.Card;
 import yay.linda.dto.enums.CardType;
 
+import javax.inject.Inject;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,13 +17,15 @@ import java.util.*;
 /**
  * Class to handle the creation of a new random deck. Has features stats and serialization.
  */
+@Component
 public class DeckGenerator {
 
+    @Inject
     private GameConfigurations gameConfigurations;
+
     private Random random;
 
-    public DeckGenerator(GameConfigurations gameConfigurations) {
-        this.gameConfigurations = gameConfigurations;
+    public DeckGenerator() {
         this.random = new Random();
     }
 

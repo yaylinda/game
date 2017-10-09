@@ -1,29 +1,25 @@
 package yay.linda.repo;
 
-import yay.linda.service.GameSession;
+import yay.linda.game.GameSession;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class PlayerGameSessionRepo {
-    private Map<UUID, GameSession> gameSessionMap;
+    private Map<String, GameSession> gameSessionMap;
 
     public PlayerGameSessionRepo() {
         this.gameSessionMap = new HashMap<>();
     }
 
-    public void assignGameSession(UUID playerId, GameSession gameSession) {
+    public void assignGameSession(String playerId, GameSession gameSession) {
         this.gameSessionMap.put(playerId, gameSession);
     }
 
-    public GameSession getGameSessionById(UUID id) {
+    public GameSession getGameSessionById(String id) {
         return this.gameSessionMap.get(id);
     }
 
-    public List<String> getPlayerIds() {
-        return gameSessionMap.keySet().stream().map(UUID::toString).collect(Collectors.toList());
+    public Set<String> getPlayerIds() {
+        return gameSessionMap.keySet();
     }
 }

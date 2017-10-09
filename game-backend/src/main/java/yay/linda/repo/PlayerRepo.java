@@ -2,14 +2,11 @@ package yay.linda.repo;
 
 import yay.linda.dto.Player;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PlayerRepo {
-    private Map<UUID, Player> playerMap;
+    private Map<String, Player> playerMap;
 
     public PlayerRepo() {
         this.playerMap = new HashMap<>();
@@ -19,11 +16,11 @@ public class PlayerRepo {
         this.playerMap.put(player.getId(), player);
     }
 
-    public Player getPlayerById(UUID id) {
+    public Player getPlayerById(String id) {
         return this.playerMap.get(id);
     }
 
-    public List<String> getPlayerIds() {
-        return playerMap.keySet().stream().map(UUID::toString).collect(Collectors.toList());
+    public Set<String> getPlayerIds() {
+        return playerMap.keySet();
     }
 }
