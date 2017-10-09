@@ -34,7 +34,7 @@ __decorate([
 CardComponent = __decorate([
     core_1.Component({
         selector: 'card',
-        template: "\n    <div id=\"card\" [ngClass]=\"card.clicked ? 'highlightCard' : ''\">\n      <p>{{card.cardType}}</p>\n      <p>Cost: {{card.cost}}</p>\n      <p>Might: {{card.might}}</p>\n      <p>Movement: {{card.movement}}</p>\n    </div>\n  ",
+        template: "\n    <div id=\"card\" [ngClass]=\"card.clicked ? 'highlight-card' : ''\">\n      <p>{{card.cardType}}</p>\n      <p>Cost: {{card.cost}}</p>\n      <p>Might: {{card.might}}</p>\n      <p>Movement: {{card.movement}}</p>\n    </div>\n  ",
         styleUrls: ['./card.component.css']
     })
 ], CardComponent);

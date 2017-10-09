@@ -7,4 +7,5 @@ var Player = (function () {
     return Player;
 }());
 exports.Player = Player;
+;
 //# sourceMappingURL=player.js.map

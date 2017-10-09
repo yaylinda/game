@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
         } else if (this.player.team === 'TEAM2') {
           this.heroService.getPlayerById(player.opponentId)
             .then(player1 => {
-              this.heroService.startGame(player1, player)
+              this.heroService.startGame(player1, player, player.id)
                 .then(gameSession => {
                   this.setupGame(gameSession);
                 });
@@ -49,8 +49,8 @@ export class DashboardComponent implements OnInit {
     this.gameSession = gameSession;
     this.showGameboard = true;
     this.showLoading = false;
-    this.numRows = Array.from(Array(gameSession.gameBoard.numRows),(x,i)=>i);
-    this.numCols = Array.from(Array(gameSession.gameBoard.numCols),(x,i)=>i);
-    console.log(this.gameSession.gameBoard);
+    this.numRows = Array.from(Array(gameSession.gameboard.numRows),(x,i)=>i);
+    this.numCols = Array.from(Array(gameSession.gameboard.numCols),(x,i)=>i);
+    console.log(this.gameSession.gameboard);
   }
 }

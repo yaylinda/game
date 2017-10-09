@@ -4,7 +4,7 @@ import {Card} from "./card";
 @Component({
   selector: 'card',
   template: `
-    <div id="card" [ngClass]="card.clicked ? 'highlightCard' : ''">
+    <div id="card" [ngClass]="card.clicked ? 'highlight-card' : ''">
       <p>{{card.cardType}}</p>
       <p>Cost: {{card.cost}}</p>
       <p>Might: {{card.might}}</p>
@@ -16,7 +16,6 @@ import {Card} from "./card";
 
 export class CardComponent {
   private _card: Card;
-  private _myTurn: boolean;
 
   @Input()
   set card(card: Card) {

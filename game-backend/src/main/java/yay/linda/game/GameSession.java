@@ -26,20 +26,21 @@ public class GameSession {
 
     private Map<String, Boolean> playerTurns;
 
+    private DeckGenerator deckGenerator;
+
     private List<Card> deck;
 
     private int handSize;
 
-    @Inject
-    private DeckGenerator deckGenerator;
 
     public GameSession() { }
 
-    public GameSession(Player player1, Player player2, int numRows, int numCols, int handSize) {
+    public GameSession(Player player1, Player player2, DeckGenerator deckGenerator, int numRows, int numCols, int handSize) {
         this.players = new HashMap<>();
         this.playerGameboards = new HashMap<>();
         this.playerGameSessionStatuses = new HashMap<>();
         this.playerTurns = new HashMap<>();
+        this.deckGenerator = deckGenerator;
         this.deck = this.deckGenerator.generateDeck();
         this.handSize = handSize;
 
@@ -99,7 +100,6 @@ public class GameSession {
         List<Card> hand = new ArrayList<>();
         for (int i = 0; i < handSize; i++) {
             Card card = this.drawCard(owningPlayerId);
-            card.setOwningTeam(players.get(owningPlayerId).getTeam());
             card.setOwningPlayer(owningPlayerId);
             hand.add(card);
         }

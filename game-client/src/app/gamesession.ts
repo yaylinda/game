@@ -4,6 +4,6 @@ import {Card} from "./card";
 
 export class GameSession {
   player: Player;
-  gameBoard: GameBoard;
+  gameboard: GameBoard;
   myTurn: boolean;
 }

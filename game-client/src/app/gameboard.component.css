@@ -20,7 +20,7 @@ td {
   background: white;
 }
 
-td:hover {
+td.my-turn:hover {
   background-color: lightcyan;
   cursor: pointer;
 }

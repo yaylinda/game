@@ -18,21 +18,21 @@ var GameboardComponent = (function () {
     GameboardComponent.prototype.processClickedCell = function (row, col) {
         var _this = this;
         console.log("(" + row + ", " + col + ")");
-        var card = this.heroService.getClickedCard();
-        if (card) {
-            console.log(card);
-            this._gameboard[row][col].type = card.cardType;
-            this._gameboard[row][col].might = card.might;
-            this._gameboard[row][col].move = card.movement;
-            this.heroService.setClickedCard(null);
-            this.heroService.drawCard(card.owningPlayer)
-                .then(function (newCard) {
-                // const index = this._cards.indexOf(card);
-                // this._cards.splice(index, 1, newCard);
-                _this.heroService.updateHand(newCard);
-                console.log("drew new card......");
-                console.log(newCard);
-            });
+        if (this.myTurn === true) {
+            if (row === 4) {
+                var card = this.heroService.getClickedCard();
+                if (card) {
+                    this._gameboard[row][col].type = card.cardType;
+                    this._gameboard[row][col].might = card.might;
+                    this._gameboard[row][col].move = card.movement;
+                    this.heroService.setClickedCard(null);
+                    this.heroService.drawCard(card.owningPlayer)
+                        .then(function (newCard) {
+                        _this.heroService.updateHand(newCard);
+                        _this._myTurn = false;
+                    });
+                }
+            }
         }
     };
     Object.defineProperty(GameboardComponent.prototype, "gameboard", {
@@ -65,6 +65,16 @@ var GameboardComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(GameboardComponent.prototype, "myTurn", {
+        get: function () {
+            return this._myTurn;
+        },
+        set: function (myTurn) {
+            this._myTurn = myTurn;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return GameboardComponent;
 }());
 __decorate([
@@ -82,10 +92,15 @@ __decorate([
     __metadata("design:type", Array),
     __metadata("design:paramtypes", [Array])
 ], GameboardComponent.prototype, "numCols", null);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], GameboardComponent.prototype, "myTurn", null);
 GameboardComponent = __decorate([
     core_1.Component({
         selector: 'game-board',
-        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" (click)=\"processClickedCell(rowNum, colNum)\">\n          <p>{{gameboard[rowNum][colNum].type}}</p>\n          <p>{{gameboard[rowNum][colNum].might}}</p>\n          <p>{{gameboard[rowNum][colNum].move}}</p>\n        </td>\n      </tr>\n    </table>\n  ",
+        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" (click)=\"processClickedCell(rowNum, colNum)\" [ngClass]=\"(myTurn && rowNum === 4) ? 'myTurn' : ''\">\n          <p>{{gameboard[rowNum][colNum].type}}</p>\n          <p>{{gameboard[rowNum][colNum].might}}</p>\n          <p>{{gameboard[rowNum][colNum].move}}</p>\n        </td>\n      </tr>\n    </table>\n  ",
         styleUrls: ['./gameboard.component.css']
     }),
     __metadata("design:paramtypes", [hero_service_1.HeroService])

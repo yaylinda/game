@@ -34,12 +34,37 @@ var HandComponent = (function () {
         this.lastSelectedCard = card;
         this.heroService.setClickedCard(card);
     };
+    HandComponent.prototype.endTurn = function () {
+        this._myTurn = false;
+        // this.heroService.endTurn();
+        console.log('end turn');
+    };
     Object.defineProperty(HandComponent.prototype, "cards", {
         get: function () {
             return this._cards;
         },
         set: function (cards) {
             this._cards = cards;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(HandComponent.prototype, "myTurn", {
+        get: function () {
+            return this._myTurn;
+        },
+        set: function (myTurn) {
+            this._myTurn = myTurn;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(HandComponent.prototype, "power", {
+        get: function () {
+            return this._power;
+        },
+        set: function (value) {
+            this._power = value;
         },
         enumerable: true,
         configurable: true
@@ -51,10 +76,20 @@ __decorate([
     __metadata("design:type", Array),
     __metadata("design:paramtypes", [Array])
 ], HandComponent.prototype, "cards", null);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], HandComponent.prototype, "myTurn", null);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number),
+    __metadata("design:paramtypes", [Number])
+], HandComponent.prototype, "power", null);
 HandComponent = __decorate([
     core_1.Component({
         selector: 'hand',
-        template: "\n    <div id=\"hand\">\n      <card *ngFor=\"let card of cards;\"\n            (click)=\"processClickedCard(card)\"\n            [card]=\"card\">\n      </card>\n    </div>\n  ",
+        template: "\n    <div id=\"hand\">\n      <div id=\"game-stats\">\n        <p *ngIf=\"myTurn\">My Turn</p>\n        <p *ngIf=\"!myTurn\">Opponent's Turn</p>\n        <p>Power: {{power}}</p>\n      </div>\n      <card *ngFor=\"let card of cards;\"\n            (click)=\"processClickedCard(card)\"\n            [card]=\"card\">\n      </card>\n      <button id=\"end-turn-btn\" (click)=\"endTurn()\">End Turn</button>\n    </div>\n  ",
         styleUrls: ['./hand.component.css']
     }),
     __metadata("design:paramtypes", [hero_service_1.HeroService])

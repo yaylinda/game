@@ -7,7 +7,7 @@ import {HeroService} from "./hero.service";
   template: `
     <table id="gameboard">
       <tr *ngFor="let rowNum of numRows">
-        <td *ngFor="let colNum of numCols" (click)="processClickedCell(rowNum, colNum)">
+        <td *ngFor="let colNum of numCols" (click)="processClickedCell(rowNum, colNum)" [ngClass]="(myTurn && rowNum === 4) ? 'myTurn' : ''">
           <p>{{gameboard[rowNum][colNum].type}}</p>
           <p>{{gameboard[rowNum][colNum].might}}</p>
           <p>{{gameboard[rowNum][colNum].move}}</p>
@@ -28,18 +28,20 @@ export class GameboardComponent {
 
   processClickedCell(row: number, col: number): void {
     console.log(`(${row}, ${col})`);
-    if (row === 4) { // only put card on first row
-      let card = this.heroService.getClickedCard();
-      if (card) {
-        this._gameboard[row][col].type = card.cardType;
-        this._gameboard[row][col].might = card.might;
-        this._gameboard[row][col].move = card.movement;
-        this.heroService.setClickedCard(null);
-        this.heroService.drawCard(card.owningPlayer)
-          .then(newCard => {
-            this.heroService.updateHand(newCard);
-            this._myTurn = false;
-          });
+    if (this.myTurn === true) { // only if it's my turn
+      if (row === 4) { // only put card on first row
+        let card = this.heroService.getClickedCard();
+        if (card) {
+          this._gameboard[row][col].type = card.cardType;
+          this._gameboard[row][col].might = card.might;
+          this._gameboard[row][col].move = card.movement;
+          this.heroService.setClickedCard(null);
+          this.heroService.drawCard(card.owningPlayer)
+            .then(newCard => {
+              this.heroService.updateHand(newCard);
+              this._myTurn = false;
+            });
+        }
       }
     }
   }

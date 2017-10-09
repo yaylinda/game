@@ -41,8 +41,9 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  startGame(player1: Player, player2: Player): Promise<GameSession> {
-    const url = `${this.baseUrl}${this.startGameUrl}`;
+  startGame(player1: Player, player2: Player, id: string): Promise<GameSession> {
+    console.log(`starting game: ${id}`);
+    const url = `${this.baseUrl}${this.startGameUrl}/${id}`;
     return this.http
       .post(url, [player1, player2], {headers: this.headers})
       .toPromise()
@@ -73,7 +74,7 @@ export class HeroService {
             .get(url, {headers: this.headers})
             .toPromise())
           .filter(x => {
-            return x.json().gameBoard != null;
+            return x.json().gameboard != null;
           })
           .take(1)
           .map(gameSession => {

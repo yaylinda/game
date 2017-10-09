@@ -29,6 +29,9 @@ public class GamePlayService {
     @Inject
     private GameConfigurations gameConfigurations;
 
+    @Inject
+    private DeckGenerator deckGenerator;
+
     public Player join(String name) {
         System.out.printf("%s is joining the game\n", name);
         Player player = new Player(name);
@@ -51,7 +54,7 @@ public class GamePlayService {
     }
 
     public GameSessionDTO startGame(Player player1, Player player2, String invokingPlayerId) {
-        GameSession gameSession = new GameSession(player1, player2,
+        GameSession gameSession = new GameSession(player1, player2, this.deckGenerator,
                 gameConfigurations.getNumRows(),
                 gameConfigurations.getNumCols(),
                 gameConfigurations.getHandSize());
@@ -67,14 +70,14 @@ public class GamePlayService {
 
     public GameSessionDTO pollForGame(String playerId) {
         GameSession gameSession = playerGameSessionRepo.getGameSessionById(playerId);
-        if (gameSession != null && gameSession.getPlayerGameSessionStatuses().get(playerId) != GameSessionStatus.NEW) {
+        if (gameSession != null && gameSession.getPlayerGameSessionStatuses().get(playerId) == GameSessionStatus.NEW) {
             return new GameSessionDTO(
                     this.playerGameSessionRepo.getGameSessionById(playerId).
                             getPlayers().get(playerId),
                     this.playerGameSessionRepo.getGameSessionById(playerId).
-                            getPlayerGameboards().get(playerId), true); // this gets setnt to player 1
+                            getPlayerGameboards().get(playerId), true); // this gets sent to player 1
         } else {
-            return null;
+            return new GameSessionDTO();
         }
     }
 

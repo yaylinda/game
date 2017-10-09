@@ -36,7 +36,7 @@ var DashboardComponent = (function () {
             else if (_this.player.team === 'TEAM2') {
                 _this.heroService.getPlayerById(player.opponentId)
                     .then(function (player1) {
-                    _this.heroService.startGame(player1, player)
+                    _this.heroService.startGame(player1, player, player.id)
                         .then(function (gameSession) {
                         _this.setupGame(gameSession);
                     });
@@ -48,9 +48,9 @@ var DashboardComponent = (function () {
         this.gameSession = gameSession;
         this.showGameboard = true;
         this.showLoading = false;
-        this.numRows = Array.from(Array(gameSession.gameBoard.numRows), function (x, i) { return i; });
-        this.numCols = Array.from(Array(gameSession.gameBoard.numCols), function (x, i) { return i; });
-        console.log(this.gameSession.gameBoard);
+        this.numRows = Array.from(Array(gameSession.gameboard.numRows), function (x, i) { return i; });
+        this.numCols = Array.from(Array(gameSession.gameboard.numCols), function (x, i) { return i; });
+        console.log(this.gameSession.gameboard);
     };
     return DashboardComponent;
 }());

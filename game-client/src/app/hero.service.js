@@ -38,8 +38,9 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HeroService.prototype.startGame = function (player1, player2) {
-        var url = "" + this.baseUrl + this.startGameUrl;
+    HeroService.prototype.startGame = function (player1, player2, id) {
+        console.log("starting game: " + id);
+        var url = "" + this.baseUrl + this.startGameUrl + "/" + id;
         return this.http
             .post(url, [player1, player2], { headers: this.headers })
             .toPromise()
@@ -69,7 +70,7 @@ var HeroService = (function () {
                 .get(url, { headers: _this.headers })
                 .toPromise(); })
                 .filter(function (x) {
-                return x.json().gameBoard != null;
+                return x.json().gameboard != null;
             })
                 .take(1)
                 .map(function (gameSession) {
@@ -87,9 +88,15 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    HeroService.prototype.endTurn = function (id) {
+        var url = "" + this.baseUrl + this.boardUrl + "/" + id;
+        return this.http
+            .put(url, { headers: this.headers })
+            .toPromise()
+            .then()
+            .catch(this.handleError);
+    };
     // TODO update board
-    // TODO draw cards
-    // TODO place card
     HeroService.prototype.setClickedCard = function (card) {
         this.selectedCard = card;
     };
