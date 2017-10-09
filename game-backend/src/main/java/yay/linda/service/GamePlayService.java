@@ -5,6 +5,7 @@ import yay.linda.config.GameConfigurations;
 import yay.linda.dto.Card;
 import yay.linda.dto.GameBoard;
 import yay.linda.dto.Player;
+import yay.linda.dto.enums.GameSessionStatus;
 import yay.linda.dto.enums.PlayerTeam;
 import yay.linda.game.GameSession;
 import yay.linda.repo.PlayerGameSessionRepo;
@@ -62,10 +63,11 @@ public class GamePlayService {
 
     public GameSession pollForGame(String playerId) {
         GameSession gameSession = playerGameSessionRepo.getGameSessionById(playerId);
-        if (gameSession != null) {
+        if (gameSession != null && gameSession.getPlayerGameSessionStatuses().get(playerId) != GameSessionStatus.NEW) {
+            // TODO filter game session info to not contain opponent's info
             return gameSession;
         } else {
-            return GameSession.none();
+            return null;
         }
     }
 

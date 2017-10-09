@@ -20,9 +20,6 @@ public class GamePlayController {
     @Inject
     private GamePlayService gamePlayService;
 
-//    @Inject
-//    private PlayerService playerService;
-
     /**
      *
      * @param name
