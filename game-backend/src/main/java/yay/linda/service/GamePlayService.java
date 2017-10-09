@@ -82,7 +82,8 @@ public class GamePlayService {
     }
 
     public Card drawCard(String playerId) {
-        return playerGameSessionRepo.getGameSessionById(playerId).drawCard(playerId);
+        String team = playerRepo.getPlayerById(playerId).getTeam();
+        return playerGameSessionRepo.getGameSessionById(playerId).drawCard(playerId, team);
     }
 
     public void updateGameData(String playerId, GameSessionDTO gameSession) {

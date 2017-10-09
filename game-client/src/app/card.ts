@@ -4,5 +4,6 @@ export class Card {
   movement: number;
   cost: number;
   owningPlayer: string;
+  owningTeam: string;
   clicked: boolean;
 }

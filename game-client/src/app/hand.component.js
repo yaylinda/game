@@ -19,10 +19,12 @@ var HandComponent = (function () {
         var _this = this;
         this.heroService.getUpdatedHand()
             .subscribe(function (newCard) {
-            console.log('recieved new card which is......');
-            console.log(newCard);
             var index = _this._cards.indexOf(_this.lastSelectedCard);
             _this._cards.splice(index, 1, newCard);
+        });
+        this.heroService.getUpdatedPower()
+            .subscribe(function (power) {
+            _this._power = power;
         });
     };
     HandComponent.prototype.processClickedCard = function (card) {

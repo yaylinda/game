@@ -17,20 +17,25 @@ var GameboardComponent = (function () {
     }
     GameboardComponent.prototype.processClickedCell = function (row, col) {
         var _this = this;
-        console.log("(" + row + ", " + col + ")");
+        console.log("clicked on: (" + row + ", " + col + ")");
         if (this.myTurn === true) {
             if (row === 4) {
                 var card = this.heroService.getClickedCard();
                 if (card) {
-                    this._gameboard[row][col].type = card.cardType;
-                    this._gameboard[row][col].might = card.might;
-                    this._gameboard[row][col].move = card.movement;
-                    this.heroService.setClickedCard(null);
-                    this.heroService.drawCard(card.owningPlayer)
-                        .then(function (newCard) {
-                        _this.heroService.updateHand(newCard);
-                        _this._myTurn = false;
-                    });
+                    if (this._power >= card.cost) {
+                        this._gameboard[row][col].state = 'OCCUPIED';
+                        this._gameboard[row][col].type = card.cardType;
+                        this._gameboard[row][col].might = card.might;
+                        this._gameboard[row][col].move = card.movement;
+                        this._gameboard[row][col].team = card.owningTeam;
+                        this._power = this._power - card.cost;
+                        this.heroService.updatePowerEE.emit(this._power);
+                        this.heroService.setClickedCard(null);
+                        this.heroService.drawCard(card.owningPlayer)
+                            .then(function (newCard) {
+                            _this.heroService.updateHand(newCard);
+                        });
+                    }
                 }
             }
         }
@@ -75,12 +80,22 @@ var GameboardComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(GameboardComponent.prototype, "power", {
+        get: function () {
+            return this._power;
+        },
+        set: function (value) {
+            this._power = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return GameboardComponent;
 }());
 __decorate([
     core_1.Input(),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:type", Array),
+    __metadata("design:paramtypes", [Array])
 ], GameboardComponent.prototype, "gameboard", null);
 __decorate([
     core_1.Input(),
@@ -97,10 +112,15 @@ __decorate([
     __metadata("design:type", Boolean),
     __metadata("design:paramtypes", [Boolean])
 ], GameboardComponent.prototype, "myTurn", null);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", Number),
+    __metadata("design:paramtypes", [Number])
+], GameboardComponent.prototype, "power", null);
 GameboardComponent = __decorate([
     core_1.Component({
         selector: 'game-board',
-        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" (click)=\"processClickedCell(rowNum, colNum)\" [ngClass]=\"(myTurn && rowNum === 4) ? 'myTurn' : ''\">\n          <p>{{gameboard[rowNum][colNum].type}}</p>\n          <p>{{gameboard[rowNum][colNum].might}}</p>\n          <p>{{gameboard[rowNum][colNum].move}}</p>\n        </td>\n      </tr>\n    </table>\n  ",
+        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" \n            (click)=\"processClickedCell(rowNum, colNum)\" \n            [ngClass]=\"[(myTurn && rowNum === 4) ? 'playable' : '', (gameboard[rowNum][colNum].team === 'TEAM1') ? 'team1' : 'team2']\">\n          <p *ngIf=\"gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameboard[rowNum][colNum].type}}</p>\n          <p *ngIf=\"gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameboard[rowNum][colNum].might}}</p>\n          <p *ngIf=\"gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameboard[rowNum][colNum].move}}</p>\n        </td>\n      </tr>\n    </table>\n  ",
         styleUrls: ['./gameboard.component.css']
     }),
     __metadata("design:paramtypes", [hero_service_1.HeroService])

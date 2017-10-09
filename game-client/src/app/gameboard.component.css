@@ -16,13 +16,20 @@ td {
   width: 120px;
   margin: 5px;
   display: inline-block;
-  color: lightslategray;
   background: white;
 }
 
-td.my-turn:hover {
+.playable:hover {
   background-color: lightcyan;
   cursor: pointer;
+}
+
+.team1 {
+  color: green;
+}
+
+.team2 {
+  color: red;
 }
 
 tr {

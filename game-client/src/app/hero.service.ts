@@ -29,6 +29,7 @@ export class HeroService {
   selectedCard: Card;
 
   @Output() updateHandEE: EventEmitter<Card> = new EventEmitter();
+  @Output() updatePowerEE: EventEmitter<number> = new EventEmitter();
 
   constructor(private http: Http) { }
 
@@ -119,6 +120,14 @@ export class HeroService {
 
   getUpdatedHand(): EventEmitter<Card> {
     return this.updateHandEE;
+  }
+
+  updatePower(power: number) {
+    this.updatePowerEE.emit(power);
+  }
+
+  getUpdatedPower(): EventEmitter<number> {
+    return this.updatePowerEE;
   }
 
   private handleError(error: any): Promise<any> {

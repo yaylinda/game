@@ -1,6 +1,7 @@
-import {Card} from "./card";
-
 export class Cell {
   state: string;
-  card: Card;
+  type: string;
+  might: number;
+  move: number;
+  team: string;
 }

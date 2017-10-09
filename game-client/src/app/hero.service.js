@@ -29,6 +29,7 @@ var HeroService = (function () {
         this.boardUrl = '/game/board';
         this.pollUrl = '/game/poll';
         this.updateHandEE = new core_1.EventEmitter();
+        this.updatePowerEE = new core_1.EventEmitter();
     }
     HeroService.prototype.joinGame = function (name) {
         var url = "" + this.baseUrl + this.joinGameUrl + "/" + name;
@@ -109,6 +110,12 @@ var HeroService = (function () {
     HeroService.prototype.getUpdatedHand = function () {
         return this.updateHandEE;
     };
+    HeroService.prototype.updatePower = function (power) {
+        this.updatePowerEE.emit(power);
+    };
+    HeroService.prototype.getUpdatedPower = function () {
+        return this.updatePowerEE;
+    };
     HeroService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
@@ -119,6 +126,10 @@ __decorate([
     core_1.Output(),
     __metadata("design:type", core_1.EventEmitter)
 ], HeroService.prototype, "updateHandEE", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], HeroService.prototype, "updatePowerEE", void 0);
 HeroService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])

@@ -7,32 +7,53 @@ import yay.linda.dto.enums.CellState;
  */
 public class Cell {
 
-    private CellState state;
-    private Card card;
+    private String state;
+    private String type;
+    private int might;
+    private int move;
+    private String team;
 
     public Cell() {
-        this.state = CellState.EMPTY;
-        this.card = null;
+        this.state = CellState.EMPTY.toString();
     }
 
-    public Cell(CellState state, Card card) {
-        this.state = state;
-        this.card = card;
-    }
-
-    public CellState getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(CellState state) {
+    public void setState(String state) {
         this.state = state;
     }
 
-    public Card getCard() {
-        return card;
+    public String getType() {
+        return type;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getMight() {
+        return might;
+    }
+
+    public void setMight(int might) {
+        this.might = might;
+    }
+
+    public int getMove() {
+        return move;
+    }
+
+    public void setMove(int move) {
+        this.move = move;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
     }
 }

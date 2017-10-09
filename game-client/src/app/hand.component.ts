@@ -32,10 +32,12 @@ export class HandComponent implements OnInit {
   ngOnInit() {
     this.heroService.getUpdatedHand()
       .subscribe((newCard: Card) => {
-        console.log('recieved new card which is......');
-        console.log(newCard);
         const index = this._cards.indexOf(this.lastSelectedCard);
         this._cards.splice(index, 1, newCard);
+      });
+    this.heroService.getUpdatedPower()
+      .subscribe((power: number) => {
+        this._power = power;
       });
   }
 

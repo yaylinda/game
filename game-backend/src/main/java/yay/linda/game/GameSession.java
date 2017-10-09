@@ -44,8 +44,8 @@ public class GameSession {
         this.deck = this.deckGenerator.generateDeck();
         this.handSize = handSize;
 
-        player1.setHand(this.pickStartingCards(player1.getId()));
-        player2.setHand(this.pickStartingCards(player2.getId()));
+        player1.setHand(this.pickStartingCards(player1.getId(), player1.getTeam()));
+        player2.setHand(this.pickStartingCards(player2.getId(), player2.getTeam()));
 
         player1.setOpponentName(player2.getName());
         player2.setOpponentName(player1.getName());
@@ -63,11 +63,11 @@ public class GameSession {
         this.playerGameSessionStatuses.put(player2.getId(), GameSessionStatus.NEW);
     }
 
-    public Card drawCard(String owningPlayerId) {
+    public Card drawCard(String owningPlayerId, String owningTeam) {
         int index = deckGenerator.getRandomNumberInRange(0, deck.size()-1);
         Card toReturn = deck.get(index);
         toReturn.setOwningPlayer(owningPlayerId);
-
+        toReturn.setOwningTeam(owningTeam);
         Card last = new Card(deck.get(deck.size()-1));
         deck.set(index, last);
         deck.remove(deck.size()-1);
@@ -96,10 +96,10 @@ public class GameSession {
         }
     }
 
-    private List<Card> pickStartingCards(String owningPlayerId) {
+    private List<Card> pickStartingCards(String owningPlayerId, String owningTeam) {
         List<Card> hand = new ArrayList<>();
         for (int i = 0; i < handSize; i++) {
-            Card card = this.drawCard(owningPlayerId);
+            Card card = this.drawCard(owningPlayerId, owningTeam);
             card.setOwningPlayer(owningPlayerId);
             hand.add(card);
         }
