@@ -31,22 +31,24 @@ export class GameboardComponent {
     console.log(`clicked on: (${row}, ${col})`);
     if (this._gameSession.myTurn === true) { // only if it's my turn
       if (row === 4) { // only put card on first row
-        let card = this.heroService.getClickedCard();
-        if (card) {
-          if (this._gameSession.player.power >= card.cost) {
-            this._gameSession.gameboard[row][col].state = 'OCCUPIED';
-            this._gameSession.gameboard[row][col].type = card.cardType;
-            this._gameSession.gameboard[row][col].might = card.might;
-            this._gameSession.gameboard[row][col].move = card.movement;
-            this._gameSession.gameboard[row][col].team = card.owningTeam;
-            this._gameSession.player.power = this._gameSession.player.power - card.cost;
-            this.heroService.updatePowerEE.emit(this._gameSession.player.power);
-            this.heroService.updateBoardEE.emit(this._gameSession.gameboard);
-            this.heroService.setClickedCard(null);
-            this.heroService.drawCard(card.owningPlayer)
-              .then(newCard => {
-                this.heroService.updateHand(newCard);
-              });
+        if (this._gameSession.gameboard[row][col].state === 'EMPTY') {
+          let card = this.heroService.getClickedCard();
+          if (card) {
+            if (this._gameSession.player.power >= card.cost) {
+              this._gameSession.gameboard[row][col].state = 'OCCUPIED';
+              this._gameSession.gameboard[row][col].type = card.cardType;
+              this._gameSession.gameboard[row][col].might = card.might;
+              this._gameSession.gameboard[row][col].move = card.movement;
+              this._gameSession.gameboard[row][col].team = card.owningTeam;
+              this._gameSession.player.power = this._gameSession.player.power - card.cost;
+              this.heroService.updatePowerEE.emit(this._gameSession.player.power);
+              this.heroService.updateBoardEE.emit(this._gameSession.gameboard);
+              this.heroService.setClickedCard(null);
+              this.heroService.drawCard(card.owningPlayer)
+                .then(newCard => {
+                  this.heroService.updateHand(newCard);
+                });
+            }
           }
         }
       }

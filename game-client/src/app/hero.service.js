@@ -31,6 +31,7 @@ var HeroService = (function () {
         this.updateHandEE = new core_1.EventEmitter();
         this.updatePowerEE = new core_1.EventEmitter();
         this.updateBoardEE = new core_1.EventEmitter();
+        this.updateGameSessionEE = new core_1.EventEmitter();
     }
     HeroService.prototype.joinGame = function (name) {
         var url = "" + this.baseUrl + this.joinGameUrl + "/" + name;
@@ -78,7 +79,7 @@ var HeroService = (function () {
                 .map(function (gameSession) {
                 return gameSession.json();
             })
-                .timeout(60000);
+                .timeout(600000);
         });
     };
     HeroService.prototype.drawCard = function (id) {
@@ -122,6 +123,12 @@ var HeroService = (function () {
     HeroService.prototype.getUpdatedBoard = function () {
         return this.updateBoardEE;
     };
+    HeroService.prototype.updateGameSession = function (gameSession) {
+        this.updateGameSessionEE.emit(gameSession);
+    };
+    HeroService.prototype.getUpdatedGameSession = function () {
+        return this.updateGameSessionEE;
+    };
     HeroService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
@@ -140,6 +147,10 @@ __decorate([
     core_1.Output(),
     __metadata("design:type", core_1.EventEmitter)
 ], HeroService.prototype, "updateBoardEE", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", core_1.EventEmitter)
+], HeroService.prototype, "updateGameSessionEE", void 0);
 HeroService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])

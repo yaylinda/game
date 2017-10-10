@@ -21,7 +21,11 @@ export class DashboardComponent implements OnInit {
 
   constructor(private heroService: HeroService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.heroService.getUpdatedGameSession().subscribe((gameSession: GameSession) => {
+      this.gameSession = gameSession;
+    });
+  }
 
   joinGame(): void {
     this.showLoading = true;
@@ -39,6 +43,9 @@ export class DashboardComponent implements OnInit {
               this.heroService.startGame(player1, player, player.id)
                 .then(gameSession => {
                   this.setupGame(gameSession);
+                  this.heroService.pollForGame(player.id).subscribe(gameSession => {
+                    this.setupGame(gameSession);
+                  });
                 });
             });
         }

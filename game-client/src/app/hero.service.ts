@@ -32,6 +32,7 @@ export class HeroService {
   @Output() updateHandEE: EventEmitter<Card> = new EventEmitter();
   @Output() updatePowerEE: EventEmitter<number> = new EventEmitter();
   @Output() updateBoardEE: EventEmitter<Cell[][]> = new EventEmitter();
+  @Output() updateGameSessionEE: EventEmitter<GameSession> = new EventEmitter();
 
   constructor(private http: Http) { }
 
@@ -83,7 +84,7 @@ export class HeroService {
           .map(gameSession => {
             return gameSession.json() as GameSession
           })
-          .timeout(60000)
+          .timeout(600000)
       );
   }
 
@@ -136,6 +137,14 @@ export class HeroService {
 
   getUpdatedBoard(): EventEmitter<Cell[][]> {
     return this.updateBoardEE;
+  }
+
+  updateGameSession(gameSession: GameSession) {
+    this.updateGameSessionEE.emit(gameSession);
+  }
+
+  getUpdatedGameSession(): EventEmitter<GameSession> {
+    return this.updateGameSessionEE;
   }
 
   private handleError(error: any): Promise<any> {

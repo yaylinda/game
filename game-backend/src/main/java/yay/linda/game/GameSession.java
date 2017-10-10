@@ -1,9 +1,6 @@
 package yay.linda.game;
 
-import yay.linda.dto.Card;
-import yay.linda.dto.GameBoard;
-import yay.linda.dto.GameSessionDTO;
-import yay.linda.dto.Player;
+import yay.linda.dto.*;
 import yay.linda.dto.enums.GameSessionStatus;
 import yay.linda.service.DeckGenerator;
 
@@ -87,8 +84,11 @@ public class GameSession {
         // get other players to update stats as well
         for (String id : players.keySet()) {
             if (!id.equals(playerId)) {
-                // TODO logic to update other player's board correctly
-                this.playerGameboards.get(id).setBoard(gameSession.getGameboard());
+                List<List<Cell>> opponentGameBoard = new ArrayList<>();
+                for (int i = gameSession.getGameboard().size()-1; i >=0; i--) {
+                    opponentGameBoard.add(gameSession.getGameboard().get(i));
+                }
+                this.playerGameboards.get(id).setBoard(opponentGameBoard);
 
                 this.playerGameSessionStatuses.put(id, GameSessionStatus.NEW);
                 this.playerTurns.put(id, true);

@@ -20,7 +20,12 @@ var DashboardComponent = (function () {
         this.numRows = [];
         this.numCols = [];
     }
-    DashboardComponent.prototype.ngOnInit = function () { };
+    DashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.heroService.getUpdatedGameSession().subscribe(function (gameSession) {
+            _this.gameSession = gameSession;
+        });
+    };
     DashboardComponent.prototype.joinGame = function () {
         var _this = this;
         this.showLoading = true;
@@ -39,6 +44,9 @@ var DashboardComponent = (function () {
                     _this.heroService.startGame(player1, player, player.id)
                         .then(function (gameSession) {
                         _this.setupGame(gameSession);
+                        _this.heroService.pollForGame(player.id).subscribe(function (gameSession) {
+                            _this.setupGame(gameSession);
+                        });
                     });
                 });
             }
