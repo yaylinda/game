@@ -41,6 +41,12 @@ var GameboardComponent = (function () {
                         }
                     }
                 }
+                else if (this._gameSession.gameboard[row][col].state === 'OCCUPIED' && this._gameSession.gameboard[row][col].team != this._gameSession.player.team) {
+                    var card = this.heroService.getClickedCard();
+                    if (card) {
+                        // TODO do math to 'fight'
+                    }
+                }
             }
         }
     };

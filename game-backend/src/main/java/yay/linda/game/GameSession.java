@@ -75,7 +75,7 @@ public class GameSession {
     }
 
     public void updateGameData(String playerId, GameSessionDTO gameSession) {
-        this.players.get(playerId).setPower(players.get(playerId).getPower() + 1.0);
+        this.players.get(playerId).setPower(players.get(playerId).getPower() + 1.0 + gameSession.getPlayer().getPower());
         this.players.get(playerId).setHand(gameSession.getPlayer().getHand());
         this.playerGameboards.get(playerId).setBoard(gameSession.getGameboard());
         this.playerGameSessionStatuses.put(playerId, GameSessionStatus.OLD);

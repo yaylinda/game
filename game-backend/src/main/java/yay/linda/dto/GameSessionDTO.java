@@ -8,6 +8,7 @@ public class GameSessionDTO {
     private List<List<Cell>> gameboard;
     private int numRows;
     private int numCols;
+    private int points;
 
     public GameSessionDTO() {
     }
@@ -18,6 +19,7 @@ public class GameSessionDTO {
         this.gameboard = gameboard.getBoard();
         this.numRows = gameboard.getNumRows();
         this.numCols = gameboard.getNumCols();
+        this.points = 0;
     }
 
     public Player getPlayer() {
@@ -58,5 +60,13 @@ public class GameSessionDTO {
 
     public void setNumCols(int numCols) {
         this.numCols = numCols;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

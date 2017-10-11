@@ -29,8 +29,8 @@ export class GameboardComponent {
 
   processClickedCell(row: number, col: number): void {
     console.log(`clicked on: (${row}, ${col})`);
-    if (this._gameSession.myTurn === true) { // only if it's my turn
-      if (row === 4) { // only put card on first row
+    if (this._gameSession.myTurn === true) {
+      if (row === 4) {
         if (this._gameSession.gameboard[row][col].state === 'EMPTY') {
           let card = this.heroService.getClickedCard();
           if (card) {
@@ -49,6 +49,11 @@ export class GameboardComponent {
                   this.heroService.updateHand(newCard);
                 });
             }
+          }
+        } else if (this._gameSession.gameboard[row][col].state === 'OCCUPIED' && this._gameSession.gameboard[row][col].team != this._gameSession.player.team) {
+          let card = this.heroService.getClickedCard();
+          if (card) {
+            // TODO do math to 'fight'
           }
         }
       }

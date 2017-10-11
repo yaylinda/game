@@ -24,6 +24,32 @@ var DashboardComponent = (function () {
         var _this = this;
         this.heroService.getUpdatedGameSession().subscribe(function (gameSession) {
             _this.gameSession = gameSession;
+            var board = Object.assign([], gameSession.gameboard);
+            console.log('board BEFORE move:');
+            console.log(board);
+            for (var rowNum = 0; rowNum < gameSession.numRows; rowNum++) {
+                for (var colNum = 0; colNum < gameSession.numCols; colNum++) {
+                    var cell = board[rowNum][colNum];
+                    if (cell.type === 'TROOP' && cell.state === 'OCCUPIED' && cell.team === gameSession.player.team) {
+                        console.log('OLD row num: ' + rowNum);
+                        var newRowNum = rowNum - cell.move;
+                        console.log('NEW row num: ' + newRowNum);
+                        if (newRowNum >= 0) {
+                            var newCell = Object.assign({}, cell);
+                            board[newRowNum][colNum] = newCell;
+                        }
+                        else {
+                            // TODO update score
+                            // TODO check for win
+                            _this.gameSession.points += 1;
+                        }
+                        board[rowNum][colNum].state = 'EMPTY';
+                    }
+                }
+            }
+            console.log('board AFTER move:');
+            console.log(board);
+            _this.gameSession.gameboard = board;
         });
     };
     DashboardComponent.prototype.joinGame = function () {
