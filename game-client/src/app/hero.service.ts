@@ -1,9 +1,8 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import {Headers, Http} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-// import 'rxjs/Rx';
 import {Observable} from 'rxjs/Rx';
 
 import {Player} from "./player";
