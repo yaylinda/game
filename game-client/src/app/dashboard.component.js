@@ -24,19 +24,37 @@ var DashboardComponent = (function () {
         var _this = this;
         this.heroService.getUpdatedGameSession().subscribe(function (gameSession) {
             _this.gameSession = gameSession;
+            // TODO check for loss state
+            // TODO handle loss
             var board = Object.assign([], gameSession.gameboard);
-            console.log('board BEFORE move:');
-            console.log(board);
             for (var rowNum = 0; rowNum < gameSession.numRows; rowNum++) {
                 for (var colNum = 0; colNum < gameSession.numCols; colNum++) {
-                    var cell = board[rowNum][colNum];
+                    var cell = Object.assign({}, board[rowNum][colNum]);
                     if (cell.type === 'TROOP' && cell.state === 'OCCUPIED' && cell.team === gameSession.player.team) {
-                        console.log('OLD row num: ' + rowNum);
                         var newRowNum = rowNum - cell.move;
-                        console.log('NEW row num: ' + newRowNum);
                         if (newRowNum >= 0) {
-                            var newCell = Object.assign({}, cell);
-                            board[newRowNum][colNum] = newCell;
+                            var newCell = Object.assign({}, board[newRowNum][colNum]);
+                            if (newCell.state === 'OCCUPIED') {
+                                if (newCell.team == gameSession.player.team) {
+                                    cell.might = cell.might + newCell.might;
+                                }
+                                else {
+                                    var mightDiff = cell.might - newCell.might;
+                                    if (mightDiff === 0) {
+                                        cell.state = 'EMPTY';
+                                    }
+                                    else if (mightDiff > 0) {
+                                        cell.might = mightDiff;
+                                    }
+                                    else if (mightDiff < 0) {
+                                        cell.might = mightDiff * -1;
+                                        cell.move = newCell.move;
+                                        cell.team = newCell.team;
+                                        cell.type = newCell.type;
+                                    }
+                                }
+                            }
+                            board[newRowNum][colNum] = Object.assign({}, cell);
                         }
                         else {
                             console.log('scored a point!');
@@ -51,8 +69,6 @@ var DashboardComponent = (function () {
                     }
                 }
             }
-            console.log('board AFTER move:');
-            console.log(board);
             _this.gameSession.gameboard = board;
         });
     };
@@ -88,7 +104,6 @@ var DashboardComponent = (function () {
         this.showLoading = false;
         this.numRows = Array.from(Array(gameSession.numRows), function (x, i) { return i; });
         this.numCols = Array.from(Array(gameSession.numCols), function (x, i) { return i; });
-        console.log(this.gameSession.gameboard);
     };
     return DashboardComponent;
 }());

@@ -25,21 +25,34 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.heroService.getUpdatedGameSession().subscribe((gameSession: GameSession) => {
       this.gameSession = gameSession;
+      // TODO check for loss state
+      // TODO handle loss
       let board = Object.assign([], gameSession.gameboard);
-
-      console.log('board BEFORE move:');
-      console.log(board);
-
       for (let rowNum = 0; rowNum < gameSession.numRows; rowNum++) {
         for (let colNum = 0; colNum < gameSession.numCols; colNum++) {
-          let cell = board[rowNum][colNum];
+          let cell: Cell = Object.assign({}, board[rowNum][colNum]);
           if (cell.type === 'TROOP' && cell.state === 'OCCUPIED' && cell.team === gameSession.player.team) {
-            console.log('OLD row num: ' + rowNum);
             let newRowNum = rowNum - cell.move;
-            console.log('NEW row num: ' + newRowNum);
             if (newRowNum >= 0) {
-              let newCell: Cell = Object.assign({}, cell);
-              board[newRowNum][colNum] = newCell;
+              let newCell: Cell = Object.assign({}, board[newRowNum][colNum]);
+              if (newCell.state === 'OCCUPIED') {
+                if (newCell.team == gameSession.player.team) {
+                  cell.might = cell.might + newCell.might;
+                } else {
+                  let mightDiff = cell.might - newCell.might;
+                  if (mightDiff === 0) {
+                    cell.state = 'EMPTY';
+                  } else if (mightDiff > 0) {
+                    cell.might = mightDiff;
+                  } else if (mightDiff < 0) {
+                    cell.might = mightDiff * -1;
+                    cell.move = newCell.move;
+                    cell.team = newCell.team;
+                    cell.type = newCell.type;
+                  }
+                }
+              }
+              board[newRowNum][colNum] = Object.assign({}, cell);
             } else {
               console.log('scored a point!');
               this.gameSession.player.score += 1;
@@ -53,10 +66,6 @@ export class DashboardComponent implements OnInit {
           }
         }
       }
-
-      console.log('board AFTER move:');
-      console.log(board);
-
       this.gameSession.gameboard = board;
     });
   }
@@ -92,6 +101,5 @@ export class DashboardComponent implements OnInit {
     this.showLoading = false;
     this.numRows = Array.from(Array(gameSession.numRows),(x,i)=>i);
     this.numCols = Array.from(Array(gameSession.numCols),(x,i)=>i);
-    console.log(this.gameSession.gameboard);
   }
 }

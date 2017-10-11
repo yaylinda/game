@@ -10,4 +10,4 @@ export class Player {
   team: string;
   score: number;
   maxScore: number;
-};
+}
