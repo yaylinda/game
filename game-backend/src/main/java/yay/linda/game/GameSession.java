@@ -4,7 +4,6 @@ import yay.linda.dto.*;
 import yay.linda.dto.enums.GameSessionStatus;
 import yay.linda.service.DeckGenerator;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +27,6 @@ public class GameSession {
     private List<Card> deck;
 
     private int handSize;
-
 
     public GameSession() { }
 
@@ -75,8 +73,9 @@ public class GameSession {
     }
 
     public void updateGameData(String playerId, GameSessionDTO gameSession) {
-        this.players.get(playerId).setPower(players.get(playerId).getPower() + 1.0 + gameSession.getPlayer().getPower());
+        this.players.get(playerId).setPower(players.get(playerId).getPower() + 1.0);
         this.players.get(playerId).setHand(gameSession.getPlayer().getHand());
+        this.players.get(playerId).setScore(gameSession.getPlayer().getScore());
         this.playerGameboards.get(playerId).setBoard(gameSession.getGameboard());
         this.playerGameSessionStatuses.put(playerId, GameSessionStatus.OLD);
         this.playerTurns.put(playerId, false);

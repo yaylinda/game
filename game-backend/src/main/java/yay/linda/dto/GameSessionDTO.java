@@ -1,5 +1,7 @@
 package yay.linda.dto;
 
+import yay.linda.dto.enums.GameState;
+
 import java.util.List;
 
 public class GameSessionDTO {
@@ -8,7 +10,7 @@ public class GameSessionDTO {
     private List<List<Cell>> gameboard;
     private int numRows;
     private int numCols;
-    private int points;
+    private String state;
 
     public GameSessionDTO() {
     }
@@ -19,7 +21,7 @@ public class GameSessionDTO {
         this.gameboard = gameboard.getBoard();
         this.numRows = gameboard.getNumRows();
         this.numCols = gameboard.getNumCols();
-        this.points = 0;
+        this.state = GameState.ONGOING.name();
     }
 
     public Player getPlayer() {
@@ -62,11 +64,11 @@ public class GameSessionDTO {
         this.numCols = numCols;
     }
 
-    public int getPoints() {
-        return points;
+    public String getState() {
+        return state;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setState(String state) {
+        this.state = state;
     }
 }
