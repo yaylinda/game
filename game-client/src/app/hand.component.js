@@ -48,7 +48,8 @@ var HandComponent = (function () {
         if (this._gameSession.myTurn) {
             this._gameSession.myTurn = false;
             this.heroService.endTurn(this._gameSession);
-            this.heroService.pollForGame(this._gameSession.player.id).subscribe(function (updatedGameSession) {
+            this.heroService.pollForGame(this._gameSession.player.id)
+                .subscribe(function (updatedGameSession) {
                 _this.heroService.updateGameSessionEE.emit(updatedGameSession);
             });
         }
