@@ -35,6 +35,7 @@ public class GamePlayService {
     public Player join(String name) {
         System.out.printf("%s is joining the game\n", name);
         Player player = new Player(name);
+        player.setMaxScore(gameConfigurations.getMaxScore());
         if (player1 == null) {
             player.setTeam(PlayerTeam.TEAM1.name());
             player.setPower(1);

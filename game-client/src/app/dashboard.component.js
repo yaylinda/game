@@ -39,9 +39,13 @@ var DashboardComponent = (function () {
                             board[newRowNum][colNum] = newCell;
                         }
                         else {
-                            // TODO update score
-                            // TODO check for win
-                            _this.gameSession.points += 1;
+                            console.log('scored a point!');
+                            _this.gameSession.player.score += 1;
+                            if (_this.gameSession.player.score >= _this.gameSession.player.maxScore) {
+                                console.log('YOU WIN!!!!');
+                                // TODO send win to backend
+                                // TODO handle win
+                            }
                         }
                         board[rowNum][colNum].state = 'EMPTY';
                     }

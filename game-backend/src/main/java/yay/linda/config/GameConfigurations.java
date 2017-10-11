@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:deck-generator.properties")
 public class GameConfigurations {
 
     @Value("${num.board.rows}")
@@ -61,6 +60,9 @@ public class GameConfigurations {
 
     @Value("${hand.size}")
     private int handSize;
+
+    @Value("${max.score}")
+    private int maxScore;
 
     public int getNumRows() {
         return numRows;
@@ -132,5 +134,9 @@ public class GameConfigurations {
 
     public int getHandSize() {
         return handSize;
+    }
+
+    public int getMaxScore() {
+        return maxScore;
     }
 }

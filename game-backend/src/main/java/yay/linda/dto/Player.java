@@ -18,14 +18,18 @@ public class Player {
     private String team;
     private double power;
     private List<Card> hand;
+    private int score;
+    private int maxScore;
 
     public Player() {
         this.id = UUID.randomUUID().toString();
+        this.score = 0;
     }
 
     public Player(String name) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
+        this.score = 0;
     }
 
     public String getId() {
@@ -82,5 +86,21 @@ public class Player {
 
     public void setTeam(String team) {
         this.team = team;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getMaxScore() {
+        return maxScore;
+    }
+
+    public void setMaxScore(int maxScore) {
+        this.maxScore = maxScore;
     }
 }

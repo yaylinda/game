@@ -7,5 +7,4 @@ export class GameSession {
   myTurn: boolean;
   numRows: number;
   numCols: number;
-  points: number;
 }

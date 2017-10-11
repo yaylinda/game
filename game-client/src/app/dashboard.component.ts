@@ -41,9 +41,13 @@ export class DashboardComponent implements OnInit {
               let newCell: Cell = Object.assign({}, cell);
               board[newRowNum][colNum] = newCell;
             } else {
-              // TODO update score
-              // TODO check for win
-              this.gameSession.points += 1;
+              console.log('scored a point!');
+              this.gameSession.player.score += 1;
+              if (this.gameSession.player.score >= this.gameSession.player.maxScore) {
+                console.log('YOU WIN!!!!');
+                // TODO send win to backend
+                // TODO handle win
+              }
             }
             board[rowNum][colNum].state = 'EMPTY';
           }
