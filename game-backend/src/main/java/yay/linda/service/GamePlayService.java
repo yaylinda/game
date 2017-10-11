@@ -3,7 +3,6 @@ package yay.linda.service;
 import org.springframework.stereotype.Component;
 import yay.linda.config.GameConfigurations;
 import yay.linda.dto.Card;
-import yay.linda.dto.GameBoard;
 import yay.linda.dto.GameSessionDTO;
 import yay.linda.dto.Player;
 import yay.linda.dto.enums.GameSessionStatus;

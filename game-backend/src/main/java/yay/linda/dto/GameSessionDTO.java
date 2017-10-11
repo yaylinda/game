@@ -4,6 +4,9 @@ import yay.linda.dto.enums.GameState;
 
 import java.util.List;
 
+/**
+ * Represents a GameSession object for one player.
+ */
 public class GameSessionDTO {
     private Player player;
     private boolean myTurn;

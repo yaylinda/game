@@ -1,11 +1,7 @@
 package yay.linda.dto;
 
-import yay.linda.dto.Cell;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Represents a Game Board object; contains Cell objects.

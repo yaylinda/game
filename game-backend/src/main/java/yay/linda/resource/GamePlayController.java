@@ -2,8 +2,9 @@ package yay.linda.resource;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import yay.linda.dto.*;
-import yay.linda.game.GameSession;
+import yay.linda.dto.Card;
+import yay.linda.dto.GameSessionDTO;
+import yay.linda.dto.Player;
 import yay.linda.service.GamePlayService;
 
 import javax.inject.Inject;
