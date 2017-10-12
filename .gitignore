@@ -28,6 +28,6 @@ target/
 
 node_modules/
 build/
-deck-generator/
+generated-decks/
 
 package-lock.json

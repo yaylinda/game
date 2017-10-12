@@ -11,13 +11,9 @@
 
   <div id="game" *ngIf="showGameboard">
 
-    <div id="other-team-goal">
-
-    </div>
+    <hand [gameSession]="gameSession"></hand>
 
     <game-board [gameSession]="gameSession" [numRows]="numRows" [numCols]="numCols"></game-board>
-
-    <hand [gameSession]="gameSession"></hand>
 
   </div>
 

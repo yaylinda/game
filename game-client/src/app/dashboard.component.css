@@ -35,6 +35,17 @@
 
 #game {
   text-align: center;
-  margin: 0 auto;
-  display: block;
+  /*margin: 0 auto;*/
+  /*display: block;*/
+}
+
+hand {
+  float: left;
+  width: 49%;
+  margin: auto;
+}
+game-board {
+  float: right;
+  width: 49%;
+  margin: auto;
 }

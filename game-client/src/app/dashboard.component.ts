@@ -25,48 +25,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.heroService.getUpdatedGameSession().subscribe((gameSession: GameSession) => {
       this.gameSession = gameSession;
-      // TODO check for loss state
-      // TODO handle loss
-      let board = Object.assign([], gameSession.gameboard);
-      for (let rowNum = 0; rowNum < gameSession.numRows; rowNum++) {
-        for (let colNum = 0; colNum < gameSession.numCols; colNum++) {
-          let cell: Cell = Object.assign({}, board[rowNum][colNum]);
-          if (cell.type === 'TROOP' && cell.state === 'OCCUPIED' && cell.team === gameSession.player.team) {
-            let newRowNum = rowNum - cell.move;
-            if (newRowNum >= 0) {
-              let newCell: Cell = Object.assign({}, board[newRowNum][colNum]);
-              if (newCell.state === 'OCCUPIED') {
-                if (newCell.team == gameSession.player.team) {
-                  cell.might = cell.might + newCell.might;
-                } else {
-                  let mightDiff = cell.might - newCell.might;
-                  if (mightDiff === 0) {
-                    cell.state = 'EMPTY';
-                  } else if (mightDiff > 0) {
-                    cell.might = mightDiff;
-                  } else if (mightDiff < 0) {
-                    cell.might = mightDiff * -1;
-                    cell.move = newCell.move;
-                    cell.team = newCell.team;
-                    cell.type = newCell.type;
-                  }
-                }
-              }
-              board[newRowNum][colNum] = Object.assign({}, cell);
-            } else {
-              console.log('scored a point!');
-              this.gameSession.player.score += 1;
-              if (this.gameSession.player.score >= this.gameSession.player.maxScore) {
-                console.log('YOU WIN!!!!');
-                // TODO send win to backend
-                // TODO handle win
-              }
-            }
-            board[rowNum][colNum].state = 'EMPTY';
-          }
-        }
-      }
-      this.gameSession.gameboard = board;
     });
   }
 

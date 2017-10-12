@@ -24,52 +24,6 @@ var DashboardComponent = (function () {
         var _this = this;
         this.heroService.getUpdatedGameSession().subscribe(function (gameSession) {
             _this.gameSession = gameSession;
-            // TODO check for loss state
-            // TODO handle loss
-            var board = Object.assign([], gameSession.gameboard);
-            for (var rowNum = 0; rowNum < gameSession.numRows; rowNum++) {
-                for (var colNum = 0; colNum < gameSession.numCols; colNum++) {
-                    var cell = Object.assign({}, board[rowNum][colNum]);
-                    if (cell.type === 'TROOP' && cell.state === 'OCCUPIED' && cell.team === gameSession.player.team) {
-                        var newRowNum = rowNum - cell.move;
-                        if (newRowNum >= 0) {
-                            var newCell = Object.assign({}, board[newRowNum][colNum]);
-                            if (newCell.state === 'OCCUPIED') {
-                                if (newCell.team == gameSession.player.team) {
-                                    cell.might = cell.might + newCell.might;
-                                }
-                                else {
-                                    var mightDiff = cell.might - newCell.might;
-                                    if (mightDiff === 0) {
-                                        cell.state = 'EMPTY';
-                                    }
-                                    else if (mightDiff > 0) {
-                                        cell.might = mightDiff;
-                                    }
-                                    else if (mightDiff < 0) {
-                                        cell.might = mightDiff * -1;
-                                        cell.move = newCell.move;
-                                        cell.team = newCell.team;
-                                        cell.type = newCell.type;
-                                    }
-                                }
-                            }
-                            board[newRowNum][colNum] = Object.assign({}, cell);
-                        }
-                        else {
-                            console.log('scored a point!');
-                            _this.gameSession.player.score += 1;
-                            if (_this.gameSession.player.score >= _this.gameSession.player.maxScore) {
-                                console.log('YOU WIN!!!!');
-                                // TODO send win to backend
-                                // TODO handle win
-                            }
-                        }
-                        board[rowNum][colNum].state = 'EMPTY';
-                    }
-                }
-            }
-            _this.gameSession.gameboard = board;
         });
     };
     DashboardComponent.prototype.joinGame = function () {

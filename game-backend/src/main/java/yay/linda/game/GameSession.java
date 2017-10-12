@@ -1,7 +1,10 @@
 package yay.linda.game;
 
 import yay.linda.dto.*;
+import yay.linda.dto.enums.CardType;
+import yay.linda.dto.enums.CellState;
 import yay.linda.dto.enums.GameSessionStatus;
+import yay.linda.dto.enums.PlayerTeam;
 import yay.linda.service.DeckGenerator;
 
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ public class GameSession {
 
     private int handSize;
 
+    private int numRows;
+    private int numCols;
+
     public GameSession() { }
 
     public GameSession(Player player1, Player player2, DeckGenerator deckGenerator, int numRows, int numCols, int handSize) {
@@ -38,6 +44,8 @@ public class GameSession {
         this.deckGenerator = deckGenerator;
         this.deck = this.deckGenerator.generateDeck();
         this.handSize = handSize;
+        this.numRows = numRows;
+        this.numCols = numCols;
 
         player1.setHand(this.pickStartingCards(player1.getId(), player1.getTeam()));
         player2.setHand(this.pickStartingCards(player2.getId(), player2.getTeam()));
@@ -73,12 +81,60 @@ public class GameSession {
     }
 
     public void updateGameData(String playerId, GameSessionDTO gameSession) {
-        this.players.get(playerId).setPower(players.get(playerId).getPower() + 1.0);
-        this.players.get(playerId).setHand(gameSession.getPlayer().getHand());
-        this.players.get(playerId).setScore(gameSession.getPlayer().getScore());
+
+        for (int rowNum = 0; rowNum < this.numRows; rowNum++) {
+            for (int colNum = 0; colNum < this.numCols; colNum++) {
+                Cell cell = gameSession.getGameboard().get(rowNum).get(colNum);
+                if (CardType.valueOf(cell.getType()) == CardType.TROOP
+                        && CellState.valueOf(cell.getState()) == CellState.OCCUPIED
+                        && PlayerTeam.valueOf(cell.getTeam()) == PlayerTeam.valueOf(gameSession.getPlayer().getTeam())) {
+                    int newRowNum = rowNum - cell.getMove();
+                    if (newRowNum >= 0) {
+                        Cell otherCell = gameSession.getGameboard().get(newRowNum).get(colNum);
+                        if (CellState.valueOf(otherCell.getState()) == CellState.OCCUPIED) {
+                            if (PlayerTeam.valueOf(otherCell.getTeam()) == PlayerTeam.valueOf(gameSession.getPlayer().getTeam())) {
+                                gameSession.getGameboard().get(newRowNum).get(colNum).setMight(cell.getMight() + otherCell.getMight());
+                            } else {
+                                int mightDiff = cell.getMight() - otherCell.getMight();
+                                if (mightDiff > 0) {
+                                    gameSession.getGameboard().get(rowNum).get(colNum).setState(CellState.EMPTY.toString());
+                                    gameSession.getGameboard().get(newRowNum).get(colNum).setType(cell.getType());
+                                    gameSession.getGameboard().get(newRowNum).get(colNum).setMight(mightDiff);
+                                    gameSession.getGameboard().get(newRowNum).get(colNum).setMove(cell.getMove());
+                                    gameSession.getGameboard().get(newRowNum).get(colNum).setTeam(cell.getTeam());
+                                } else if (mightDiff < 0) {
+                                    gameSession.getGameboard().get(rowNum).get(colNum).setState(CellState.EMPTY.toString());
+                                    gameSession.getGameboard().get(newRowNum).get(colNum).setType(otherCell.getType());
+                                    gameSession.getGameboard().get(newRowNum).get(colNum).setMight(mightDiff);
+                                    gameSession.getGameboard().get(newRowNum).get(colNum).setMove(otherCell.getMove());
+                                    gameSession.getGameboard().get(newRowNum).get(colNum).setTeam(otherCell.getTeam());
+                                } else {
+                                    gameSession.getGameboard().get(rowNum).get(colNum).setState(CellState.EMPTY.toString());
+                                    gameSession.getGameboard().get(newRowNum).get(colNum).setState(CellState.EMPTY.toString());
+                                }
+                            }
+                        } else {
+                            gameSession.getGameboard().get(rowNum).get(colNum).setState(CellState.EMPTY.toString());
+                            gameSession.getGameboard().get(newRowNum).get(colNum).setState(CellState.OCCUPIED.toString());
+                            gameSession.getGameboard().get(newRowNum).get(colNum).setType(cell.getType());
+                            gameSession.getGameboard().get(newRowNum).get(colNum).setMight(cell.getMight());
+                            gameSession.getGameboard().get(newRowNum).get(colNum).setMove(cell.getMove());
+                            gameSession.getGameboard().get(newRowNum).get(colNum).setTeam(cell.getTeam());
+                        }
+                    } else {
+                        this.players.get(playerId).setScore(this.players.get(playerId).getScore() + 1);
+                        if (this.players.get(playerId).getScore() == this.players.get(playerId).getMaxScore()) {
+                            // TODO win state for this player; lose state for other player
+                        }
+                    }
+                }
+            }
+        }
         this.playerGameboards.get(playerId).setBoard(gameSession.getGameboard());
         this.playerGameSessionStatuses.put(playerId, GameSessionStatus.OLD);
         this.playerTurns.put(playerId, false);
+        this.players.get(playerId).setPower(players.get(playerId).getPower() + 1.0);
+        this.players.get(playerId).setHand(gameSession.getPlayer().getHand());
 
         // get other players to update stats as well
         for (String id : players.keySet()) {
