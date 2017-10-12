@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yay.linda.dto.Card;
 import yay.linda.dto.GameSessionDTO;
+import yay.linda.dto.MoveDTO;
 import yay.linda.dto.Player;
 import yay.linda.service.GamePlayService;
 
@@ -84,12 +85,12 @@ public class GamePlayController {
 
     /**
      *
-     * @param gameSession
+     * @param move
      * @return
      */
-    @RequestMapping(value = "game/board", method = RequestMethod.PUT)
-    public ResponseEntity<GameSessionDTO> updateBoard(@RequestBody GameSessionDTO gameSession) {
-        gamePlayService.updateGameData(gameSession);
-        return ResponseEntity.ok(gameSession);
+    @RequestMapping(value = "game/card", method = RequestMethod.PUT)
+    public ResponseEntity<GameSessionDTO> processPutCard(@RequestBody MoveDTO move) {
+        GameSessionDTO gameSessionDTO = gamePlayService.processPutCard(move);
+        return ResponseEntity.ok(gameSessionDTO);
     }
 }

@@ -2,9 +2,7 @@ package yay.linda.service;
 
 import org.springframework.stereotype.Component;
 import yay.linda.config.GameConfigurations;
-import yay.linda.dto.Card;
-import yay.linda.dto.GameSessionDTO;
-import yay.linda.dto.Player;
+import yay.linda.dto.*;
 import yay.linda.dto.enums.GameSessionStatus;
 import yay.linda.dto.enums.PlayerTeam;
 import yay.linda.game.GameSession;
@@ -12,6 +10,7 @@ import yay.linda.repo.PlayerGameSessionRepo;
 import yay.linda.repo.PlayerRepo;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Service to handle all functionality related to actual game play.
@@ -70,6 +69,7 @@ public class GamePlayService {
 
     public GameSessionDTO pollForGame(String playerId) {
         GameSession gameSession = playerGameSessionRepo.getGameSessionById(playerId);
+        // TODO before returning gameboard, do move/combat
         if (gameSession != null && gameSession.getPlayerGameSessionStatuses().get(playerId) == GameSessionStatus.NEW) {
             return new GameSessionDTO(
                     this.playerGameSessionRepo.getGameSessionById(playerId).
@@ -86,8 +86,9 @@ public class GamePlayService {
         return playerGameSessionRepo.getGameSessionById(playerId).drawCard(playerId, team);
     }
 
-    public void updateGameData(GameSessionDTO gameSession) {
-        String playerId = gameSession.getPlayer().getId();
-        this.playerGameSessionRepo.getGameSessionById(playerId).updateGameData(playerId, gameSession);
+    public GameSessionDTO processPutCard(MoveDTO move) {
+        String playerId = move.getPlayerId();
+        GameBoard updatedGameboard = playerGameSessionRepo.getGameSessionById(playerId).processPutCard(move);
+        return new GameSessionDTO(this.playerGameSessionRepo.getGameSessionById(playerId).getPlayers().get(playerId), false, updatedGameboard);
     }
 }

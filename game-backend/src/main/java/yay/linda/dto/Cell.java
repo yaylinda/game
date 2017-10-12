@@ -17,6 +17,14 @@ public class Cell {
         this.state = CellState.EMPTY.toString();
     }
 
+    public Cell(Cell cell) {
+        this.setState(cell.getState());
+        this.setType(cell.getType());
+        this.setMight(cell.getMight());
+        this.setMove(cell.getMove());
+        this.setTeam(cell.getTeam());
+    }
+
     public String getState() {
         return state;
     }

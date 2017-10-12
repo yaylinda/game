@@ -90,6 +90,26 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
+    HeroService.prototype.sendCardPut = function (card, row, col, hand) {
+        var cell;
+        cell.type = card.cardType;
+        cell.might = card.might;
+        cell.move = card.movement;
+        cell.team = card.owningTeam;
+        cell.state = 'OCCUPIED';
+        var moveDto;
+        moveDto.row = row;
+        moveDto.col = col;
+        moveDto.cell = cell;
+        moveDto.hand = hand;
+        moveDto.playerId = card.owningPlayer;
+        var url = "" + this.baseUrl + this.cardUrl;
+        return this.http
+            .put(url, moveDto, { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); })
+            .catch(this.handleError);
+    };
     HeroService.prototype.endTurn = function (gameSession) {
         var url = "" + this.baseUrl + this.boardUrl;
         return this.http

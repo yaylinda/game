@@ -9,6 +9,7 @@ import {Player} from "./player";
 import {GameSession} from "./gamesession";
 import {Card} from "./card";
 import {Cell} from "./cell";
+import {Move} from "./move";
 
 @Injectable()
 export class HeroService {
@@ -97,6 +98,31 @@ export class HeroService {
       .catch(this.handleError);
   }
 
+  sendCardPut(card: Card, row: number, col: number, hand: Card[]) : Promise<Cell[][]>{
+    let cell: Cell;
+    cell.type = card.cardType;
+    cell.might = card.might;
+    cell.move = card.movement;
+    cell.team = card.owningTeam;
+    cell.state = 'OCCUPIED';
+    
+    let moveDto: Move;
+    moveDto.row = row;
+    moveDto.col = col;
+    moveDto.cell = cell;
+    moveDto.hand = hand;
+
+    moveDto.playerId = card.owningPlayer;
+
+    const url = `${this.baseUrl}${this.cardUrl}`;
+
+    return this.http
+      .put(url, moveDto, {headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as Cell[][])
+      .catch(this.handleError);
+  }
+
   endTurn(gameSession: GameSession) {
     const url = `${this.baseUrl}${this.boardUrl}`;
     return this.http
@@ -150,5 +176,6 @@ export class HeroService {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
   }
+
 }
 
