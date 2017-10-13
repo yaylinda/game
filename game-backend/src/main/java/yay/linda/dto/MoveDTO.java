@@ -7,7 +7,6 @@ public class MoveDTO {
     private int row;
     private int col;
     private Cell cell;
-    private List<Card> hand;
 
     public MoveDTO() {
     }
@@ -42,13 +41,5 @@ public class MoveDTO {
 
     public void setCell(Cell cell) {
         this.cell = cell;
-    }
-
-    public List<Card> getHand() {
-        return hand;
-    }
-
-    public void setHand(List<Card> hand) {
-        this.hand = hand;
     }
 }

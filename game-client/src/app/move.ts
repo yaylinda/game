@@ -6,5 +6,4 @@ export class Move {
   row: number;
   col: number;
   cell: Cell;
-  hand: Card[];
 }

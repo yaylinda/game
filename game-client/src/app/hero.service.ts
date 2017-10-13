@@ -24,7 +24,7 @@ export class HeroService {
   private joinGameUrl = '/player/join';
   private startGameUrl = '/game/start';
   private cardUrl = '/game/card';
-  private boardUrl = '/game/board';
+  private turnUrl = '/game/endTurn';
   private pollUrl = '/game/poll';
 
   selectedCard: Card;
@@ -98,19 +98,18 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  sendCardPut(card: Card, row: number, col: number, hand: Card[]) : Promise<Cell[][]>{
+  sendCardPut(card: Card, row: number, col: number) : Promise<Cell[][]> {
     let cell: Cell;
     cell.type = card.cardType;
     cell.might = card.might;
     cell.move = card.movement;
     cell.team = card.owningTeam;
     cell.state = 'OCCUPIED';
-    
+
     let moveDto: Move;
     moveDto.row = row;
     moveDto.col = col;
     moveDto.cell = cell;
-    moveDto.hand = hand;
 
     moveDto.playerId = card.owningPlayer;
 
@@ -123,10 +122,10 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  endTurn(gameSession: GameSession) {
-    const url = `${this.baseUrl}${this.boardUrl}`;
+  endTurn(id: string, hand: Card[]) {
+    const url = `${this.baseUrl}${this.turnUrl}/${id}`;
     return this.http
-      .put(url, gameSession, {headers: this.headers})
+      .put(url, hand, {headers: this.headers})
       .toPromise()
       .then()
       .catch(this.handleError);

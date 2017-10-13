@@ -18,13 +18,13 @@ public class GameSessionDTO {
     public GameSessionDTO() {
     }
 
-    public GameSessionDTO(Player player, boolean myTurn, GameBoard gameboard) {
+    public GameSessionDTO(Player player, GameBoard gameboard, String gameState, boolean myTurn) {
         this.player = player;
-        this.myTurn = myTurn;
         this.gameboard = gameboard.getBoard();
+        this.state = gameState;
+        this.myTurn = myTurn;
         this.numRows = gameboard.getNumRows();
         this.numCols = gameboard.getNumCols();
-        this.state = GameState.ONGOING.name();
     }
 
     public Player getPlayer() {

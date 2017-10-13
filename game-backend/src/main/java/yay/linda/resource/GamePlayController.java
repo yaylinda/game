@@ -2,10 +2,7 @@ package yay.linda.resource;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import yay.linda.dto.Card;
-import yay.linda.dto.GameSessionDTO;
-import yay.linda.dto.MoveDTO;
-import yay.linda.dto.Player;
+import yay.linda.dto.*;
 import yay.linda.service.GamePlayService;
 
 import javax.inject.Inject;
@@ -89,8 +86,19 @@ public class GamePlayController {
      * @return
      */
     @RequestMapping(value = "game/card", method = RequestMethod.PUT)
-    public ResponseEntity<GameSessionDTO> processPutCard(@RequestBody MoveDTO move) {
-        GameSessionDTO gameSessionDTO = gamePlayService.processPutCard(move);
+    public ResponseEntity<GameBoard> processPutCard(@RequestBody MoveDTO move) {
+        GameBoard updatedGameboard = gamePlayService.processPutCard(move);
+        return ResponseEntity.ok(updatedGameboard);
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "game/endTurn/{id}", method = RequestMethod.GET)
+    public ResponseEntity<GameSessionDTO> endTurn(@PathVariable String id, @RequestBody List<Card> hand) {
+        GameSessionDTO gameSessionDTO = gamePlayService.endTurn(id, hand);
         return ResponseEntity.ok(gameSessionDTO);
     }
 }

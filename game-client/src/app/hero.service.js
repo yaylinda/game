@@ -25,7 +25,7 @@ var HeroService = (function () {
         this.joinGameUrl = '/player/join';
         this.startGameUrl = '/game/start';
         this.cardUrl = '/game/card';
-        this.boardUrl = '/game/board';
+        this.turnUrl = '/game/endTurn';
         this.pollUrl = '/game/poll';
         this.updateHandEE = new core_1.EventEmitter();
         this.updatePowerEE = new core_1.EventEmitter();
@@ -90,7 +90,7 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HeroService.prototype.sendCardPut = function (card, row, col, hand) {
+    HeroService.prototype.sendCardPut = function (card, row, col) {
         var cell;
         cell.type = card.cardType;
         cell.might = card.might;
@@ -101,7 +101,6 @@ var HeroService = (function () {
         moveDto.row = row;
         moveDto.col = col;
         moveDto.cell = cell;
-        moveDto.hand = hand;
         moveDto.playerId = card.owningPlayer;
         var url = "" + this.baseUrl + this.cardUrl;
         return this.http
@@ -110,10 +109,10 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HeroService.prototype.endTurn = function (gameSession) {
-        var url = "" + this.baseUrl + this.boardUrl;
+    HeroService.prototype.endTurn = function (id, hand) {
+        var url = "" + this.baseUrl + this.turnUrl + "/" + id;
         return this.http
-            .put(url, gameSession, { headers: this.headers })
+            .put(url, hand, { headers: this.headers })
             .toPromise()
             .then()
             .catch(this.handleError);
