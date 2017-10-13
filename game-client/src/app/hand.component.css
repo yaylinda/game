@@ -1,7 +1,9 @@
 #hand {
-  border: 4px solid saddlebrown;
+  /*border: 4px solid saddlebrown;*/
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   border-radius: 10px;
   height: 130px;
+  background-color: whitesmoke;
 }
 
 #end-turn-btn {
@@ -28,4 +30,5 @@
   border: 2px solid green;
   border-radius: 10px;
   padding: 5px;
+  background-color: white;
 }

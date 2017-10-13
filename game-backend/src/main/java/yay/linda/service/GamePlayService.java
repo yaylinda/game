@@ -24,22 +24,14 @@ public class GamePlayService {
     private Player player1;
     private PlayerRepo playerRepo = new PlayerRepo();
 
-    private int numRows;
-    private int numCols;
-
     @Inject
     private GameConfigurations gameConfigurations;
 
     @Inject
     private DeckGenerator deckGenerator;
 
-//    public GamePlayService() {
-//        this.numRows = gameConfigurations.getNumRows();
-//        this.numRows = gameConfigurations.getNumCols();
-//    }
-
     public Player join(String name) {
-        System.out.printf("%s is joining the game\n", name);
+//        System.out.printf("%s is joining the game\n", name);
         Player player = new Player(name);
         player.setMaxScore(gameConfigurations.getMaxScore());
         if (player1 == null) {
@@ -133,17 +125,18 @@ public class GamePlayService {
                             }
                         } else {
                             player.setScore(player.getScore() + cell.getMight());
-                            if (player.getScore() >= player.getMaxScore()) {
-                                gameSession.getGameStates().put(playerId, GameState.WIN);
-                                gameSession.getPlayerGameboards().get(player.getOpponentId()).setBoard(updatedGameboard);
-                                gameSession.getGameStates().put(player.getOpponentId(), GameState.LOSS);
-                                gameSession.getPlayerGameSessionStatuses().put(player.getOpponentId(), GameSessionStatus.NEW);
-                            }
                         }
                     }
                 }
             }
             gameSession.getPlayerGameboards().get(playerId).setBoard(updatedGameboard);
+
+            if (player.getScore() >= player.getMaxScore()) {
+                gameSession.getGameStates().put(playerId, GameState.WIN);
+                gameSession.getPlayerGameboards().get(player.getOpponentId()).setBoard(updatedGameboard);
+                gameSession.getGameStates().put(player.getOpponentId(), GameState.LOSS);
+                gameSession.getPlayerGameSessionStatuses().put(player.getOpponentId(), GameSessionStatus.NEW);
+            }
 
             Player originalPlayer = this.playerRepo.getPlayerById(playerId);
             originalPlayer.setPower(originalPlayer.getPower() + 1);

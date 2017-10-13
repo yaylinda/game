@@ -1,16 +1,17 @@
 table {
-  border: 2px solid gray;
+  border: 2px solid greenyellow;
   border-radius: 10px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   margin: 0 auto;
   padding: 10px;
-  background: linear-gradient(to bottom right, green, greenyellow); /* Standard syntax */
+  /*background: linear-gradient(to bottom right, green, greenyellow); !* Standard syntax *!*/
+  background-color: greenyellow;
 }
 
 td {
   font-size: 10px;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  border: 2px solid black;
+  /*border: 2px solid white;*/
   border-radius: 10px;
   border-collapse: collapse;
   height: 75px;
