@@ -72,6 +72,7 @@ public class GamePlayService {
                 this.playerGameSessionRepo.getGameSessionById(invokingPlayerId).getPlayers().get(invokingPlayerId),
                 this.playerGameSessionRepo.getGameSessionById(invokingPlayerId).getPlayerGameboards().get(invokingPlayerId),
                 this.playerGameSessionRepo.getGameSessionById(invokingPlayerId).getGameStates().get(invokingPlayerId).name(),
+                this.playerGameSessionRepo.getGameSessionById(invokingPlayerId).getDeck().size(),
                 false); // this gets sent to player 2
     }
 
@@ -152,6 +153,7 @@ public class GamePlayService {
                     this.playerGameSessionRepo.getGameSessionById(playerId).getPlayers().get(playerId),
                     this.playerGameSessionRepo.getGameSessionById(playerId).getPlayerGameboards().get(playerId),
                     this.playerGameSessionRepo.getGameSessionById(playerId).getGameStates().get(playerId).name(),
+                    this.playerGameSessionRepo.getGameSessionById(playerId).getDeck().size(),
                     true); // this gets sent to player 1 on first turn
         } else {
             return new GameSessionDTO();
@@ -175,6 +177,7 @@ public class GamePlayService {
                 this.playerGameSessionRepo.getGameSessionById(playerId).getPlayers().get(playerId),
                 gameSession.getPlayerGameboards().get(playerId),
                 gameSession.getGameStates().get(playerId).name(),
+                gameSession.getDeck().size(),
                 false);
     }
 }

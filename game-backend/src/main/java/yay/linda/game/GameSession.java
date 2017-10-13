@@ -78,21 +78,16 @@ public class GameSession {
         Card last = new Card(deck.get(deck.size()-1));
         deck.set(index, last);
         deck.remove(deck.size()-1);
-
-        System.out.println("Deck now has " + deck.size() + " remaining.");
-
         return toReturn;
     }
 
     public List<List<Cell>> processPutCard(MoveDTO move) {
         GameBoard gameBoard = this.playerGameboards.get(move.getPlayerId());
-
         gameBoard.getBoard().get(move.getRow()).get(move.getCol()).setState(CellState.OCCUPIED.toString());
         gameBoard.getBoard().get(move.getRow()).get(move.getCol()).setTeam(move.getCell().getTeam());
         gameBoard.getBoard().get(move.getRow()).get(move.getCol()).setType(move.getCell().getType());
         gameBoard.getBoard().get(move.getRow()).get(move.getCol()).setMove(move.getCell().getMove());
         gameBoard.getBoard().get(move.getRow()).get(move.getCol()).setMight(move.getCell().getMight());
-
         return gameBoard.getBoard();
     }
 
@@ -191,5 +186,13 @@ public class GameSession {
 
     public void setNumCols(int numCols) {
         this.numCols = numCols;
+    }
+
+    public List<Card> getDeck() {
+        return deck;
+    }
+
+    public void setDeck(List<Card> deck) {
+        this.deck = deck;
     }
 }

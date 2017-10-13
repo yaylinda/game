@@ -13,6 +13,7 @@ import {GameSession} from "./gamesession";
         <p *ngIf="!gameSession.myTurn">Opponent's Turn</p>
         <p>Power: {{gameSession.player.power}}</p>
         <p>Score: {{gameSession.player.score}}</p>
+        <p>Cards Remaining in Deck: {{gameSession.numCardsInDeck}}</p>
       </div>
       <card *ngFor="let card of gameSession.player.hand;"
             (click)="processClickedCard(card)"

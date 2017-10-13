@@ -19,11 +19,19 @@ var DashboardComponent = (function () {
         this.showLoading = false;
         this.numRows = [];
         this.numCols = [];
+        this.showWin = false;
+        this.showLoss = false;
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.heroService.getUpdatedGameSession().subscribe(function (gameSession) {
             _this.gameSession = gameSession;
+            if (_this.gameSession.state === 'WIN') {
+                _this.showWin = true;
+            }
+            else if (_this.gameSession.state === 'LOSS') {
+                _this.showLoss = true;
+            }
         });
     };
     DashboardComponent.prototype.joinGame = function () {

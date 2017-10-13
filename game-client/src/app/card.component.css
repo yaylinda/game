@@ -19,7 +19,7 @@
 }
 
 @keyframes background-fade {
-  90% {
+  0% {
     background:#E1FEE0;
   }
   100% {

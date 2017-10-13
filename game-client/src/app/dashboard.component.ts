@@ -19,12 +19,19 @@ export class DashboardComponent implements OnInit {
   gameSession: GameSession;
   numRows: number[] = [];
   numCols: number[] = [];
+  showWin = false;
+  showLoss = false;
 
   constructor(private heroService: HeroService) { }
 
   ngOnInit(): void {
     this.heroService.getUpdatedGameSession().subscribe((gameSession: GameSession) => {
       this.gameSession = gameSession;
+      if (this.gameSession.state === 'WIN') {
+        this.showWin = true;
+      } else if (this.gameSession.state === 'LOSS') {
+        this.showLoss = true;
+      }
     });
   }
 

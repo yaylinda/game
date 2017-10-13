@@ -2,7 +2,7 @@
 
   <div id="greeting" *ngIf="!showLoading && !showGameboard">
     <input id="player-name-input" [(ngModel)]="name" placeholder="name" />
-    <button id="join-game-btn" (click)="joinGame()"><b>Join Game</b></button>
+    <button [disabled]="name.length === 0" id="join-game-btn" (click)="joinGame()"><b>Join Game</b></button>
   </div>
 
   <div id="loading" *ngIf="showLoading">
@@ -14,6 +14,9 @@
     <hand [gameSession]="gameSession"></hand>
 
     <game-board [gameSession]="gameSession" [numRows]="numRows" [numCols]="numCols"></game-board>
+
+    <div *ngIf="showWin">You Win!</div>
+    <div *ngIf="showLoss">You Lost!</div>
 
   </div>
 

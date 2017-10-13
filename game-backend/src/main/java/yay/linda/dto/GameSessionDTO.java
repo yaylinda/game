@@ -14,17 +14,19 @@ public class GameSessionDTO {
     private int numRows;
     private int numCols;
     private String state;
+    private int numCardsInDeck;
 
     public GameSessionDTO() {
     }
 
-    public GameSessionDTO(Player player, GameBoard gameboard, String gameState, boolean myTurn) {
+    public GameSessionDTO(Player player, GameBoard gameboard, String gameState, int numCardsInDeck, boolean myTurn) {
         this.player = player;
         this.gameboard = gameboard.getBoard();
         this.state = gameState;
         this.myTurn = myTurn;
         this.numRows = gameboard.getNumRows();
         this.numCols = gameboard.getNumCols();
+        this.numCardsInDeck = numCardsInDeck;
     }
 
     public Player getPlayer() {
@@ -73,5 +75,13 @@ public class GameSessionDTO {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public int getNumCardsInDeck() {
+        return numCardsInDeck;
+    }
+
+    public void setNumCardsInDeck(int numCardsInDeck) {
+        this.numCardsInDeck = numCardsInDeck;
     }
 }

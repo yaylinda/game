@@ -79,7 +79,7 @@ __decorate([
 HandComponent = __decorate([
     core_1.Component({
         selector: 'hand',
-        template: "\n    <div id=\"hand\">\n      <div id=\"game-stats\">\n        <p *ngIf=\"gameSession.myTurn\">My Turn</p>\n        <p *ngIf=\"!gameSession.myTurn\">Opponent's Turn</p>\n        <p>Power: {{gameSession.player.power}}</p>\n        <p>Score: {{gameSession.player.score}}</p>\n      </div>\n      <card *ngFor=\"let card of gameSession.player.hand;\"\n            (click)=\"processClickedCard(card)\"\n            [card]=\"card\">\n      </card>\n      <button id=\"end-turn-btn\" (click)=\"endTurn()\">End Turn</button>\n    </div>\n  ",
+        template: "\n    <div id=\"hand\">\n      <div id=\"game-stats\">\n        <p *ngIf=\"gameSession.myTurn\">My Turn</p>\n        <p *ngIf=\"!gameSession.myTurn\">Opponent's Turn</p>\n        <p>Power: {{gameSession.player.power}}</p>\n        <p>Score: {{gameSession.player.score}}</p>\n        <p>Cards Remaining in Deck: {{gameSession.numCardsInDeck}}</p>\n      </div>\n      <card *ngFor=\"let card of gameSession.player.hand;\"\n            (click)=\"processClickedCard(card)\"\n            [card]=\"card\">\n      </card>\n      <button id=\"end-turn-btn\" (click)=\"endTurn()\">End Turn</button>\n    </div>\n  ",
         styleUrls: ['./hand.component.css']
     }),
     __metadata("design:paramtypes", [hero_service_1.HeroService])
