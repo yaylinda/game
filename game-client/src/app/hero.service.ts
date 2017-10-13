@@ -99,24 +99,24 @@ export class HeroService {
   }
 
   sendCardPut(card: Card, row: number, col: number) : Promise<Cell[][]> {
-    let cell: Cell;
+    let cell: Cell = new Cell;
     cell.type = card.cardType;
     cell.might = card.might;
     cell.move = card.movement;
     cell.team = card.owningTeam;
     cell.state = 'OCCUPIED';
 
-    let moveDto: Move;
-    moveDto.row = row;
-    moveDto.col = col;
-    moveDto.cell = cell;
+    let move: Move = new Move;
+    move.row = row;
+    move.col = col;
+    move.cell = cell;
 
-    moveDto.playerId = card.owningPlayer;
+    move.playerId = card.owningPlayer;
 
     const url = `${this.baseUrl}${this.cardUrl}`;
 
     return this.http
-      .put(url, moveDto, {headers: this.headers})
+      .put(url, move, {headers: this.headers})
       .toPromise()
       .then(response => response.json() as Cell[][])
       .catch(this.handleError);

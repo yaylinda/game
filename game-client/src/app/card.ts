@@ -6,4 +6,5 @@ export class Card {
   owningPlayer: string;
   owningTeam: string;
   clicked: boolean;
+  justDrew: boolean;
 }

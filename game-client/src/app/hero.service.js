@@ -13,6 +13,8 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
 var Rx_1 = require("rxjs/Rx");
+var cell_1 = require("./cell");
+var move_1 = require("./move");
 var HeroService = (function () {
     function HeroService(http) {
         this.http = http;
@@ -91,20 +93,20 @@ var HeroService = (function () {
             .catch(this.handleError);
     };
     HeroService.prototype.sendCardPut = function (card, row, col) {
-        var cell;
+        var cell = new cell_1.Cell;
         cell.type = card.cardType;
         cell.might = card.might;
         cell.move = card.movement;
         cell.team = card.owningTeam;
         cell.state = 'OCCUPIED';
-        var moveDto;
-        moveDto.row = row;
-        moveDto.col = col;
-        moveDto.cell = cell;
-        moveDto.playerId = card.owningPlayer;
+        var move = new move_1.Move;
+        move.row = row;
+        move.col = col;
+        move.cell = cell;
+        move.playerId = card.owningPlayer;
         var url = "" + this.baseUrl + this.cardUrl;
         return this.http
-            .put(url, moveDto, { headers: this.headers })
+            .put(url, move, { headers: this.headers })
             .toPromise()
             .then(function (response) { return response.json(); })
             .catch(this.handleError);

@@ -33,10 +33,10 @@ public class GamePlayService {
     @Inject
     private DeckGenerator deckGenerator;
 
-    public GamePlayService() {
-        this.numRows = gameConfigurations.getNumRows();
-        this.numRows = gameConfigurations.getNumCols();
-    }
+//    public GamePlayService() {
+//        this.numRows = gameConfigurations.getNumRows();
+//        this.numRows = gameConfigurations.getNumCols();
+//    }
 
     public Player join(String name) {
         System.out.printf("%s is joining the game\n", name);
@@ -44,11 +44,11 @@ public class GamePlayService {
         player.setMaxScore(gameConfigurations.getMaxScore());
         if (player1 == null) {
             player.setTeam(PlayerTeam.TEAM1.name());
-            player.setPower(1);
+            player.setPower(0);
             player1 = player;
         } else {
             player.setTeam(PlayerTeam.TEAM2.name());
-            player.setPower(2);
+            player.setPower(1);
             player.setOpponentId(player1.getId());
             player1 = null;
         }
@@ -77,9 +77,9 @@ public class GamePlayService {
 
     public GameSessionDTO pollForGame(String playerId) {
         GameSession gameSession = this.playerGameSessionRepo.getGameSessionById(playerId);
-        Player player = gameSession.getPlayers().get(gameSession);
 
         if (gameSession != null && gameSession.getPlayerGameSessionStatuses().get(playerId) == GameSessionStatus.NEW) {
+            Player player = gameSession.getPlayers().get(playerId);
 
             List<List<Cell>> updatedGameboard = new ArrayList<>();
             for (List<Cell> row : gameSession.getPlayerGameboards().get(playerId).getBoard()) {
@@ -90,8 +90,8 @@ public class GamePlayService {
                 updatedGameboard.add(copiedRow);
             }
 
-            for (int rowNum = 0; rowNum < this.numRows; rowNum++) {
-                for (int colNum = 0; colNum < this.numCols; colNum++) {
+            for (int rowNum = 0; rowNum < this.gameConfigurations.getNumRows(); rowNum++) {
+                for (int colNum = 0; colNum < this.gameConfigurations.getNumCols(); colNum++) {
                     Cell cell = new Cell(updatedGameboard.get(rowNum).get(colNum));
                     if (CellState.valueOf(cell.getState()) == CellState.OCCUPIED &&
                             CardType.valueOf(cell.getType()) == CardType.TROOP &&
@@ -102,6 +102,7 @@ public class GamePlayService {
                             if (CellState.valueOf(otherCell.getState()) == CellState.OCCUPIED) {
                                 if (PlayerTeam.valueOf(otherCell.getTeam()) == PlayerTeam.valueOf(player.getTeam())) {
                                     updatedGameboard.get(newRowNum).get(colNum).setMight(cell.getMight() + otherCell.getMight());
+                                    updatedGameboard.get(rowNum).get(colNum).setState(CellState.EMPTY.toString());
                                 } else {
                                     int mightDiff = cell.getMight() - otherCell.getMight();
                                     if (mightDiff > 0) {
@@ -113,7 +114,7 @@ public class GamePlayService {
                                     } else if (mightDiff < 0) {
                                         updatedGameboard.get(rowNum).get(colNum).setState(CellState.EMPTY.toString());
                                         updatedGameboard.get(newRowNum).get(colNum).setType(otherCell.getType());
-                                        updatedGameboard.get(newRowNum).get(colNum).setMight(mightDiff);
+                                        updatedGameboard.get(newRowNum).get(colNum).setMight(mightDiff * -1);
                                         updatedGameboard.get(newRowNum).get(colNum).setMove(otherCell.getMove());
                                         updatedGameboard.get(newRowNum).get(colNum).setTeam(otherCell.getTeam());
                                     } else {
@@ -130,10 +131,9 @@ public class GamePlayService {
                                 updatedGameboard.get(newRowNum).get(colNum).setTeam(cell.getTeam());
                             }
                         } else {
-                            player.setScore(player.getScore() + 1);
-                            if (player.getScore() == player.getMaxScore()) {
+                            player.setScore(player.getScore() + cell.getMight());
+                            if (player.getScore() >= player.getMaxScore()) {
                                 gameSession.getGameStates().put(playerId, GameState.WIN);
-
                                 gameSession.getPlayerGameboards().get(player.getOpponentId()).setBoard(updatedGameboard);
                                 gameSession.getGameStates().put(player.getOpponentId(), GameState.LOSS);
                                 gameSession.getPlayerGameSessionStatuses().put(player.getOpponentId(), GameSessionStatus.NEW);
@@ -170,6 +170,7 @@ public class GamePlayService {
     public GameSessionDTO endTurn(String playerId, List<Card> hand) {
         GameSession gameSession = playerGameSessionRepo.getGameSessionById(playerId);
         gameSession.endTurn(playerId, hand);
+        gameSession.getPlayerGameSessionStatuses().put(playerId, GameSessionStatus.OLD);
         return new GameSessionDTO(
                 this.playerGameSessionRepo.getGameSessionById(playerId).getPlayers().get(playerId),
                 gameSession.getPlayerGameboards().get(playerId),

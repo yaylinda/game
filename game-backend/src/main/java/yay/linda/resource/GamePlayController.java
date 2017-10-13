@@ -96,7 +96,7 @@ public class GamePlayController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "game/endTurn/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "game/endTurn/{id}", method = RequestMethod.PUT)
     public ResponseEntity<GameSessionDTO> endTurn(@PathVariable String id, @RequestBody List<Card> hand) {
         GameSessionDTO gameSessionDTO = gamePlayService.endTurn(id, hand);
         return ResponseEntity.ok(gameSessionDTO);

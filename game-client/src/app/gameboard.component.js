@@ -19,10 +19,16 @@ var GameboardComponent = (function () {
     GameboardComponent.prototype.processClickedCell = function (row, col) {
         var _this = this;
         console.log("clicked on: (" + row + ", " + col + ")");
-        if (row === 4 && this._gameSession.myTurn === true && this._gameSession.gameboard[row][col].state === 'EMPTY') {
-            var card = this.heroService.getClickedCard();
+        var card = this.heroService.getClickedCard();
+        if (row === 4 && this._gameSession.myTurn === true && this._gameSession.gameboard[row][col].state === 'EMPTY' && this._gameSession.player.power >= card.cost) {
             this.heroService.sendCardPut(card, row, col).then(function (gameboard) {
                 _this._gameSession.gameboard = gameboard;
+                _this._gameSession.player.power = _this._gameSession.player.power - card.cost;
+                _this.heroService.updatePowerEE.emit(_this._gameSession.player.power);
+                _this.heroService.drawCard(_this._gameSession.player.id).then(function (newCard) {
+                    newCard.justDrew = true;
+                    _this.heroService.updateHandEE.emit(newCard);
+                });
             });
         }
     };

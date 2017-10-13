@@ -29,10 +29,16 @@ export class GameboardComponent {
 
   processClickedCell(row: number, col: number): void {
     console.log(`clicked on: (${row}, ${col})`);
-    if (row === 4 && this._gameSession.myTurn === true && this._gameSession.gameboard[row][col].state === 'EMPTY') {
-      let card = this.heroService.getClickedCard();
+    let card = this.heroService.getClickedCard();
+    if (row === 4 && this._gameSession.myTurn === true && this._gameSession.gameboard[row][col].state === 'EMPTY' && this._gameSession.player.power >= card.cost) {
       this.heroService.sendCardPut(card, row, col).then(gameboard => {
         this._gameSession.gameboard = gameboard;
+        this._gameSession.player.power = this._gameSession.player.power - card.cost;
+        this.heroService.updatePowerEE.emit(this._gameSession.player.power);
+        this.heroService.drawCard(this._gameSession.player.id).then(newCard => {
+          newCard.justDrew = true;
+          this.heroService.updateHandEE.emit(newCard);
+        });
       });
     }
   }
