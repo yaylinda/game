@@ -84,7 +84,7 @@ public class GameSession {
         return toReturn;
     }
 
-    public GameBoard processPutCard(MoveDTO move) {
+    public List<List<Cell>> processPutCard(MoveDTO move) {
         GameBoard gameBoard = this.playerGameboards.get(move.getPlayerId());
 
         gameBoard.getBoard().get(move.getRow()).get(move.getCol()).setState(CellState.OCCUPIED.toString());
@@ -93,15 +93,14 @@ public class GameSession {
         gameBoard.getBoard().get(move.getRow()).get(move.getCol()).setMove(move.getCell().getMove());
         gameBoard.getBoard().get(move.getRow()).get(move.getCol()).setMight(move.getCell().getMight());
 
-        return gameBoard;
+        return gameBoard.getBoard();
     }
 
     public void endTurn(String playerId, List<Card> hand) {
         this.players.get(playerId).setHand(hand);
 
-        List<List<Cell>> gameboard = this.playerGameboards.get(playerId).getBoard();
-
         // update opponent's gameboard with player's moves
+        List<List<Cell>> gameboard = this.playerGameboards.get(playerId).getBoard();
         for (String id : players.keySet()) {
                 if (!id.equals(playerId)) {
                 List<List<Cell>> opponentGameboard = new ArrayList<>();

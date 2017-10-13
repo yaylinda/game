@@ -60,11 +60,13 @@ export class HandComponent implements OnInit {
   endTurn(): void {
     if (this._gameSession.myTurn) {
       this._gameSession.myTurn = false;
-      this.heroService.endTurn(this._gameSession);
-      this.heroService.pollForGame(this._gameSession.player.id)
-        .subscribe(updatedGameSession => {
-          this.heroService.updateGameSessionEE.emit(updatedGameSession);
-        });
+      this.heroService.endTurn(this._gameSession.player.id, this._gameSession.player.hand).then(() => {
+        this.heroService.pollForGame(this._gameSession.player.id)
+          .subscribe(updatedGameSession => {
+            this._gameSession = updatedGameSession;
+            this.heroService.updateGameSessionEE.emit(updatedGameSession);
+          });
+      });
     } else {
       console.log('it\'s not even your turn');
     }

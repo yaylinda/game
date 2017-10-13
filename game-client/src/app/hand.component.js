@@ -47,10 +47,12 @@ var HandComponent = (function () {
         var _this = this;
         if (this._gameSession.myTurn) {
             this._gameSession.myTurn = false;
-            this.heroService.endTurn(this._gameSession);
-            this.heroService.pollForGame(this._gameSession.player.id)
-                .subscribe(function (updatedGameSession) {
-                _this.heroService.updateGameSessionEE.emit(updatedGameSession);
+            this.heroService.endTurn(this._gameSession.player.id, this._gameSession.player.hand).then(function () {
+                _this.heroService.pollForGame(_this._gameSession.player.id)
+                    .subscribe(function (updatedGameSession) {
+                    _this._gameSession = updatedGameSession;
+                    _this.heroService.updateGameSessionEE.emit(updatedGameSession);
+                });
             });
         }
         else {

@@ -163,7 +163,7 @@ public class GamePlayService {
         return this.playerGameSessionRepo.getGameSessionById(playerId).drawCard(playerId, team);
     }
 
-    public GameBoard processPutCard(MoveDTO move) {
+    public List<List<Cell>> processPutCard(MoveDTO move) {
         return this.playerGameSessionRepo.getGameSessionById(move.getPlayerId()).processPutCard(move);
     }
 

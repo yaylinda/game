@@ -86,8 +86,8 @@ public class GamePlayController {
      * @return
      */
     @RequestMapping(value = "game/card", method = RequestMethod.PUT)
-    public ResponseEntity<GameBoard> processPutCard(@RequestBody MoveDTO move) {
-        GameBoard updatedGameboard = gamePlayService.processPutCard(move);
+    public ResponseEntity<List<List<Cell>>> processPutCard(@RequestBody MoveDTO move) {
+        List<List<Cell>> updatedGameboard = gamePlayService.processPutCard(move);
         return ResponseEntity.ok(updatedGameboard);
     }
 
