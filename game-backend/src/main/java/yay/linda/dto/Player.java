@@ -13,23 +13,26 @@ public class Player {
 
     private String id;
     private String opponentId;
-    private String opponentName;
     private String name;
+    private String opponentName;
     private String team;
     private double power;
     private List<Card> hand;
     private int score;
+    private int opponentScore;
     private int maxScore;
 
     public Player() {
         this.id = UUID.randomUUID().toString();
         this.score = 0;
+        this.opponentScore = 0;
     }
 
     public Player(String name) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.score = 0;
+        this.opponentScore = 0;
     }
 
     public String getId() {
@@ -102,5 +105,13 @@ public class Player {
 
     public void setMaxScore(int maxScore) {
         this.maxScore = maxScore;
+    }
+
+    public int getOpponentScore() {
+        return opponentScore;
+    }
+
+    public void setOpponentScore(int opponentScore) {
+        this.opponentScore = opponentScore;
     }
 }

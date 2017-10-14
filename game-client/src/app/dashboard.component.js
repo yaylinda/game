@@ -21,16 +21,24 @@ var DashboardComponent = (function () {
         this.numCols = [];
         this.showWin = false;
         this.showLoss = false;
+        this.showTie = false;
+        this.gameEnd = false;
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.heroService.getUpdatedGameSession().subscribe(function (gameSession) {
             _this.gameSession = gameSession;
-            if (_this.gameSession.state === 'WIN') {
-                _this.showWin = true;
-            }
-            else if (_this.gameSession.state === 'LOSS') {
-                _this.showLoss = true;
+            if (_this.gameSession.state !== 'ONGOING') {
+                _this.gameEnd = true;
+                if (_this.gameSession.state === 'WIN') {
+                    _this.showWin = true;
+                }
+                else if (_this.gameSession.state === 'LOSS') {
+                    _this.showLoss = true;
+                }
+                else if (_this.gameSession.state === 'TIE') {
+                    _this.showTie = true;
+                }
             }
         });
     };
@@ -72,7 +80,7 @@ var DashboardComponent = (function () {
 DashboardComponent = __decorate([
     core_1.Component({
         selector: 'my-dashboard',
-        templateUrl: './dashboard.component.html',
+        template: "\n    \n  ",
         styleUrls: ['./dashboard.component.css']
     }),
     __metadata("design:paramtypes", [hero_service_1.HeroService])

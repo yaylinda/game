@@ -13,8 +13,8 @@ var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
 var Rx_1 = require("rxjs/Rx");
-var cell_1 = require("./cell");
-var move_1 = require("./move");
+var cell_1 = require("./dto/cell");
+var move_1 = require("./dto/move");
 var HeroService = (function () {
     function HeroService(http) {
         this.http = http;

@@ -9,5 +9,6 @@ export class Player {
   hand: Card[] = [];
   team: string;
   score: number;
+  opponentScore: number;
   maxScore: number;
 }

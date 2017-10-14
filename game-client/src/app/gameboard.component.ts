@@ -1,6 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {HeroService} from "./hero.service";
-import {GameSession} from "./gamesession";
+import {GameSession} from "./dto/gamesession";
 
 @Component({
   selector: 'game-board',
@@ -9,7 +9,7 @@ import {GameSession} from "./gamesession";
       <tr *ngFor="let rowNum of numRows">
         <td *ngFor="let colNum of numCols" 
             (click)="processClickedCell(rowNum, colNum)" 
-            [ngClass]="[(gameSession.myTurn && rowNum === 4 || gameSession.myTurn && rowNum === 3) ? 'playable' : '', (gameSession.gameboard[rowNum][colNum].team === 'TEAM1') ? 'team1' : 'team2']">
+            [ngClass]="[(gameSession.myTurn && rowNum === 4 || gameSession.myTurn && rowNum === 3) ? 'playable' : '', (gameSession.gameboard[rowNum][colNum].team === gameSession.player.team) ? 'mine' : 'notmine']">
           <p *ngIf="gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'">{{gameSession.gameboard[rowNum][colNum].type}}</p>
           <p *ngIf="gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'">{{gameSession.gameboard[rowNum][colNum].might}}</p>
           <p *ngIf="gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'">{{gameSession.gameboard[rowNum][colNum].move}}</p>
@@ -30,7 +30,7 @@ export class GameboardComponent {
   processClickedCell(row: number, col: number): void {
     console.log(`clicked on: (${row}, ${col})`);
     let card = this.heroService.getClickedCard();
-    if ((row === 4 || row === 3) && this._gameSession.myTurn === true && this._gameSession.gameboard[row][col].state === 'EMPTY' && this._gameSession.player.power >= card.cost) {
+    if ((row === 4 || row === 3) && this._gameSession.myTurn === true && (this._gameSession.gameboard[row][col].state === 'EMPTY' /*|| this._gameSession.gameboard[row][col].type === card.cardType*/) && this._gameSession.player.power >= card.cost) {
       this.heroService.sendCardPut(card, row, col).then(gameboard => {
         this._gameSession.gameboard = gameboard;
         this._gameSession.player.power = this._gameSession.player.power - card.cost;

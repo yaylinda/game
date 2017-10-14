@@ -142,11 +142,13 @@ public class GamePlayService {
             originalPlayer.setPower(originalPlayer.getPower() + 1);
             player.setPower(originalPlayer.getPower());
 
+            player.setOpponentScore(gameSession.getPlayers().get(player.getOpponentId()).getScore());
+
             return new GameSessionDTO(
-                    this.playerGameSessionRepo.getGameSessionById(playerId).getPlayers().get(playerId),
-                    this.playerGameSessionRepo.getGameSessionById(playerId).getPlayerGameboards().get(playerId),
-                    this.playerGameSessionRepo.getGameSessionById(playerId).getGameStates().get(playerId).name(),
-                    this.playerGameSessionRepo.getGameSessionById(playerId).getDeck().size(),
+                    player,
+                    gameSession.getPlayerGameboards().get(playerId),
+                    gameSession.getGameStates().get(playerId).name(),
+                    gameSession.getDeck().size(),
                     true); // this gets sent to player 1 on first turn
         } else {
             return new GameSessionDTO();

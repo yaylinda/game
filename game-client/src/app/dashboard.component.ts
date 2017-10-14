@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 
 import {HeroService} from './hero.service';
-import {Player} from "./player";
-import {GameSession} from "./gamesession";
-import {Cell} from "./cell";
+import {Player} from "./dto/player";
+import {GameSession} from "./dto/gamesession";
 
 @Component({
   selector: 'my-dashboard',
-  templateUrl: './dashboard.component.html',
+  template: `
+    
+  `,
   styleUrls: [ './dashboard.component.css' ]
 })
 
@@ -21,16 +22,23 @@ export class DashboardComponent implements OnInit {
   numCols: number[] = [];
   showWin = false;
   showLoss = false;
+  showTie = false;
+  gameEnd = false;
 
   constructor(private heroService: HeroService) { }
 
   ngOnInit(): void {
     this.heroService.getUpdatedGameSession().subscribe((gameSession: GameSession) => {
       this.gameSession = gameSession;
-      if (this.gameSession.state === 'WIN') {
-        this.showWin = true;
-      } else if (this.gameSession.state === 'LOSS') {
-        this.showLoss = true;
+      if (this.gameSession.state !== 'ONGOING') {
+        this.gameEnd = true;
+        if (this.gameSession.state === 'WIN') {
+          this.showWin = true;
+        } else if (this.gameSession.state === 'LOSS') {
+          this.showLoss = true;
+        } else if (this.gameSession.state === 'TIE') {
+          this.showTie = true;
+        }
       }
     });
   }

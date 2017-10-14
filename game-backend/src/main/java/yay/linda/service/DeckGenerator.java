@@ -75,7 +75,8 @@ public class DeckGenerator {
     private int calculateMovementStat(CardType cardType) {
         int movement = 0;
         if (cardType.equals(CardType.TROOP)) {
-            movement = (random.nextFloat() > gameConfigurations.getTroopMoveExtraFreq()) ? 1 : 2;
+//            movement = (random.nextFloat() > gameConfigurations.getTroopMoveExtraFreq()) ? 1 : 2;
+            movement = 1;
         }
         return movement;
     }

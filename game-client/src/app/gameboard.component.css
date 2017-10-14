@@ -26,11 +26,11 @@ td {
   cursor: pointer;
 }
 
-.team1 {
+.mine {
   color: green;
 }
 
-.team2 {
+.notmine {
   color: red;
 }
 

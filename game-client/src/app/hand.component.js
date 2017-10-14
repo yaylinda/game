@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var hero_service_1 = require("./hero.service");
-var gamesession_1 = require("./gamesession");
+var gamesession_1 = require("./dto/gamesession");
 var HandComponent = (function () {
     function HandComponent(heroService) {
         this.heroService = heroService;

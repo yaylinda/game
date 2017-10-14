@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var card_1 = require("./card");
+var card_1 = require("./dto/card");
 var CardComponent = (function () {
     function CardComponent() {
     }

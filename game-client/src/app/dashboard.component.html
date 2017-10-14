@@ -15,8 +15,13 @@
 
     <game-board [gameSession]="gameSession" [numRows]="numRows" [numCols]="numCols"></game-board>
 
-    <div *ngIf="showWin">You Win!</div>
-    <div *ngIf="showLoss">You Lost!</div>
+    <game-end *ngIf="gameEnd"
+              [status]="gameSession.state"
+              [name]="gameSession.player.name"
+              [opponentName]="gameSession.player.opponentName"
+              [score]="gameSession.player.score"
+              [opponentScore]="gameSession.player.opponentScore">
+    </game-end>
 
   </div>
 

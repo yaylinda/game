@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {Card} from "./card";
+import {Card} from "./dto/card";
 import {HeroService} from "./hero.service";
-import {Cell} from "./cell";
-import {GameSession} from "./gamesession";
+import {Cell} from "./dto/cell";
+import {GameSession} from "./dto/gamesession";
 
 @Component({
   selector: 'hand',

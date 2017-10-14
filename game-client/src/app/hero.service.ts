@@ -5,11 +5,11 @@ import 'rxjs/add/operator/toPromise';
 
 import {Observable} from 'rxjs/Rx';
 
-import {Player} from "./player";
-import {GameSession} from "./gamesession";
-import {Card} from "./card";
-import {Cell} from "./cell";
-import {Move} from "./move";
+import {Player} from "./dto/player";
+import {GameSession} from "./dto/gamesession";
+import {Card} from "./dto/card";
+import {Cell} from "./dto/cell";
+import {Move} from "./dto/move";
 
 @Injectable()
 export class HeroService {
