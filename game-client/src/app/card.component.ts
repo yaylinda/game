@@ -8,7 +8,7 @@ import {Card} from "./dto/card";
       <p>{{card.cardType}}</p>
       <p>Cost: {{card.cost}}</p>
       <p>Might: {{card.might}}</p>
-      <p>Movement: {{card.movement}}</p>
+      <!--<p>Movement: {{card.movement}}</p>-->
     </div>
   `,
   styleUrls: [ './card.component.css' ]

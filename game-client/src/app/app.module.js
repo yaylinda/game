@@ -13,11 +13,12 @@ var http_1 = require("@angular/http");
 var app_routing_module_1 = require("./app-routing.module");
 var app_component_1 = require("./app.component");
 var dashboard_component_1 = require("./dashboard.component");
-var hero_service_1 = require("./hero.service");
+var game_service_1 = require("./game.service");
 var http_2 = require("@angular/common/http");
 var card_component_1 = require("./card.component");
 var gameboard_component_1 = require("./gameboard.component");
 var hand_component_1 = require("./hand.component");
+var gameend_component_1 = require("./gameend.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -38,9 +39,10 @@ AppModule = __decorate([
             card_component_1.CardComponent,
             hand_component_1.HandComponent,
             gameboard_component_1.GameboardComponent,
+            gameend_component_1.GameEndComponent
         ],
         providers: [
-            hero_service_1.HeroService
+            game_service_1.GameService
         ],
         bootstrap: [
             app_component_1.AppComponent

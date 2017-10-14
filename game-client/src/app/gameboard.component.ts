@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {HeroService} from "./hero.service";
+import {GameService} from "./game.service";
 import {GameSession} from "./dto/gamesession";
 
 @Component({
@@ -12,7 +12,7 @@ import {GameSession} from "./dto/gamesession";
             [ngClass]="[(gameSession.myTurn && rowNum === 4 || gameSession.myTurn && rowNum === 3) ? 'playable' : '', (gameSession.gameboard[rowNum][colNum].team === gameSession.player.team) ? 'mine' : 'notmine']">
           <p *ngIf="gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'">{{gameSession.gameboard[rowNum][colNum].type}}</p>
           <p *ngIf="gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'">{{gameSession.gameboard[rowNum][colNum].might}}</p>
-          <p *ngIf="gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'">{{gameSession.gameboard[rowNum][colNum].move}}</p>
+          <!--<p *ngIf="gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'">{{gameSession.gameboard[rowNum][colNum].move}}</p>-->
         </td>
       </tr>
     </table>
@@ -25,7 +25,7 @@ export class GameboardComponent {
   private _numRows: number[];
   private _numCols: number[];
 
-  constructor(private heroService: HeroService) { }
+  constructor(private heroService: GameService) { }
 
   processClickedCell(row: number, col: number): void {
     console.log(`clicked on: (${row}, ${col})`);

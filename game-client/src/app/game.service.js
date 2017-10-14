@@ -15,8 +15,8 @@ require("rxjs/add/operator/toPromise");
 var Rx_1 = require("rxjs/Rx");
 var cell_1 = require("./dto/cell");
 var move_1 = require("./dto/move");
-var HeroService = (function () {
-    function HeroService(http) {
+var GameService = (function () {
+    function GameService(http) {
         this.http = http;
         this.headers = new http_1.Headers({
             'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ var HeroService = (function () {
         this.updateBoardEE = new core_1.EventEmitter();
         this.updateGameSessionEE = new core_1.EventEmitter();
     }
-    HeroService.prototype.joinGame = function (name) {
+    GameService.prototype.joinGame = function (name) {
         var url = "" + this.baseUrl + this.joinGameUrl + "/" + name;
         return this.http
             .post(url, "{}", { headers: this.headers })
@@ -42,7 +42,7 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HeroService.prototype.startGame = function (player1, player2, id) {
+    GameService.prototype.startGame = function (player1, player2, id) {
         console.log("starting game: " + id);
         var url = "" + this.baseUrl + this.startGameUrl + "/" + id;
         return this.http
@@ -51,7 +51,7 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HeroService.prototype.getPlayerById = function (id) {
+    GameService.prototype.getPlayerById = function (id) {
         console.log("getting player by id: " + id);
         var url = "" + this.baseUrl + this.playerUrl + "/" + id;
         return this.http
@@ -60,7 +60,7 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HeroService.prototype.pollForGame = function (id) {
+    GameService.prototype.pollForGame = function (id) {
         var _this = this;
         console.log('polling for game...');
         var url = "" + this.baseUrl + this.pollUrl + "/" + id;
@@ -83,7 +83,7 @@ var HeroService = (function () {
                 .timeout(600000);
         });
     };
-    HeroService.prototype.drawCard = function (id) {
+    GameService.prototype.drawCard = function (id) {
         console.log('drawing card...');
         var url = "" + this.baseUrl + this.cardUrl + "/" + id;
         return this.http
@@ -92,7 +92,8 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HeroService.prototype.sendCardPut = function (card, row, col) {
+    GameService.prototype.sendCardPut = function (card, row, col) {
+        console.log('send card placement...');
         var cell = new cell_1.Cell;
         cell.type = card.cardType;
         cell.might = card.might;
@@ -111,7 +112,8 @@ var HeroService = (function () {
             .then(function (response) { return response.json(); })
             .catch(this.handleError);
     };
-    HeroService.prototype.endTurn = function (id, hand) {
+    GameService.prototype.endTurn = function (id, hand) {
+        console.log('ending turn...');
         var url = "" + this.baseUrl + this.turnUrl + "/" + id;
         return this.http
             .put(url, hand, { headers: this.headers })
@@ -119,61 +121,67 @@ var HeroService = (function () {
             .then()
             .catch(this.handleError);
     };
-    HeroService.prototype.setClickedCard = function (card) {
-        this.selectedCard = card;
-    };
-    HeroService.prototype.getClickedCard = function () {
-        return this.selectedCard;
-    };
-    HeroService.prototype.updateHand = function (newCard) {
-        this.updateHandEE.emit(newCard);
-    };
-    HeroService.prototype.getUpdatedHand = function () {
-        return this.updateHandEE;
-    };
-    HeroService.prototype.updatePower = function (power) {
-        this.updatePowerEE.emit(power);
-    };
-    HeroService.prototype.getUpdatedPower = function () {
-        return this.updatePowerEE;
-    };
-    HeroService.prototype.updateBoard = function (board) {
-        this.updateBoardEE.emit(board);
-    };
-    HeroService.prototype.getUpdatedBoard = function () {
-        return this.updateBoardEE;
-    };
-    HeroService.prototype.updateGameSession = function (gameSession) {
-        this.updateGameSessionEE.emit(gameSession);
-    };
-    HeroService.prototype.getUpdatedGameSession = function () {
-        return this.updateGameSessionEE;
-    };
-    HeroService.prototype.handleError = function (error) {
+    /************************************************************************************************
+     * Private Helper Functions
+     ************************************************************************************************/
+    GameService.prototype.handleError = function (error) {
         console.error('An error occurred', error); // for demo purposes only
         return Promise.reject(error.message || error);
     };
-    return HeroService;
+    /************************************************************************************************
+     * Getters and Setters
+     ************************************************************************************************/
+    GameService.prototype.setClickedCard = function (card) {
+        this.selectedCard = card;
+    };
+    GameService.prototype.getClickedCard = function () {
+        return this.selectedCard;
+    };
+    GameService.prototype.updateHand = function (newCard) {
+        this.updateHandEE.emit(newCard);
+    };
+    GameService.prototype.getUpdatedHand = function () {
+        return this.updateHandEE;
+    };
+    GameService.prototype.updatePower = function (power) {
+        this.updatePowerEE.emit(power);
+    };
+    GameService.prototype.getUpdatedPower = function () {
+        return this.updatePowerEE;
+    };
+    GameService.prototype.updateBoard = function (board) {
+        this.updateBoardEE.emit(board);
+    };
+    GameService.prototype.getUpdatedBoard = function () {
+        return this.updateBoardEE;
+    };
+    GameService.prototype.updateGameSession = function (gameSession) {
+        this.updateGameSessionEE.emit(gameSession);
+    };
+    GameService.prototype.getUpdatedGameSession = function () {
+        return this.updateGameSessionEE;
+    };
+    return GameService;
 }());
 __decorate([
     core_1.Output(),
     __metadata("design:type", core_1.EventEmitter)
-], HeroService.prototype, "updateHandEE", void 0);
+], GameService.prototype, "updateHandEE", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", core_1.EventEmitter)
-], HeroService.prototype, "updatePowerEE", void 0);
+], GameService.prototype, "updatePowerEE", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", core_1.EventEmitter)
-], HeroService.prototype, "updateBoardEE", void 0);
+], GameService.prototype, "updateBoardEE", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", core_1.EventEmitter)
-], HeroService.prototype, "updateGameSessionEE", void 0);
-HeroService = __decorate([
+], GameService.prototype, "updateGameSessionEE", void 0);
+GameService = __decorate([
     core_1.Injectable(),
     __metadata("design:paramtypes", [http_1.Http])
-], HeroService);
-exports.HeroService = HeroService;
-//# sourceMappingURL=hero.service.js.map
+], GameService);
+exports.GameService = GameService;
+//# sourceMappingURL=game.service.js.map

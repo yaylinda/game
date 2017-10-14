@@ -12,13 +12,12 @@ import {Cell} from "./dto/cell";
 import {Move} from "./dto/move";
 
 @Injectable()
-export class HeroService {
+export class GameService {
 
   private headers = new Headers({
     'Content-Type': 'application/json',
     'accept': 'application/json'
   });
-
   private baseUrl = 'http://localhost:8080';
   private playerUrl = '/player';
   private joinGameUrl = '/player/join';
@@ -27,7 +26,7 @@ export class HeroService {
   private turnUrl = '/game/endTurn';
   private pollUrl = '/game/poll';
 
-  selectedCard: Card;
+  private selectedCard: Card;
 
   @Output() updateHandEE: EventEmitter<Card> = new EventEmitter();
   @Output() updatePowerEE: EventEmitter<number> = new EventEmitter();
@@ -99,6 +98,7 @@ export class HeroService {
   }
 
   sendCardPut(card: Card, row: number, col: number) : Promise<Cell[][]> {
+    console.log('send card placement...');
     let cell: Cell = new Cell;
     cell.type = card.cardType;
     cell.might = card.might;
@@ -123,6 +123,7 @@ export class HeroService {
   }
 
   endTurn(id: string, hand: Card[]) {
+    console.log('ending turn...');
     const url = `${this.baseUrl}${this.turnUrl}/${id}`;
     return this.http
       .put(url, hand, {headers: this.headers})
@@ -130,6 +131,19 @@ export class HeroService {
       .then()
       .catch(this.handleError);
   }
+
+  /************************************************************************************************
+   * Private Helper Functions
+   ************************************************************************************************/
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for demo purposes only
+    return Promise.reject(error.message || error);
+  }
+
+  /************************************************************************************************
+   * Getters and Setters
+   ************************************************************************************************/
 
   setClickedCard(card: Card) {
     this.selectedCard = card;
@@ -170,11 +184,5 @@ export class HeroService {
   getUpdatedGameSession(): EventEmitter<GameSession> {
     return this.updateGameSessionEE;
   }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
-  }
-
 }
 

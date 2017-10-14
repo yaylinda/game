@@ -1,13 +1,30 @@
 import {Component, OnInit} from '@angular/core';
 
-import {HeroService} from './hero.service';
+import {GameService} from './game.service';
 import {Player} from "./dto/player";
 import {GameSession} from "./dto/gamesession";
 
 @Component({
   selector: 'my-dashboard',
   template: `
-    
+    <div class="main-container">
+
+      <div id="greeting" *ngIf="!showLoading && !showGameboard">
+        <input id="player-name-input" [(ngModel)]="name" placeholder="name" />
+        <button [disabled]="name.length === 0" id="join-game-btn" (click)="joinGame()"><b>Join Game</b></button>
+      </div>
+
+      <div id="loading" *ngIf="showLoading">
+        Loading <strong>{{name}}'s</strong> Simple War...
+      </div>
+
+      <div id="game" *ngIf="showGameboard">
+        <game-board [gameSession]="gameSession" [numRows]="numRows" [numCols]="numCols"></game-board>
+        <hand [gameSession]="gameSession"></hand>
+        <game-end *ngIf="gameEnd" [status]="gameSession.state" [player]="gameSession.player"></game-end>
+      </div>
+
+    </div>
   `,
   styleUrls: [ './dashboard.component.css' ]
 })
@@ -25,7 +42,7 @@ export class DashboardComponent implements OnInit {
   showTie = false;
   gameEnd = false;
 
-  constructor(private heroService: HeroService) { }
+  constructor(private heroService: GameService) { }
 
   ngOnInit(): void {
     this.heroService.getUpdatedGameSession().subscribe((gameSession: GameSession) => {

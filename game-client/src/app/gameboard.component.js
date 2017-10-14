@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var hero_service_1 = require("./hero.service");
+var game_service_1 = require("./game.service");
 var gamesession_1 = require("./dto/gamesession");
 var GameboardComponent = (function () {
     function GameboardComponent(heroService) {
@@ -82,10 +82,10 @@ __decorate([
 GameboardComponent = __decorate([
     core_1.Component({
         selector: 'game-board',
-        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" \n            (click)=\"processClickedCell(rowNum, colNum)\" \n            [ngClass]=\"[(gameSession.myTurn && rowNum === 4 || gameSession.myTurn && rowNum === 3) ? 'playable' : '', (gameSession.gameboard[rowNum][colNum].team === gameSession.player.team) ? 'mine' : 'notmine']\">\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].type}}</p>\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].might}}</p>\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].move}}</p>\n        </td>\n      </tr>\n    </table>\n  ",
+        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" \n            (click)=\"processClickedCell(rowNum, colNum)\" \n            [ngClass]=\"[(gameSession.myTurn && rowNum === 4 || gameSession.myTurn && rowNum === 3) ? 'playable' : '', (gameSession.gameboard[rowNum][colNum].team === gameSession.player.team) ? 'mine' : 'notmine']\">\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].type}}</p>\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].might}}</p>\n          <!--<p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].move}}</p>-->\n        </td>\n      </tr>\n    </table>\n  ",
         styleUrls: ['./gameboard.component.css']
     }),
-    __metadata("design:paramtypes", [hero_service_1.HeroService])
+    __metadata("design:paramtypes", [game_service_1.GameService])
 ], GameboardComponent);
 exports.GameboardComponent = GameboardComponent;
 //# sourceMappingURL=gameboard.component.js.map

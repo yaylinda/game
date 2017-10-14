@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from "@angular/core";
 import {Card} from "./dto/card";
-import {HeroService} from "./hero.service";
+import {GameService} from "./game.service";
 import {Cell} from "./dto/cell";
 import {GameSession} from "./dto/gamesession";
 
@@ -12,8 +12,7 @@ import {GameSession} from "./dto/gamesession";
         <p *ngIf="gameSession.myTurn">My Turn</p>
         <p *ngIf="!gameSession.myTurn">Opponent's Turn</p>
         <p>Power: {{gameSession.player.power}}</p>
-        <p>Score: {{gameSession.player.score}}</p>
-        <p>Cards Remaining in Deck: {{gameSession.numCardsInDeck}}</p>
+        <p>{{gameSession.numCardsInDeck}} cards left</p>
       </div>
       <card *ngFor="let card of gameSession.player.hand;"
             (click)="processClickedCard(card)"
@@ -29,7 +28,7 @@ export class HandComponent implements OnInit {
   private _gameSession: GameSession;
   private _lastSelectedCard: Card;
 
-  constructor(private heroService: HeroService) { }
+  constructor(private heroService: GameService) { }
 
   ngOnInit() {
     this.heroService.getUpdatedHand()

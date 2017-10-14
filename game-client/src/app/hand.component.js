@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var hero_service_1 = require("./hero.service");
+var game_service_1 = require("./game.service");
 var gamesession_1 = require("./dto/gamesession");
 var HandComponent = (function () {
     function HandComponent(heroService) {
@@ -79,10 +79,10 @@ __decorate([
 HandComponent = __decorate([
     core_1.Component({
         selector: 'hand',
-        template: "\n    <div id=\"hand\">\n      <div id=\"game-stats\">\n        <p *ngIf=\"gameSession.myTurn\">My Turn</p>\n        <p *ngIf=\"!gameSession.myTurn\">Opponent's Turn</p>\n        <p>Power: {{gameSession.player.power}}</p>\n        <p>Score: {{gameSession.player.score}}</p>\n        <p>Cards Remaining in Deck: {{gameSession.numCardsInDeck}}</p>\n      </div>\n      <card *ngFor=\"let card of gameSession.player.hand;\"\n            (click)=\"processClickedCard(card)\"\n            [card]=\"card\">\n      </card>\n      <button id=\"end-turn-btn\" (click)=\"endTurn()\">End Turn</button>\n    </div>\n  ",
+        template: "\n    <div id=\"hand\">\n      <div id=\"game-stats\">\n        <p *ngIf=\"gameSession.myTurn\">My Turn</p>\n        <p *ngIf=\"!gameSession.myTurn\">Opponent's Turn</p>\n        <p>Power: {{gameSession.player.power}}</p>\n        <p>{{gameSession.numCardsInDeck}} cards left</p>\n      </div>\n      <card *ngFor=\"let card of gameSession.player.hand;\"\n            (click)=\"processClickedCard(card)\"\n            [card]=\"card\">\n      </card>\n      <button id=\"end-turn-btn\" (click)=\"endTurn()\">End Turn</button>\n    </div>\n  ",
         styleUrls: ['./hand.component.css']
     }),
-    __metadata("design:paramtypes", [hero_service_1.HeroService])
+    __metadata("design:paramtypes", [game_service_1.GameService])
 ], HandComponent);
 exports.HandComponent = HandComponent;
 //# sourceMappingURL=hand.component.js.map
