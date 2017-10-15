@@ -20,16 +20,18 @@ var GameboardComponent = (function () {
         var _this = this;
         console.log("clicked on: (" + row + ", " + col + ")");
         var card = this.heroService.getClickedCard();
-        if ((row === 4 || row === 3) && this._gameSession.myTurn === true && (this._gameSession.gameboard[row][col].state === 'EMPTY' /*|| this._gameSession.gameboard[row][col].type === card.cardType*/) && this._gameSession.player.power >= card.cost) {
-            this.heroService.sendCardPut(card, row, col).then(function (gameboard) {
-                _this._gameSession.gameboard = gameboard;
-                _this._gameSession.player.power = _this._gameSession.player.power - card.cost;
-                _this.heroService.updatePowerEE.emit(_this._gameSession.player.power);
-                _this.heroService.drawCard(_this._gameSession.player.id).then(function (newCard) {
-                    newCard.justDrew = true;
-                    _this.heroService.updateHandEE.emit(newCard);
+        if (card.cardType !== 'BLANK') {
+            if (this._gameSession.myTurn && (row >= this._gameSession.player.furthestRow) && (this._gameSession.gameboard[row][col].state === 'EMPTY' /*|| this._gameSession.gameboard[row][col].type === card.cardType*/) && this._gameSession.player.power >= card.cost) {
+                this.heroService.sendCardPut(card, row, col).then(function (gameboard) {
+                    _this._gameSession.gameboard = gameboard;
+                    _this._gameSession.player.power = _this._gameSession.player.power - card.cost;
+                    _this.heroService.updatePowerEE.emit(_this._gameSession.player.power);
+                    _this.heroService.drawCard(_this._gameSession.player.id).then(function (newCard) {
+                        newCard.justDrew = true;
+                        _this.heroService.updateHandEE.emit(newCard);
+                    });
                 });
-            });
+            }
         }
     };
     Object.defineProperty(GameboardComponent.prototype, "gameSession", {
@@ -82,7 +84,7 @@ __decorate([
 GameboardComponent = __decorate([
     core_1.Component({
         selector: 'game-board',
-        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" \n            (click)=\"processClickedCell(rowNum, colNum)\" \n            [ngClass]=\"[(gameSession.myTurn && rowNum === 4 || gameSession.myTurn && rowNum === 3) ? 'playable' : '', (gameSession.gameboard[rowNum][colNum].team === gameSession.player.team) ? 'mine' : 'notmine']\">\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].type}}</p>\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].might}}</p>\n          <!--<p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].move}}</p>-->\n        </td>\n      </tr>\n    </table>\n  ",
+        template: "\n    <table id=\"gameboard\">\n      <tr *ngFor=\"let rowNum of numRows\">\n        <td *ngFor=\"let colNum of numCols\" \n            (click)=\"processClickedCell(rowNum, colNum)\" \n            [ngClass]=\"[(gameSession.myTurn && (rowNum >= gameSession.player.furthestRow)) ? 'playable' : '', (gameSession.gameboard[rowNum][colNum].team === gameSession.player.team) ? 'mine' : 'notmine']\">\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].type}}</p>\n          <p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].might}}</p>\n          <!--<p *ngIf=\"gameSession.gameboard[rowNum][colNum].state === 'OCCUPIED'\">{{gameSession.gameboard[rowNum][colNum].move}}</p>-->\n        </td>\n      </tr>\n    </table>\n  ",
         styleUrls: ['./gameboard.component.css']
     }),
     __metadata("design:paramtypes", [game_service_1.GameService])

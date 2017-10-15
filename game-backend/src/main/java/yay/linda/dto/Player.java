@@ -21,6 +21,7 @@ public class Player {
     private int score;
     private int opponentScore;
     private int maxScore;
+    private int furthestRow;
 
     public Player() {
         this.id = UUID.randomUUID().toString();
@@ -113,5 +114,13 @@ public class Player {
 
     public void setOpponentScore(int opponentScore) {
         this.opponentScore = opponentScore;
+    }
+
+    public int getFurthestRow() {
+        return furthestRow;
+    }
+
+    public void setFurthestRow(int furthestRow) {
+        this.furthestRow = furthestRow;
     }
 }

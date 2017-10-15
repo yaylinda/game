@@ -11,4 +11,5 @@ export class Player {
   score: number;
   opponentScore: number;
   maxScore: number;
+  furthestRow: number;
 }

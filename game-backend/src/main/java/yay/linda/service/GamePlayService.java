@@ -131,6 +131,19 @@ public class GamePlayService {
             }
             gameSession.getPlayerGameboards().get(playerId).setBoard(updatedGameboard);
 
+            int furthestRow = gameConfigurations.getNumRows()-1;
+            for (int row = gameConfigurations.getNumRows()-1; row >= 0; row--) {
+                for (Cell cell : updatedGameboard.get(row)) {
+                    if (CellState.valueOf(cell.getState()) == CellState.OCCUPIED) {
+                        if (row < furthestRow) {
+                            furthestRow = row;
+                            break;
+                        }
+                    }
+                }
+            }
+            player.setFurthestRow(furthestRow);
+
             if (player.getScore() >= player.getMaxScore()) {
                 gameSession.getGameStates().put(playerId, GameState.WIN);
                 gameSession.getPlayerGameboards().get(player.getOpponentId()).setBoard(updatedGameboard);
