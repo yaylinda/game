@@ -33,7 +33,7 @@ var HandComponent = (function () {
         });
     };
     HandComponent.prototype.processClickedCard = function (card) {
-        if (this._gameSession.myTurn) {
+        if (this._gameSession.myTurn && card.cardType !== 'BLANK') {
             for (var _i = 0, _a = this._gameSession.player.hand; _i < _a.length; _i++) {
                 var otherCard = _a[_i];
                 otherCard.clicked = false;

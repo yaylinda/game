@@ -71,13 +71,20 @@ public class GameSession {
     }
 
     public Card drawCard(String owningPlayerId, String owningTeam) {
-        int index = deckGenerator.getRandomNumberInRange(0, deck.size()-1);
-        Card toReturn = deck.get(index);
-        toReturn.setOwningPlayer(owningPlayerId);
-        toReturn.setOwningTeam(owningTeam);
-        Card last = new Card(deck.get(deck.size()-1));
-        deck.set(index, last);
-        deck.remove(deck.size()-1);
+        Card toReturn;
+        if (this.deck.size() > 0) {
+            int index = deckGenerator.getRandomNumberInRange(0, deck.size() - 1);
+            toReturn = deck.get(index);
+            toReturn.setOwningPlayer(owningPlayerId);
+            toReturn.setOwningTeam(owningTeam);
+            Card last = new Card(deck.get(deck.size() - 1));
+            deck.set(index, last);
+            deck.remove(deck.size() - 1);
+            return toReturn;
+        } else {
+            toReturn= new Card();
+            toReturn.setCardType(CardType.BLANK.toString());
+        }
         return toReturn;
     }
 

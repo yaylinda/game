@@ -47,7 +47,7 @@ export class HandComponent implements OnInit {
   }
 
   processClickedCard(card: Card): void {
-    if (this._gameSession.myTurn) {
+    if (this._gameSession.myTurn && card.cardType !== 'BLANK') {
       for (let otherCard of this._gameSession.player.hand) {
         otherCard.clicked = false;
       }

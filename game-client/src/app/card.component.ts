@@ -5,9 +5,9 @@ import {Card} from "./dto/card";
   selector: 'card',
   template: `
     <div id="card" [ngClass]="[card.clicked ? 'highlight-card' : '' , card.justDrew ? 'just-drew' : '']">
-      <p>{{card.cardType}}</p>
-      <p>Cost: {{card.cost}}</p>
-      <p>Might: {{card.might}}</p>
+      <p *ngIf="card.cardType !== 'BLANK'">{{card.cardType}}</p>
+      <p *ngIf="card.cardType !== 'BLANK'">Cost: {{card.cost}}</p>
+      <p *ngIf="card.cardType !== 'BLANK'">Might: {{card.might}}</p>
       <!--<p>Movement: {{card.movement}}</p>-->
     </div>
   `,
