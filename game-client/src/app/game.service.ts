@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {EventEmitter, Injectable, OnInit, Output} from '@angular/core';
 import {Headers, Http} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
@@ -18,7 +18,8 @@ export class GameService {
     'Content-Type': 'application/json',
     'accept': 'application/json'
   });
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = '';
+  private basePort = '8080';
   private playerUrl = '/player';
   private joinGameUrl = '/player/join';
   private startGameUrl = '/game/start';
@@ -36,6 +37,9 @@ export class GameService {
   constructor(private http: Http) { }
 
   joinGame(name: string): Promise<Player> {
+    this.baseUrl = `http://${window.location.hostname}:${this.basePort}`;
+    console.log('BASE URL: ' + this.baseUrl);
+
     const url = `${this.baseUrl}${this.joinGameUrl}/${name}`;
     return this.http
       .post(url, "{}", {headers: this.headers})

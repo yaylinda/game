@@ -22,7 +22,8 @@ var GameService = (function () {
             'Content-Type': 'application/json',
             'accept': 'application/json'
         });
-        this.baseUrl = 'http://localhost:8080';
+        this.baseUrl = '';
+        this.basePort = '8080';
         this.playerUrl = '/player';
         this.joinGameUrl = '/player/join';
         this.startGameUrl = '/game/start';
@@ -35,6 +36,8 @@ var GameService = (function () {
         this.updateGameSessionEE = new core_1.EventEmitter();
     }
     GameService.prototype.joinGame = function (name) {
+        this.baseUrl = "http://" + window.location.hostname + ":" + this.basePort;
+        console.log('BASE URL: ' + this.baseUrl);
         var url = "" + this.baseUrl + this.joinGameUrl + "/" + name;
         return this.http
             .post(url, "{}", { headers: this.headers })
