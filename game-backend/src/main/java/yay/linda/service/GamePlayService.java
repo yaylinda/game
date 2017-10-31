@@ -134,11 +134,11 @@ public class GamePlayService {
             int furthestRow = gameConfigurations.getNumRows()-1;
             for (int row = gameConfigurations.getNumRows()-1; row >= 0; row--) {
                 for (Cell cell : updatedGameboard.get(row)) {
-                    if (CellState.valueOf(cell.getState()) == CellState.OCCUPIED) {
-                        if (row < furthestRow) {
-                            furthestRow = row;
-                            break;
-                        }
+                    if (CellState.valueOf(cell.getState()) == CellState.OCCUPIED
+                            && PlayerTeam.valueOf(cell.getTeam()) == PlayerTeam.valueOf(player.getTeam())
+                            && row < furthestRow) {
+                        furthestRow = row;
+                        break;
                     }
                 }
             }
@@ -146,7 +146,7 @@ public class GamePlayService {
 
             if (player.getScore() >= player.getMaxScore()) {
                 gameSession.getGameStates().put(playerId, GameState.WIN);
-                gameSession.getPlayerGameboards().get(player.getOpponentId()).setBoard(updatedGameboard);
+                gameSession.getPlayerGameboards().get(player.getOpponentId()).setBoard(updatedGameboard); // TODO reverse opponent's gameboard
                 gameSession.getGameStates().put(player.getOpponentId(), GameState.LOSS);
                 gameSession.getPlayerGameSessionStatuses().put(player.getOpponentId(), GameSessionStatus.NEW);
             }
@@ -155,16 +155,16 @@ public class GamePlayService {
             originalPlayer.setPower(originalPlayer.getPower() + 1);
             player.setPower(originalPlayer.getPower());
 
-            player.setOpponentScore(gameSession.getPlayers().get(player.getOpponentId()).getScore());
+            player.setOpponentScore(gameSession.getPlayers().get(player.getOpponentId()).getScore()); // TODO loser's score was not updated on winner's screen on last turn
 
             return new GameSessionDTO(
                     player,
                     gameSession.getPlayerGameboards().get(playerId),
                     gameSession.getGameStates().get(playerId).name(),
                     gameSession.getDeck().size(),
-                    true); // this gets sent to player 1 on first turn
+                    true);
         } else {
-            return new GameSessionDTO();
+            return new GameSessionDTO(); // this gets sent to player 1 on first turn
         }
     }
 

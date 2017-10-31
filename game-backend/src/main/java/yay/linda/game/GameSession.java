@@ -82,7 +82,7 @@ public class GameSession {
             deck.remove(deck.size() - 1);
             return toReturn;
         } else {
-            toReturn= new Card();
+            toReturn = new Card();
             toReturn.setCardType(CardType.BLANK.toString());
         }
         return toReturn;

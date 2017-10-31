@@ -5,6 +5,9 @@ import {GameSession} from "./dto/gamesession";
 @Component({
   selector: 'game-board',
   template: `
+    <div>
+      My Goal: {{gameSession.player.score}} points
+    </div>
     <table id="gameboard">
       <tr *ngFor="let rowNum of numRows">
         <td *ngFor="let colNum of numCols" 
@@ -16,6 +19,9 @@ import {GameSession} from "./dto/gamesession";
         </td>
       </tr>
     </table>
+    <div>
+      Opponent's Goal: {{gameSession.player.opponentScore}} points
+    </div>
   `,
   styleUrls: [ './gameboard.component.css' ]
 })

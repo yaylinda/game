@@ -14,7 +14,7 @@ var game_service_1 = require("./game.service");
 var DashboardComponent = (function () {
     function DashboardComponent(heroService) {
         this.heroService = heroService;
-        this.name = '';
+        this.name = ''; // TODO fix name showing on both screens issue
         this.showGameboard = false;
         this.showLoading = false;
         this.numRows = [];
@@ -80,7 +80,7 @@ var DashboardComponent = (function () {
 DashboardComponent = __decorate([
     core_1.Component({
         selector: 'my-dashboard',
-        template: "\n    <div class=\"main-container\">\n\n      <div id=\"greeting\" *ngIf=\"!showLoading && !showGameboard\">\n        <input id=\"player-name-input\" [(ngModel)]=\"name\" placeholder=\"name\" />\n        <button [disabled]=\"name.length === 0\" id=\"join-game-btn\" (click)=\"joinGame()\"><b>Join Game</b></button>\n      </div>\n\n      <div id=\"loading\" *ngIf=\"showLoading\">\n        Loading <strong>{{name}}'s</strong> Simple War...\n      </div>\n\n      <div id=\"game\" *ngIf=\"showGameboard\">\n        <game-board [gameSession]=\"gameSession\" [numRows]=\"numRows\" [numCols]=\"numCols\"></game-board>\n        <hand [gameSession]=\"gameSession\"></hand>\n        <game-end *ngIf=\"gameEnd\" [status]=\"gameSession.state\" [player]=\"gameSession.player\"></game-end>\n      </div>\n\n    </div>\n  ",
+        template: "\n    <div class=\"main-container\">\n\n      <div id=\"greeting\" *ngIf=\"!showLoading && !showGameboard\">\n        <input id=\"player-name-input\" [(ngModel)]=\"name\" placeholder=\"name\" />\n        <button [disabled]=\"name.length === 0\" id=\"join-game-btn\" (click)=\"joinGame()\"><b>Join Game</b></button>\n      </div>\n\n      <div id=\"loading\" *ngIf=\"showLoading\">\n        Loading <strong>{{name}}'s</strong> Simple War...\n      </div>\n\n      <div id=\"game\" *ngIf=\"showGameboard\">\n        <game-end *ngIf=\"gameEnd\" [status]=\"gameSession.state\" [player]=\"gameSession.player\"></game-end>\n        <game-board [gameSession]=\"gameSession\" [numRows]=\"numRows\" [numCols]=\"numCols\"></game-board>\n        <hand [gameSession]=\"gameSession\"></hand>\n      </div>\n\n    </div>\n  ",
         styleUrls: ['./dashboard.component.css']
     }),
     __metadata("design:paramtypes", [game_service_1.GameService])

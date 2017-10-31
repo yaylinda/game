@@ -19,9 +19,9 @@ import {GameSession} from "./dto/gamesession";
       </div>
 
       <div id="game" *ngIf="showGameboard">
+        <game-end *ngIf="gameEnd" [status]="gameSession.state" [player]="gameSession.player"></game-end>
         <game-board [gameSession]="gameSession" [numRows]="numRows" [numCols]="numCols"></game-board>
         <hand [gameSession]="gameSession"></hand>
-        <game-end *ngIf="gameEnd" [status]="gameSession.state" [player]="gameSession.player"></game-end>
       </div>
 
     </div>
@@ -30,7 +30,7 @@ import {GameSession} from "./dto/gamesession";
 })
 
 export class DashboardComponent implements OnInit {
-  name = '';
+  name = ''; // TODO fix name showing on both screens issue
   player: Player;
   showGameboard = false;
   showLoading = false;
