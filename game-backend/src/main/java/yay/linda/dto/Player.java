@@ -29,13 +29,6 @@ public class Player {
         this.opponentScore = 0;
     }
 
-    public Player(String name) {
-        this.id = UUID.randomUUID().toString();
-        this.name = name;
-        this.score = 0;
-        this.opponentScore = 0;
-    }
-
     public String getId() {
         return id;
     }
