@@ -21,11 +21,14 @@ export class GameService {
   private baseUrl = '';
   private basePort = '8080';
   private playerUrl = '/player';
+  private loginUrl = '/login';
+
   private joinGameUrl = '/player/join';
   private startGameUrl = '/game/start';
   private cardUrl = '/game/card';
   private turnUrl = '/game/endTurn';
   private pollUrl = '/game/poll';
+  // private getPlayerUrl = '/player';
 
   private selectedCard: Card;
 
@@ -35,6 +38,22 @@ export class GameService {
   @Output() updateGameSessionEE: EventEmitter<GameSession> = new EventEmitter();
 
   constructor(private http: Http) { }
+
+  getPlayerFromSessionTokenCookie(sessionToken: string): Promise<Player> {
+    const url = `http://${window.location.hostname}:${this.basePort}/${this.playerUrl}/${sessionToken}`;
+    return this.http
+      .get(url, {headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as Player)
+  }
+
+  login(username: string, password: string): Promise<string> {
+    const url = `http://${window.location.hostname}:${this.basePort}/${this.loginUrl}/${username}/${password}`;
+    return this.http
+      .get(url, {headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as string)
+  }
 
   joinGame(name: string): Promise<Player> {
     this.baseUrl = `http://${window.location.hostname}:${this.basePort}`;

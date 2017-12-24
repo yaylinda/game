@@ -9,8 +9,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var dashboard_component_1 = require("./dashboard.component");
+var landing_component_1 = require("./landing.component");
 var routes = [
-    { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+    { path: '', redirectTo: '/landing', pathMatch: 'full' },
+    { path: 'landing', component: landing_component_1.LandingComponent },
     { path: 'dashboard', component: dashboard_component_1.DashboardComponent }
 ];
 var AppRoutingModule = (function () {

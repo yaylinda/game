@@ -52,14 +52,14 @@
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [
-      true,
+      false,
       "check-open-brace",
       "check-catch",
       "check-else",
       "check-whitespace"
     ],
     "quotemark": [
-      true,
+      false,
       "single"
     ],
     "radix": true,
@@ -71,7 +71,7 @@
       "allow-null-check"
     ],
     "typedef-whitespace": [
-      true,
+      false,
       {
         "call-signature": "nospace",
         "index-signature": "nospace",
@@ -82,7 +82,7 @@
     ],
     "variable-name": false,
     "whitespace": [
-      true,
+      false,
       "check-branch",
       "check-decl",
       "check-operator",

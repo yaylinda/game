@@ -25,6 +25,7 @@ var GameService = (function () {
         this.baseUrl = '';
         this.basePort = '8080';
         this.playerUrl = '/player';
+        this.loginUrl = '/login';
         this.joinGameUrl = '/player/join';
         this.startGameUrl = '/game/start';
         this.cardUrl = '/game/card';
@@ -35,6 +36,20 @@ var GameService = (function () {
         this.updateBoardEE = new core_1.EventEmitter();
         this.updateGameSessionEE = new core_1.EventEmitter();
     }
+    GameService.prototype.getPlayerFromSessionTokenCookie = function (sessionToken) {
+        var url = "http://" + window.location.hostname + ":" + this.basePort + "/" + this.playerUrl + "/" + sessionToken;
+        return this.http
+            .get(url, { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); });
+    };
+    GameService.prototype.login = function (username, password) {
+        var url = "http://" + window.location.hostname + ":" + this.basePort + "/" + this.loginUrl + "/" + username + "/" + password;
+        return this.http
+            .get(url, { headers: this.headers })
+            .toPromise()
+            .then(function (response) { return response.json(); });
+    };
     GameService.prototype.joinGame = function (name) {
         this.baseUrl = "http://" + window.location.hostname + ":" + this.basePort;
         console.log('BASE URL: ' + this.baseUrl);
