@@ -45,7 +45,7 @@ export class LandingComponent implements OnInit {
   login(username: string, password: string): void {
     // TODO hash password before calling backend
     this._gameService.login(username, password).then(sessionToken => {
-      this.sessionToken = sessionToken;
+      this.sessionToken = sessionToken.sessionToken;
       this._cookieService.put("simple-war-session-token", this.sessionToken); // TODO move key to constants.ts file
       this._gameService.getPlayerFromSessionTokenCookie(this.sessionToken).then(player => {
         this.player = player;

@@ -10,6 +10,7 @@ import {GameSession} from "./dto/gamesession";
 import {Card} from "./dto/card";
 import {Cell} from "./dto/cell";
 import {Move} from "./dto/move";
+import {SessionToken} from './dto/sessiontoken';
 
 @Injectable()
 export class GameService {
@@ -18,7 +19,7 @@ export class GameService {
     'Content-Type': 'application/json',
     'accept': 'application/json'
   });
-  private baseUrl = '';
+  private baseUrl = `http://${window.location.hostname}`;
   private basePort = '8080';
   private playerUrl = '/player';
   private loginUrl = '/login';
@@ -40,20 +41,24 @@ export class GameService {
   constructor(private http: Http) { }
 
   getPlayerFromSessionTokenCookie(sessionToken: string): Promise<Player> {
-    const url = `http://${window.location.hostname}:${this.basePort}/${this.playerUrl}/${sessionToken}`;
+    const url = `${this.baseUrl}:${this.basePort}/${this.playerUrl}/${sessionToken}`;
     return this.http
       .get(url, {headers: this.headers})
       .toPromise()
       .then(response => response.json() as Player)
   }
 
-  login(username: string, password: string): Promise<string> {
-    const url = `http://${window.location.hostname}:${this.basePort}/${this.loginUrl}/${username}/${password}`;
+  login(username: string, password: string): Promise<SessionToken> {
+    const url = `${this.baseUrl}:${this.basePort}/${this.loginUrl}/${username}/${password}`;
     return this.http
       .get(url, {headers: this.headers})
       .toPromise()
-      .then(response => response.json() as string)
+      .then(response => response.json() as SessionToken)
   }
+
+  /*
+  OLD FUNCTIONS
+   */
 
   joinGame(name: string): Promise<Player> {
     this.baseUrl = `http://${window.location.hostname}:${this.basePort}`;
