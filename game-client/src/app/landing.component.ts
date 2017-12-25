@@ -29,7 +29,7 @@ export class LandingComponent implements OnInit {
   constructor(private _cookieService: CookieService, private _gameService: GameService) {}
 
   ngOnInit(): void {
-    this.sessionToken = this._cookieService.get("simple-war-session-token");
+    this.sessionToken = this._cookieService.get("simple-war-session-token"); // TODO move key to constants.ts file
     if (this.sessionToken) {
       this._gameService.getPlayerFromSessionTokenCookie(this.sessionToken)
         .then((player) => {
@@ -44,9 +44,9 @@ export class LandingComponent implements OnInit {
 
   login(username: string, password: string): void {
     // TODO hash password before calling backend
-
     this._gameService.login(username, password).then(sessionToken => {
       this.sessionToken = sessionToken;
+      this._cookieService.put("simple-war-session-token", this.sessionToken); // TODO move key to constants.ts file
       this._gameService.getPlayerFromSessionTokenCookie(this.sessionToken).then(player => {
         this.player = player;
       }, () => {
@@ -57,7 +57,6 @@ export class LandingComponent implements OnInit {
 
   register(username: string, password: string, passwordConf: string): void {
     // TODO hash password before calling backend
-
     if (password === passwordConf) {
       this.login(username, password);
     } else {
