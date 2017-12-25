@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CookieService} from 'angular2-cookie/core';
 import {GameService} from './game.service';
 import {Player} from './dto/player';
+import {CookieService} from 'angular2-cookie/core';
 
 @Component({
   template: `
@@ -16,7 +16,7 @@ import {Player} from './dto/player';
       <p *ngIf="showLoginIssueMsg">Username and passwords do not match. Please make sure you have an account, or register for a new one.</p>
     </div>
   `,
-  styleUrls: ['./landing.component.css']
+  styleUrls: []
 })
 export class LandingComponent implements OnInit {
   sessionToken = '';

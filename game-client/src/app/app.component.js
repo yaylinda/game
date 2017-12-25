@@ -9,14 +9,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var AppComponent = (function () {
     function AppComponent() {
-        this.title = 'Simple War';
     }
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
-        template: "\n    <!--<h1 id=\"title\">{{title}}</h1>-->\n    <!--<hr>-->\n    <router-outlet></router-outlet>\n  ",
+        template: "\n    <router-outlet></router-outlet>\n  ",
         styleUrls: ['./app.component.css']
     })
 ], AppComponent);

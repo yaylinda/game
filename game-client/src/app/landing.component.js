@@ -10,8 +10,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var core_2 = require("angular2-cookie/core");
 var game_service_1 = require("./game.service");
+var core_2 = require("angular2-cookie/core");
 var LandingComponent = (function () {
     function LandingComponent(_cookieService, _gameService) {
         this._cookieService = _cookieService;
@@ -64,7 +64,7 @@ var LandingComponent = (function () {
 LandingComponent = __decorate([
     core_1.Component({
         template: "\n    <div *ngIf=\"doLogin\">\n      <input id=\"username-input\" [ngModel]=\"username\" placeholder=\"username\" />\n      <input id=\"password-input\" [ngModel]=\"password\" placeholder=\"password\" />\n      <input *ngIf=\"doRegister\" id=\"password-conf-input\" [ngModel]=\"passwordConf\" placeholder=\"password confirmation\" />\n      <button *ngIf=\"!doRegister\" (click)=\"login(username, password)\">Login</button>\n      <button *ngIf=\"doRegister\" (click)=\"register(username, password, passwordConf)\">Register</button>\n      <button *ngIf=\"!doRegister\" (click)=\"doRegister=true\">New User</button>\n      <p *ngIf=\"showPasswordDoesNotMatchMsg\">Passwords do not match</p>\n      <p *ngIf=\"showLoginIssueMsg\">Username and passwords do not match. Please make sure you have an account, or register for a new one.</p>\n    </div>\n  ",
-        styleUrls: ['./landing.component.css']
+        styleUrls: []
     }),
     __metadata("design:paramtypes", [core_2.CookieService, game_service_1.GameService])
 ], LandingComponent);

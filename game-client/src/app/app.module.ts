@@ -13,6 +13,8 @@ import {CardComponent} from "./card.component";
 import {GameboardComponent} from "./gameboard.component";
 import {HandComponent} from "./hand.component";
 import {GameEndComponent} from "./gameend.component";
+import {LandingComponent} from './landing.component';
+import {CookieService} from 'angular2-cookie/core';
 
 @NgModule({
   imports: [
@@ -24,6 +26,7 @@ import {GameEndComponent} from "./gameend.component";
   ],
   declarations: [
     AppComponent,
+    LandingComponent,
     DashboardComponent,
     CardComponent,
     HandComponent,
@@ -31,7 +34,8 @@ import {GameEndComponent} from "./gameend.component";
     GameEndComponent
   ],
   providers: [
-    GameService
+    GameService,
+    CookieService
   ],
   bootstrap: [
     AppComponent

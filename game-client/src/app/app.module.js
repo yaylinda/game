@@ -19,6 +19,8 @@ var card_component_1 = require("./card.component");
 var gameboard_component_1 = require("./gameboard.component");
 var hand_component_1 = require("./hand.component");
 var gameend_component_1 = require("./gameend.component");
+var landing_component_1 = require("./landing.component");
+var core_2 = require("angular2-cookie/core");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -35,6 +37,7 @@ AppModule = __decorate([
         ],
         declarations: [
             app_component_1.AppComponent,
+            landing_component_1.LandingComponent,
             dashboard_component_1.DashboardComponent,
             card_component_1.CardComponent,
             hand_component_1.HandComponent,
@@ -42,7 +45,8 @@ AppModule = __decorate([
             gameend_component_1.GameEndComponent
         ],
         providers: [
-            game_service_1.GameService
+            game_service_1.GameService,
+            core_2.CookieService
         ],
         bootstrap: [
             app_component_1.AppComponent
