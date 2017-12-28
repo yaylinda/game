@@ -24,8 +24,22 @@ public class UserController {
      */
     @RequestMapping(value = "/login/{username}/{password}", method = RequestMethod.GET)
     public ResponseEntity<SessionToken> login(@PathVariable("username") String username, @PathVariable("password") String password) {
-        return userService.login(username, password);
+        SessionToken sessionToken = userService.login(username, password);
+        return ResponseEntity.ok(sessionToken);
     }
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
+    @RequestMapping(value = "/register/{username}/{password}/{email}", method = RequestMethod.GET)
+    public ResponseEntity<SessionToken> register(@PathVariable("username") String username, @PathVariable("password") String password, @PathVariable("email") String email) {
+        SessionToken sessionToken = userService.register(username, password, email);
+        return ResponseEntity.ok(sessionToken);
+    }
+
 
     /**
      *

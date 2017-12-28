@@ -3,6 +3,7 @@ package yay.linda.dto;
 import java.util.UUID;
 
 public class SessionToken {
+
     private String sessionToken;
 
     public SessionToken(String sessionToken) {
