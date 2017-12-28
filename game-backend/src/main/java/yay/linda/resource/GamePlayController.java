@@ -25,8 +25,8 @@ public class GamePlayController {
      * @return
      */
     @RequestMapping(value = "/join/{name}", method = RequestMethod.POST)
-    public ResponseEntity<Player> join(@PathVariable String name) {
-        Player player = gamePlayService.join(name);
+    public ResponseEntity<PlayerDTO> join(@PathVariable String name) {
+        PlayerDTO player = gamePlayService.join(name);
         return ResponseEntity.ok(player);
     }
 
@@ -36,8 +36,8 @@ public class GamePlayController {
      * @return
      */
     @RequestMapping(value = "/player/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Player> findPlayerById(@PathVariable String id) {
-        Player player = gamePlayService.findPlayerById(id);
+    public ResponseEntity<PlayerDTO> findPlayerById(@PathVariable String id) {
+        PlayerDTO player = gamePlayService.findPlayerById(id);
         return ResponseEntity.ok(player);
     }
 
@@ -47,7 +47,7 @@ public class GamePlayController {
      * @return
      */
     @RequestMapping(value = "/start/{id}", method = RequestMethod.POST)
-    public ResponseEntity<GameSessionDTO> startGame(@PathVariable String id, @RequestBody List<Player> players) {
+    public ResponseEntity<GameSessionDTO> startGame(@PathVariable String id, @RequestBody List<PlayerDTO> players) {
         GameSessionDTO gameSession = gamePlayService.startGame(players.get(0), players.get(1), id);
         if (gameSession != null) {
             return ResponseEntity.ok(gameSession);

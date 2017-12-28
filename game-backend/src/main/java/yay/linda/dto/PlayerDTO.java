@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Represents a Player object.
  */
-public class Player {
+public class PlayerDTO {
 
     private String id;
     private String opponentId;
@@ -23,7 +23,7 @@ public class Player {
     private int maxScore;
     private int furthestRow;
 
-    public Player() {
+    public PlayerDTO() {
         this.id = UUID.randomUUID().toString();
         this.score = 0;
         this.opponentScore = 0;

@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class GameSession {
 
-    private Map<String, Player> players;
+    private Map<String, PlayerDTO> players;
 
     private Map<String, GameBoard> playerGameboards;
 
@@ -36,7 +36,7 @@ public class GameSession {
 
     public GameSession() { }
 
-    public GameSession(Player player1, Player player2, DeckGenerator deckGenerator, int numRows, int numCols, int handSize) {
+    public GameSession(PlayerDTO player1, PlayerDTO player2, DeckGenerator deckGenerator, int numRows, int numCols, int handSize) {
         this.players = new HashMap<>();
         this.playerGameboards = new HashMap<>();
         this.playerGameSessionStatuses = new HashMap<>();
@@ -131,11 +131,11 @@ public class GameSession {
         return hand;
     }
 
-    public Map<String, Player> getPlayers() {
+    public Map<String, PlayerDTO> getPlayers() {
         return players;
     }
 
-    public void setPlayers(Map<String, Player> players) {
+    public void setPlayers(Map<String, PlayerDTO> players) {
         this.players = players;
     }
 

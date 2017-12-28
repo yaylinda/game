@@ -1,23 +1,23 @@
 package yay.linda.repo;
 
-import yay.linda.dto.Player;
+import yay.linda.dto.PlayerDTO;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class PlayerRepo {
-    private Map<String, Player> playerMap;
+    private Map<String, PlayerDTO> playerMap;
 
     public PlayerRepo() {
         this.playerMap = new HashMap<>();
     }
 
-    public void addPlayer(Player player) {
+    public void addPlayer(PlayerDTO player) {
         this.playerMap.put(player.getId(), player);
     }
 
-    public Player getPlayerById(String id) {
+    public PlayerDTO getPlayerById(String id) {
         return this.playerMap.get(id);
     }
 

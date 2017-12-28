@@ -21,7 +21,7 @@ public class GamePlayService {
     private PlayerGameSessionRepo playerGameSessionRepo = new PlayerGameSessionRepo();
 
     // is this only used for matchmaking?
-    private Player player1;
+    private PlayerDTO player1;
     private PlayerRepo playerRepo = new PlayerRepo();
 
     @Inject
@@ -30,9 +30,9 @@ public class GamePlayService {
     @Inject
     private DeckGenerator deckGenerator;
 
-    public Player join(String name) {
+    public PlayerDTO join(String name) {
 //        System.out.printf("%s is joining the game\n", name);
-        Player player = new Player(name);
+        PlayerDTO player = new PlayerDTO();
         player.setMaxScore(gameConfigurations.getMaxScore());
         if (player1 == null) {
             player.setTeam(PlayerTeam.TEAM1.name());
@@ -48,11 +48,11 @@ public class GamePlayService {
         return player;
     }
 
-    public Player findPlayerById(String id) {
+    public PlayerDTO findPlayerById(String id) {
         return playerRepo.getPlayerById(id);
     }
 
-    public GameSessionDTO startGame(Player player1, Player player2, String invokingPlayerId) {
+    public GameSessionDTO startGame(PlayerDTO player1, PlayerDTO player2, String invokingPlayerId) {
         GameSession gameSession = new GameSession(player1, player2, this.deckGenerator,
                 gameConfigurations.getNumRows(),
                 gameConfigurations.getNumCols(),
@@ -72,7 +72,7 @@ public class GamePlayService {
         GameSession gameSession = this.playerGameSessionRepo.getGameSessionById(playerId);
 
         if (gameSession != null && gameSession.getPlayerGameSessionStatuses().get(playerId) == GameSessionStatus.NEW) {
-            Player player = gameSession.getPlayers().get(playerId);
+            PlayerDTO player = gameSession.getPlayers().get(playerId);
 
             List<List<Cell>> updatedGameboard = new ArrayList<>();
             for (List<Cell> row : gameSession.getPlayerGameboards().get(playerId).getBoard()) {
@@ -151,7 +151,7 @@ public class GamePlayService {
                 gameSession.getPlayerGameSessionStatuses().put(player.getOpponentId(), GameSessionStatus.NEW);
             }
 
-            Player originalPlayer = this.playerRepo.getPlayerById(playerId);
+            PlayerDTO originalPlayer = this.playerRepo.getPlayerById(playerId);
             originalPlayer.setPower(originalPlayer.getPower() + 1);
             player.setPower(originalPlayer.getPower());
 

@@ -2,14 +2,14 @@ package yay.linda.resource;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import yay.linda.dto.UserDTO;
-import yay.linda.dto.Player;
+import yay.linda.dto.SessionToken;
+import yay.linda.dto.PlayerDTO;
 import yay.linda.service.UserService;
 
 import javax.inject.Inject;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/")
 @CrossOrigin("*")
 public class UserController {
 
@@ -18,23 +18,22 @@ public class UserController {
 
     /**
      *
-     * @param userDTO
+     * @param username
+     * @param password
      * @return
      */
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<Player> createUser(@RequestBody UserDTO userDTO) {
-        Player player = userService.createUser(userDTO);
-        return ResponseEntity.ok(player);
+    @RequestMapping(value = "/login/{username}/{password}", method = RequestMethod.GET)
+    public ResponseEntity<SessionToken> login(@PathVariable("username") String username, @PathVariable("password") String password) {
+        return userService.login(username, password);
     }
 
     /**
      *
-     * @param userDTO
+     * @param sessionToken
      * @return
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<Player> loginUser(@RequestBody UserDTO userDTO) {
-        Player player = userService.loginUser(userDTO);
-        return ResponseEntity.ok(player);
+    @RequestMapping(value = "/players/{sessionToken}", method = RequestMethod.GET)
+    public ResponseEntity<PlayerDTO> getPlayer(@PathVariable("sessionToken") String sessionToken) {
+        return userService.getPlayer(sessionToken);
     }
 }

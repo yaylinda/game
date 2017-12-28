@@ -1,14 +1,12 @@
 package yay.linda.dto;
 
-import yay.linda.dto.enums.GameState;
-
 import java.util.List;
 
 /**
  * Represents a GameSession object for one player.
  */
 public class GameSessionDTO {
-    private Player player;
+    private PlayerDTO player;
     private boolean myTurn;
     private List<List<Cell>> gameboard;
     private int numRows;
@@ -19,7 +17,7 @@ public class GameSessionDTO {
     public GameSessionDTO() {
     }
 
-    public GameSessionDTO(Player player, GameBoard gameboard, String gameState, int numCardsInDeck, boolean myTurn) {
+    public GameSessionDTO(PlayerDTO player, GameBoard gameboard, String gameState, int numCardsInDeck, boolean myTurn) {
         this.player = player;
         this.gameboard = gameboard.getBoard();
         this.state = gameState;
@@ -29,11 +27,11 @@ public class GameSessionDTO {
         this.numCardsInDeck = numCardsInDeck;
     }
 
-    public Player getPlayer() {
+    public PlayerDTO getPlayer() {
         return player;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(PlayerDTO player) {
         this.player = player;
     }
 

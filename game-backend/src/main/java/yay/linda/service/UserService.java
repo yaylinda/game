@@ -1,21 +1,19 @@
 package yay.linda.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import yay.linda.dto.Player;
-import yay.linda.dto.UserDTO;
+import yay.linda.dto.PlayerDTO;
+import yay.linda.dto.SessionToken;
 
 @Component
 public class UserService {
 
-    public Player createUser(UserDTO userDTO) {
-        Player newPlayer = new Player();
-        newPlayer.setName(userDTO.getUsername());
-        // TODO save user dto info to repo
-        return newPlayer;
+
+    public ResponseEntity<SessionToken> login(String username, String password) {
+        return null;
     }
 
-    public Player loginUser(UserDTO userDTO) {
-        // TODO look up user dto
+    public ResponseEntity<PlayerDTO> getPlayer(String sessionToken) {
         return null;
     }
 }
