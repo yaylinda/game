@@ -22,6 +22,19 @@ public class UserService {
     @Autowired
     private ActiveSessionRepository activeSessionRepository;
 
+
+    public SessionToken login(UUID playerId) {
+        List<Session> allSessions = activeSessionRepository.findAll();
+        UUID sessionId = UUID.randomUUID();
+        for (Session session : allSessions) {
+            if (session.getPlayerId().equals(playerId)) {
+                sessionId = session.getSessionId();
+                break;
+            }
+        }
+        return new SessionToken(sessionId.toString());
+    }
+
     public SessionToken login(String username, String password) {
         UUID sessionId = UUID.randomUUID();
         List<Player> allPlayers = playerRepository.findAll();
@@ -59,10 +72,12 @@ public class UserService {
         Player newPlayer = new Player(username, password, email);
         UUID playerId = newPlayer.getPlayerId();
         playerRepository.save(newPlayer);
-        return login(username, password);
+        return login(playerId);
     }
 
-    public ResponseEntity<PlayerDTO> getPlayer(String sessionToken) {
-        return null;
+    public Player getPlayer(String sessionId) {
+        Session session = activeSessionRepository.findOne(UUID.fromString(sessionId));
+        return playerRepository.findOne(session.getPlayerId());
+
     }
 }
