@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import yay.linda.dto.SessionToken;
 import yay.linda.dto.PlayerDTO;
+import yay.linda.entity.Player;
 import yay.linda.service.UserService;
 
 import javax.inject.Inject;
@@ -46,8 +47,8 @@ public class UserController {
      * @param sessionToken
      * @return
      */
-    @RequestMapping(value = "/players/{sessionToken}", method = RequestMethod.GET)
-    public ResponseEntity<PlayerDTO> getPlayer(@PathVariable("sessionToken") String sessionToken) {
-        return userService.getPlayer(sessionToken);
+    @RequestMapping(value = "/player/{sessionToken}", method = RequestMethod.GET)
+    public ResponseEntity<Player> getPlayer(@PathVariable("sessionToken") String sessionToken) {
+        return ResponseEntity.ok(userService.getPlayer(sessionToken));
     }
 }

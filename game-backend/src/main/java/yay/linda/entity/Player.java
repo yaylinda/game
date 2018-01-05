@@ -1,24 +1,19 @@
 package yay.linda.entity;
 
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-@Table
+@Table(value = "player")
 public class Player implements Serializable {
 
-    @PrimaryKey
-    private UUID playerId;
-
-    @PrimaryKey
-    private String username;
-
-    private String password;
-    private String email;
+    @PrimaryKey("player_id") private UUID playerId;
+    @Column("username") private String username;
+    @Column("password") private String password;
+    @Column("email") private String email;
 
     public Player(String username, String password, String email) {
         this.playerId = UUID.randomUUID();

@@ -1,36 +1,35 @@
 package yay.linda;
 
-import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.Session;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
-import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
-import org.springframework.data.cassandra.core.mapping.BasicCassandraMappingContext;
-import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
-import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
+import org.springframework.data.cassandra.config.SchemaAction;
+import org.springframework.data.cassandra.core.CassandraTemplate;
+import yay.linda.entity.Player;
 
 @Configuration
-@EnableCassandraRepositories(basePackages = "yay.linda.repository")
-public class CassandraConfiguration extends AbstractCassandraConfiguration {
+@EnableAutoConfiguration
+class CassandraConfiguration extends AbstractCassandraConfiguration {
 
     @Override
-    protected String getKeyspaceName() {
-        return "testKeySpace";
+    public String getKeyspaceName() {
+        return "example";
     }
 
     @Bean
-    public CassandraClusterFactoryBean cluster() {
-        CassandraClusterFactoryBean cluster =
-                new CassandraClusterFactoryBean();
-        cluster.setContactPoints("127.0.0.1");
-        cluster.setPort(9142);
-        return cluster;
+    public CassandraTemplate cassandraTemplate(Session session) {
+        return new CassandraTemplate(session);
     }
 
-    @Bean
-    public CassandraMappingContext cassandraMapping()
-            throws ClassNotFoundException {
-        return new BasicCassandraMappingContext();
+    @Override
+    public String[] getEntityBasePackages() {
+        return new String[] { Player.class.getPackage().getName() };
+    }
+
+    @Override
+    public SchemaAction getSchemaAction() {
+        return SchemaAction.RECREATE;
     }
 }

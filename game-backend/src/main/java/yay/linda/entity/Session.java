@@ -1,16 +1,17 @@
 package yay.linda.entity;
 
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-@Table
+@Table(value = "session")
 public class Session implements Serializable {
-    @PrimaryKey
-    private UUID sessionId;
-    private UUID playerId;
+
+    @PrimaryKey("session_id") private UUID sessionId;
+    @Column("player_id") private UUID playerId;
 
     public Session (UUID playerId) {
         this.sessionId = UUID.randomUUID();
