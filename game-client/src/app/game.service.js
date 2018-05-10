@@ -22,10 +22,12 @@ var GameService = (function () {
             'Content-Type': 'application/json',
             'accept': 'application/json'
         });
-        this.baseUrl = '';
-        this.basePort = '8080';
+        this.serverHost = "http://" + window.location.hostname;
+        this.serverPort = '8080';
+        this.baseUrl = this.serverHost + ":" + this.serverPort;
+        this.registerUrl = '/user/';
+        this.loginUrl = '/user/login';
         this.playerUrl = '/player';
-        this.loginUrl = '/login';
         this.joinGameUrl = '/player/join';
         this.startGameUrl = '/game/start';
         this.cardUrl = '/game/card';
@@ -36,24 +38,28 @@ var GameService = (function () {
         this.updateBoardEE = new core_1.EventEmitter();
         this.updateGameSessionEE = new core_1.EventEmitter();
     }
-    GameService.prototype.getPlayerFromSessionTokenCookie = function (sessionToken) {
-        var url = "http://" + window.location.hostname + ":" + this.basePort + "/" + this.playerUrl + "/" + sessionToken;
+    GameService.prototype.login = function (loginRequest) {
+        var url = this.baseUrl + this.loginUrl;
+        console.log(loginRequest);
         return this.http
-            .get(url, { headers: this.headers })
+            .post(url, loginRequest)
             .toPromise()
             .then(function (response) { return response.json(); });
     };
-    GameService.prototype.login = function (username, password) {
-        var url = "http://" + window.location.hostname + ":" + this.basePort + "/" + this.loginUrl + "/" + username + "/" + password;
+    GameService.prototype.register = function (registerRequest) {
+        var url = this.baseUrl + this.registerUrl;
         return this.http
-            .get(url, { headers: this.headers })
+            .post(url, registerRequest)
             .toPromise()
             .then(function (response) { return response.json(); });
     };
+    /*
+    OLD FUNCTIONS
+     */
     GameService.prototype.joinGame = function (name) {
-        this.baseUrl = "http://" + window.location.hostname + ":" + this.basePort;
-        console.log('BASE URL: ' + this.baseUrl);
-        var url = "" + this.baseUrl + this.joinGameUrl + "/" + name;
+        this.serverHost = "http://" + window.location.hostname + ":" + this.serverPort;
+        console.log('BASE URL: ' + this.serverHost);
+        var url = "" + this.serverHost + this.joinGameUrl + "/" + name;
         return this.http
             .post(url, "{}", { headers: this.headers })
             .toPromise()
@@ -62,7 +68,7 @@ var GameService = (function () {
     };
     GameService.prototype.startGame = function (player1, player2, id) {
         console.log("starting game: " + id);
-        var url = "" + this.baseUrl + this.startGameUrl + "/" + id;
+        var url = "" + this.serverHost + this.startGameUrl + "/" + id;
         return this.http
             .post(url, [player1, player2], { headers: this.headers })
             .toPromise()
@@ -71,7 +77,7 @@ var GameService = (function () {
     };
     GameService.prototype.getPlayerById = function (id) {
         console.log("getting player by id: " + id);
-        var url = "" + this.baseUrl + this.playerUrl + "/" + id;
+        var url = "" + this.serverHost + this.playerUrl + "/" + id;
         return this.http
             .get(url, { headers: this.headers })
             .toPromise()
@@ -81,7 +87,7 @@ var GameService = (function () {
     GameService.prototype.pollForGame = function (id) {
         var _this = this;
         console.log('polling for game...');
-        var url = "" + this.baseUrl + this.pollUrl + "/" + id;
+        var url = "" + this.serverHost + this.pollUrl + "/" + id;
         return Rx_1.Observable
             .fromPromise(this.http
             .get(url, { headers: this.headers })
@@ -103,7 +109,7 @@ var GameService = (function () {
     };
     GameService.prototype.drawCard = function (id) {
         console.log('drawing card...');
-        var url = "" + this.baseUrl + this.cardUrl + "/" + id;
+        var url = "" + this.serverHost + this.cardUrl + "/" + id;
         return this.http
             .get(url, { headers: this.headers })
             .toPromise()
@@ -123,7 +129,7 @@ var GameService = (function () {
         move.col = col;
         move.cell = cell;
         move.playerId = card.owningPlayer;
-        var url = "" + this.baseUrl + this.cardUrl;
+        var url = "" + this.serverHost + this.cardUrl;
         return this.http
             .put(url, move, { headers: this.headers })
             .toPromise()
@@ -132,7 +138,7 @@ var GameService = (function () {
     };
     GameService.prototype.endTurn = function (id, hand) {
         console.log('ending turn...');
-        var url = "" + this.baseUrl + this.turnUrl + "/" + id;
+        var url = "" + this.serverHost + this.turnUrl + "/" + id;
         return this.http
             .put(url, hand, { headers: this.headers })
             .toPromise()

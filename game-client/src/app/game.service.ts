@@ -10,7 +10,10 @@ import {GameSession} from "./dto/gamesession";
 import {Card} from "./dto/card";
 import {Cell} from "./dto/cell";
 import {Move} from "./dto/move";
-import {SessionToken} from './dto/sessiontoken';
+import { LoginRequest } from './dto/LoginRequest';
+import { LoginResponse } from './dto/LoginResponse';
+import { RegisterRequest } from './dto/RegisterRequest';
+import { RegisterResponse } from './dto/RegisterResponse';
 
 @Injectable()
 export class GameService {
@@ -19,17 +22,21 @@ export class GameService {
     'Content-Type': 'application/json',
     'accept': 'application/json'
   });
-  private baseUrl = `http://${window.location.hostname}`;
-  private basePort = '8080';
-  private playerUrl = '/player';
-  private loginUrl = '/login';
 
+  private serverHost = `http://${window.location.hostname}`;
+  private serverPort = '8080';
+  private baseUrl = `${this.serverHost}:${this.serverPort}`;
+
+  private registerUrl = '/user/';
+  private loginUrl = '/user/login';
+
+  private playerUrl = '/player';
   private joinGameUrl = '/player/join';
   private startGameUrl = '/game/start';
   private cardUrl = '/game/card';
   private turnUrl = '/game/endTurn';
   private pollUrl = '/game/poll';
-  // private getPlayerUrl = '/player';
+
 
   private selectedCard: Card;
 
@@ -40,20 +47,21 @@ export class GameService {
 
   constructor(private http: Http) { }
 
-  getPlayerFromSessionTokenCookie(sessionToken: string): Promise<Player> {
-    const url = `${this.baseUrl}:${this.basePort}/${this.playerUrl}/${sessionToken}`;
+  login(loginRequest: LoginRequest): Promise<LoginResponse> {
+    const url = this.baseUrl + this.loginUrl;
+    console.log(loginRequest);
     return this.http
-      .get(url, {headers: this.headers})
+      .post(url, loginRequest)
       .toPromise()
-      .then(response => response.json() as Player)
+      .then(response => response.json() as LoginResponse);
   }
 
-  login(username: string, password: string): Promise<SessionToken> {
-    const url = `${this.baseUrl}:${this.basePort}/${this.loginUrl}/${username}/${password}`;
+  register(registerRequest: RegisterRequest): Promise<RegisterResponse> {
+    const url = this.baseUrl + this.registerUrl;
     return this.http
-      .get(url, {headers: this.headers})
+      .post(url, registerRequest)
       .toPromise()
-      .then(response => response.json() as SessionToken)
+      .then(response => response.json() as RegisterResponse);
   }
 
   /*
@@ -61,10 +69,10 @@ export class GameService {
    */
 
   joinGame(name: string): Promise<Player> {
-    this.baseUrl = `http://${window.location.hostname}:${this.basePort}`;
-    console.log('BASE URL: ' + this.baseUrl);
+    this.serverHost = `http://${window.location.hostname}:${this.serverPort}`;
+    console.log('BASE URL: ' + this.serverHost);
 
-    const url = `${this.baseUrl}${this.joinGameUrl}/${name}`;
+    const url = `${this.serverHost}${this.joinGameUrl}/${name}`;
     return this.http
       .post(url, "{}", {headers: this.headers})
       .toPromise()
@@ -74,7 +82,7 @@ export class GameService {
 
   startGame(player1: Player, player2: Player, id: string): Promise<GameSession> {
     console.log(`starting game: ${id}`);
-    const url = `${this.baseUrl}${this.startGameUrl}/${id}`;
+    const url = `${this.serverHost}${this.startGameUrl}/${id}`;
     return this.http
       .post(url, [player1, player2], {headers: this.headers})
       .toPromise()
@@ -84,7 +92,7 @@ export class GameService {
 
   getPlayerById(id: string): Promise<Player> {
     console.log(`getting player by id: ${id}`);
-    const url = `${this.baseUrl}${this.playerUrl}/${id}`;
+    const url = `${this.serverHost}${this.playerUrl}/${id}`;
     return this.http
       .get(url, {headers: this.headers})
       .toPromise()
@@ -94,7 +102,7 @@ export class GameService {
 
   pollForGame(id: string): Observable<GameSession> {
     console.log('polling for game...');
-    const url = `${this.baseUrl}${this.pollUrl}/${id}`;
+    const url = `${this.serverHost}${this.pollUrl}/${id}`;
     return Observable
       .fromPromise(this.http
         .get(url, {headers: this.headers})
@@ -117,7 +125,7 @@ export class GameService {
 
   drawCard(id: string): Promise<Card> {
     console.log('drawing card...');
-    const url = `${this.baseUrl}${this.cardUrl}/${id}`;
+    const url = `${this.serverHost}${this.cardUrl}/${id}`;
     return this.http
       .get(url, {headers: this.headers})
       .toPromise()
@@ -141,7 +149,7 @@ export class GameService {
 
     move.playerId = card.owningPlayer;
 
-    const url = `${this.baseUrl}${this.cardUrl}`;
+    const url = `${this.serverHost}${this.cardUrl}`;
 
     return this.http
       .put(url, move, {headers: this.headers})
@@ -152,7 +160,7 @@ export class GameService {
 
   endTurn(id: string, hand: Card[]) {
     console.log('ending turn...');
-    const url = `${this.baseUrl}${this.turnUrl}/${id}`;
+    const url = `${this.serverHost}${this.turnUrl}/${id}`;
     return this.http
       .put(url, hand, {headers: this.headers})
       .toPromise()
